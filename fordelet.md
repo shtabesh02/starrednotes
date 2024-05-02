@@ -1,3 +1,6 @@
+https://github.com/edison914/FurryGo?tab=readme-ov-file
+
+
 Thanks for clarifying. Given that "StarredNotes" is an online educational platform where users can access courses and articles, and logged-in users can create their own notes, the database schema will be designed to support these functionalities. Here's an outline that includes the necessary tables for courses, articles, and user-created notes.
 
 ### 1. Users
