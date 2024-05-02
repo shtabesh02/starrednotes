@@ -1,5 +1,9 @@
-# Starred Notes!
-# Database Schema
-![](starrednotes.png)
+# [Starred Notes]
+# Database Schema Design
+
+![db-schema](./images/starrednotes.png)
 
 # API Documentation
+
+
+
