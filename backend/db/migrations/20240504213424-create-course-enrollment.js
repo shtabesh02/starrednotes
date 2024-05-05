@@ -20,7 +20,8 @@ module.exports = {
           model: 'Users',
           id: 'id'
         },
-        onDelete: 'cascade'
+        onDelete: 'CASCADE',
+        allowNull: false
       },
       course_id: {
         type: Sequelize.INTEGER,
@@ -28,7 +29,8 @@ module.exports = {
           model: 'Courses',
           id: 'id'
         },
-        onDelete: 'cascade'
+        onDelete: 'CASCADE',
+        allowNull: false
       },
       enrolled_at: {
         type: Sequelize.DATE

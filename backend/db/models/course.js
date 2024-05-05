@@ -14,17 +14,18 @@ module.exports = (sequelize, DataTypes) => {
       Course.belongsToMany(models.User, {
         through: models.Course_Enrollment,
         foreignKey: 'course_id',
-        otherKey: 'user_id'
+        otherKey: 'user_id',
+        onDelete: 'CASCADE'
       });
 
       Course.hasMany(models.Lesson, {
         foreignKey: 'course_id',
-        onDelete: 'cascade'
+        onDelete: 'CASCADE'
       });
 
       Course.hasMany(models.Course_Comment, {
         foreignKey: 'course_id',
-        onDelete: 'cascade'
+        onDelete: 'CASCADE'
       })
     }
   }
