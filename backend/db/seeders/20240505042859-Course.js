@@ -13,11 +13,11 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     await Course.bulkCreate([
       {
-        title: 'Sequelize JS',
+        title: 'SequelizeJS',
         description: 'A detailed course on Sequelize JS'
       },
       {
-        title: 'Express JS',
+        title: 'ExpressJS',
         description: 'A detailed course on Express JS'
       },
       {
@@ -31,7 +31,7 @@ module.exports = {
     options.tableName = 'Courses';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      title: { [Op.in]: ['Sequelize JS', 'Express JS', 'Flask'] }
+      title: { [Op.in]: ['SequelizeJS', 'ExpressJS', 'Flask'] }
     }, {});
   }
 };

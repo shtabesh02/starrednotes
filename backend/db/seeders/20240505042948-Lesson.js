@@ -30,7 +30,7 @@ module.exports = {
     {
       user_id: 1,
       course_id: 1,
-      title: 'Initializing Sequelize',
+      title: 'InitializingSequelize',
       content: 'Sequelize will be explained here...'
     },
   ], {validate: true});
@@ -40,7 +40,7 @@ module.exports = {
     options.tableName = 'Lessons';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      title: {[Op.in]: ['Model', 'Migration', 'Seeder', 'Initializing Sequelize']}
+      title: {[Op.in]: ['Model', 'Migration', 'Seeder', 'InitializingSequelize']}
     }, {})
   }
 };

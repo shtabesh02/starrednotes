@@ -14,17 +14,17 @@ module.exports = {
       {
         user_id: 1,
         course_id: 1,
-        comment: 'This course is a must taken course1.'
+        comment: 'comment1'
       },
       {
         user_id: 2,
         course_id: 2,
-        comment: 'This course is a must taken course2.'
+        comment: 'comment2'
       },
       {
         user_id: 3,
         course_id: 3,
-        comment: 'This course is a must taken course3.'
+        comment: 'comment3'
       }
     ], {validate:true})
   },
@@ -33,7 +33,7 @@ module.exports = {
     options.tableName = 'Course_Comments';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      user_id: { [Op.in]: ['1', '2', '3'] }
+      comment: { [Op.in]: ['comment1', 'comment2', 'comment3'] }
     }, {});
   }
 };
