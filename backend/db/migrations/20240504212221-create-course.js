@@ -16,13 +16,11 @@ module.exports = {
       user_id: {
         type: Sequelize.INTEGER,
         references: {
-          model: {
-          tableName: 'Users',
-          schema: options.schema,
-          },
+          model: 'Users',
           key: 'id',
         },
-        onDelete: 'cascade'
+        onDelete: 'cascade',
+        allowNull: false
       },
       title: {
         type: Sequelize.STRING
