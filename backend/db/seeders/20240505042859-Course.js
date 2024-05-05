@@ -24,7 +24,7 @@ module.exports = {
         title: 'Flask',
         description: 'A detailed course on Flask Python'
       }
-    ])
+    ], {validate: true});
   },
 
   async down (queryInterface, Sequelize) {

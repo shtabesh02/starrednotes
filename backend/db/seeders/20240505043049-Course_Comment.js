@@ -26,7 +26,7 @@ module.exports = {
         course_id: 3,
         comment: 'This course is a must taken course3.'
       }
-    ])
+    ], {validate:true})
   },
 
   async down (queryInterface, Sequelize) {

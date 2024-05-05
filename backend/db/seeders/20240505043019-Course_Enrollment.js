@@ -27,11 +27,11 @@ module.exports = {
         course_id: 3,
         enrolled_at: '05/05/2024'
       }
-    ])
+    ], {validate: true})
   },
 
   async down (queryInterface, Sequelize) {
-    options.tableName = 'Users';
+    options.tableName = 'Course_Enrollments';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
       user_id: { [Op.in]: ['1', '2', '3'] }
