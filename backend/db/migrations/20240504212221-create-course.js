@@ -13,15 +13,15 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      user_id: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'Users',
-          key: 'id',
-        },
-        onDelete: 'cascade',
-        allowNull: false
-      },
+      // user_id: {
+      //   type: Sequelize.INTEGER,
+      //   references: {
+      //     model: 'Users',
+      //     key: 'id',
+      //   },
+      //   onDelete: 'cascade',
+      //   allowNull: false
+      // },
       title: {
         type: Sequelize.STRING
       },
@@ -30,13 +30,15 @@ module.exports = {
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       }
-    });
+    }, options);
   },
   async down(queryInterface, Sequelize) {
     options.tableName = "Courses"

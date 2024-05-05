@@ -14,15 +14,18 @@ module.exports = {
     await Course_Enrollment.bulkCreate([
       {
         user_id: 1,
-        course_id: 1
+        course_id: 1,
+        enrolled_at: '05/05/2024'
       },
       {
         user_id: 2,
-        course_id: 2
+        course_id: 2,
+        enrolled_at: '05/05/2024'
       },
       {
         user_id: 3,
-        course_id: 3
+        course_id: 3,
+        enrolled_at: '05/05/2024'
       }
     ])
   },
