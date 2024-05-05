@@ -28,7 +28,8 @@ module.exports = {
           model: 'Users',
           key: 'id',
         },
-        onDelete: 'cascade'
+        onDelete: 'cascade',
+        allowNull: false
       },
       title: {
         type: Sequelize.STRING
