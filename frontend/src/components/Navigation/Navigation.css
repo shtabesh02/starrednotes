@@ -1,0 +1,6 @@
+.home-nav{
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    margin: 30px 40px;
+}

@@ -5,6 +5,8 @@ import * as sessionActions from '../../store/session';
 import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal';
 import './LoginForm.css';
+import OpenModalButton from '../OpenModalButton';
+import SignupFormModal from '../SignupFormModal';
 
 function LoginFormModal() {
   const dispatch = useDispatch();
@@ -53,6 +55,15 @@ function LoginFormModal() {
         )}
         <button type="submit">Log In</button>
       </form>
+      <div>
+        <h1>Create an account</h1>
+
+        <OpenModalButton
+          buttonText="Sign Up"
+          modalComponent={<SignupFormModal />}
+        />
+
+      </div>
     </>
   );
 }

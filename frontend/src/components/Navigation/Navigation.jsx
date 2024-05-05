@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import OpenModalButton from '../OpenModalButton';
 import LoginFormModal from '../LoginFormModal';
-import SignupFormModal from '../SignupFormModal';
+// import SignupFormModal from '../SignupFormModal';
 import './Navigation.css';
 
 function Navigation({ isLoaded }) {
@@ -27,18 +27,19 @@ function Navigation({ isLoaded }) {
           modalComponent={<LoginFormModal />}
         />
       </li>
-      <li>
+      {/* The Signup is commented for testing purpose. */}
+      {/* <li>
         <OpenModalButton
           buttonText="Sign Up"
           modalComponent={<SignupFormModal />}
         />
-      </li>
+      </li> */}
       </>
     );
   }
 
   return (
-    <ul>
+    <ul className='home-nav'>
       <li>
         <NavLink to="/">Home</NavLink>
       </li>
