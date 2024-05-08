@@ -7,6 +7,8 @@ import OpenModalButton from '../OpenModalButton';
 import LoginFormModal from '../LoginFormModal';
 // import SignupFormModal from '../SignupFormModal';
 import './Navigation.css';
+import CoursesRibbon from '../CoursesRibbon';
+// import { FaUserCircle } from 'react-icons/fa';
 
 function Navigation({ isLoaded }) {
   const sessionUser = useSelector((state) => state.session.user);
@@ -21,6 +23,7 @@ function Navigation({ isLoaded }) {
   } else {
     sessionLinks = (
       <>
+      
       <li>
         <OpenModalButton
           buttonText="Log In"
@@ -39,12 +42,19 @@ function Navigation({ isLoaded }) {
   }
 
   return (
+    <>
+    
     <ul className='home-nav'>
       <li>
-        <NavLink to="/">Home</NavLink>
+        <NavLink to="/"><img src={'./sn-logo.png'} style={{width: '130px'}} alt="" /></NavLink>
+      </li>
+      <li>
+        <input type="text" name="search" id="search" className='search' placeholder='What course are you looking for?...'/>
       </li>
       {isLoaded && sessionLinks}
     </ul>
+    <CoursesRibbon />
+    </>
   );
 }
 

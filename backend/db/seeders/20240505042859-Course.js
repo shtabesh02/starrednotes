@@ -14,14 +14,20 @@ module.exports = {
     await Course.bulkCreate([
       {
         title: 'SequelizeJS',
+        instructor: 'Sharif Rezaie',
+        category: 'Javascript',
         description: 'A detailed course on Sequelize JS'
       },
       {
         title: 'ExpressJS',
+        instructor: 'Alisina Danesh',
+        category: 'Javascript',
         description: 'A detailed course on Express JS'
       },
       {
         title: 'Flask',
+        instructor: 'Mohammadjan Farasu',
+        category: 'Python',
         description: 'A detailed course on Flask Python'
       }
     ], {validate: true});
