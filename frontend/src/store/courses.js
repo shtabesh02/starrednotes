@@ -33,10 +33,10 @@ const loadCourse = (course) => {
 export const loadCoursefromDB = (course_id) => async (dispatch) => {
     // const response = await fetch(`/api/courses/${course_id}`);
     const response = await csrfFetch(`/api/courses/${course_id}`)
-    console.log('course response: ', response);
+    // console.log('course response: ', response);
     if(response.ok){
         const data = await response.json();
-        console.log('course data: ', data)
+        // console.log('course data: ', data)
         dispatch(loadCourse(data))
     }
 }
@@ -48,7 +48,7 @@ const initialState = {
     courseDetails: {}
 };
 const courseReducer = (state = initialState, action) => {
-    const newState = {...state};
+    // const newState = {...state};
     switch(action.type){
         case LOADCOURSES: {
             // return {...state, ...action.courses}

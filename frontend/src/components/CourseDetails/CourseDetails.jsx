@@ -1,18 +1,21 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { loadCoursefromDB } from "../../store/courses";
-import { useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
+import { loadlessonsfromDB } from "../../store/lessons";
 
 const CourseDetails = () => {
 
-  const course = useSelector(state => state.courseReducer);
-  console.log('course from details jsx: ', course)
+  const course = useSelector(state => state.courseReducer.courseDetails);
+  const lessons = useSelector(state => state.lessonReducer.lessons)
+
   const dispatch = useDispatch();
 
   const { course_id } = useParams();
-  console.log('course id from details jsx: ', course_id)
+
   useEffect(()=> {
-    dispatch(loadCoursefromDB(course_id))
+    dispatch(loadCoursefromDB(course_id));
+    dispatch(loadlessonsfromDB(course_id));
   }, [dispatch, course_id])
 
   const [selectedTab, setSelectedTab] = useState('course_content')
@@ -24,9 +27,12 @@ const CourseDetails = () => {
         <h3 onClick={() => setSelectedTab('comments')}>Comments</h3>
       </div>
       {selectedTab === 'course_content' && 
-      <ul>
-        <li>lesson 1</li>
-      </ul>
+      <ol>
+        {lessons && lessons.map(lesson => (
+          <NavLink key={lesson.id} style={{textDecoration: 'none'}}><li>{lesson.title}</li></NavLink>
+        ))
+        }
+      </ol>
       }
       {
         selectedTab === 'comments' &&

@@ -1,6 +1,6 @@
 const express = require('express');
-const { Course } = require('../../db/models');
-const { where } = require('sequelize');
+const { Course, Lesson } = require('../../db/models');
+const { where, json } = require('sequelize');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
@@ -8,11 +8,24 @@ router.get('/', async (req, res) => {
     res.json(courses)
 })
 
+// loading one course details by id
 router.get('/:course_id', async (req, res) => {
     const course_id = parseInt(req.params.course_id);
-    console.log('course id: ', course_id)
+    // console.log('course id: ', course_id)
     const course = await Course.findOne({where: {id: course_id}})
-    console.log('course from server: ', course)
+    // console.log('course from server: ', course)
     res.json(course);
+})
+
+// loading lessons
+router.get('/:course_id/lessons', async (req, res) => {
+    console.log('heyheyhey...1')
+    const course_id = parseInt(req.params.course_id)
+    const lessons = await Lesson.findAll({where: {course_id: course_id}});
+    const lessonsList = [];
+    lessons.forEach(lesson => {
+        lessonsList.push(lesson.toJSON());
+    });
+    res.status(200).json(lessonsList)
 })
 module.exports = router; 

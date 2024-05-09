@@ -2,11 +2,13 @@ import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 import sessionReducer from './session';
 import courseReducer from './courses';
+import lessonReducer from './lessons';
 
 const rootReducer = combineReducers({
   // ADD REDUCERS HERE
   session: sessionReducer,
-  courseReducer: courseReducer
+  courseReducer: courseReducer,
+  lessonReducer: lessonReducer
 });
 
 let enhancer;
