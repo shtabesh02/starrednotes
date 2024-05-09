@@ -3,11 +3,13 @@ import { useDispatch, useSelector } from "react-redux"
 import { loadCoursefromDB } from "../../store/courses";
 import { NavLink, useParams } from "react-router-dom";
 import { loadlessonsfromDB } from "../../store/lessons";
+import { loadcommentsfromDB } from "../../store/comments";
 
 const CourseDetails = () => {
 
   const course = useSelector(state => state.courseReducer.courseDetails);
-  const lessons = useSelector(state => state.lessonReducer.lessons)
+  const lessons = useSelector(state => state.lessonReducer.lessons);
+  const comments = useSelector(state => state.commentReducer.comments)
 
   const dispatch = useDispatch();
 
@@ -17,6 +19,7 @@ const CourseDetails = () => {
   useEffect(()=> {
     dispatch(loadCoursefromDB(course_id));
     dispatch(loadlessonsfromDB(course_id));
+    dispatch(loadcommentsfromDB(course_id))
   }, [dispatch, course_id])
 
   const [selectedTab, setSelectedTab] = useState('course_content')
@@ -38,7 +41,9 @@ const CourseDetails = () => {
       {
         selectedTab === 'comments' &&
         <ul>
-          <li>This is the best course available on planet earth.</li>
+          {comments.length > 0 && comments.map(comment => (
+            <li key={comment.id}>{comment.comment}</li>
+          ))}
         </ul>
       }
     </div>

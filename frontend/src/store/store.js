@@ -3,12 +3,14 @@ import thunk from 'redux-thunk';
 import sessionReducer from './session';
 import courseReducer from './courses';
 import lessonReducer from './lessons';
+import commentReducer from './comments';
 
 const rootReducer = combineReducers({
   // ADD REDUCERS HERE
   session: sessionReducer,
   courseReducer: courseReducer,
-  lessonReducer: lessonReducer
+  lessonReducer: lessonReducer,
+  commentReducer: commentReducer
 });
 
 let enhancer;

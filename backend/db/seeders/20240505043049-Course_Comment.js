@@ -14,7 +14,17 @@ module.exports = {
       {
         user_id: 1,
         course_id: 1,
-        comment: 'comment1'
+        comment: 'This is the best course available on planet earth.'
+      },
+      {
+        user_id: 1,
+        course_id: 1,
+        comment: 'This is a single course sufficient to learn this technology'
+      },
+      {
+        user_id: 2,
+        course_id: 1,
+        comment: 'Human beings needed this course.'
       },
       {
         user_id: 2,
@@ -33,7 +43,7 @@ module.exports = {
     options.tableName = 'Course_Comments';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      comment: { [Op.in]: ['comment1', 'comment2', 'comment3'] }
+      user_id: { [Op.in]: [1, 2, 3] }
     }, {});
   }
 };
