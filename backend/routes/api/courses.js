@@ -21,11 +21,14 @@ router.get('/:course_id', async (req, res) => {
 router.get('/:course_id/lessons', async (req, res) => {
     console.log('heyheyhey...1')
     const course_id = parseInt(req.params.course_id)
+    console.log('cours_id: ', course_id)
     const lessons = await Lesson.findAll({where: {course_id: course_id}});
+    console.log('lessons: ', lessons)
     const lessonsList = [];
     lessons.forEach(lesson => {
         lessonsList.push(lesson.toJSON());
     });
+    console.log('lessonList: ', lessonsList)
     res.status(200).json(lessonsList)
 })
 module.exports = router; 

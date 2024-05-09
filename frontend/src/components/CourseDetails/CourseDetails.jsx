@@ -12,6 +12,7 @@ const CourseDetails = () => {
   const dispatch = useDispatch();
 
   const { course_id } = useParams();
+  // console.log('course_id: ', course_id)
 
   useEffect(()=> {
     dispatch(loadCoursefromDB(course_id));
@@ -23,12 +24,12 @@ const CourseDetails = () => {
     <div>
       <h1>{course.title}</h1>
       <div className="tabs">
-        <h3 onClick={() => setSelectedTab('course_content')}>Corse contents</h3>
+        <h3 onClick={() => setSelectedTab('course_content')}>Course contents</h3>
         <h3 onClick={() => setSelectedTab('comments')}>Comments</h3>
       </div>
       {selectedTab === 'course_content' && 
       <ol>
-        {lessons && lessons.map(lesson => (
+        {lessons.length>0 && lessons.map(lesson => (
           <NavLink key={lesson.id} style={{textDecoration: 'none'}}><li>{lesson.title}</li></NavLink>
         ))
         }

@@ -12,8 +12,10 @@ const loadlessons = (lessons) => {
 // thunk action to lead lessons from DB
 export const loadlessonsfromDB = (course_id) => async (dispatch) => {
     const response = await csrfFetch(`/api/courses/${course_id}/lessons`);
+    console.log('response: ', response)
     if(response.ok){
         const data = await response.json();
+        console.log('date: ', data)
         dispatch(loadlessons(data));
     }
 }
