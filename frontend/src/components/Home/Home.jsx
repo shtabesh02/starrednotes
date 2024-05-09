@@ -81,7 +81,7 @@ const Home = () => {
                     .slice(-1)
                     .map((course) => (
                       <div key={course.id} className="course_container">
-                        <NavLink style={{ textDecoration: "none" }}>
+                        <NavLink to={`/courses/${course.id}`} style={{ textDecoration: "none" }}>
                           <div className="course_cart">
                             <li className='course_title'>{course?.title}</li>
                           </div>

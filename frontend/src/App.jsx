@@ -7,6 +7,7 @@ import Navigation from './components/Navigation';
 import * as sessionActions from './store/session';
 import Home from './components/Home';
 import CourseDetails from './components/CourseDetails'
+import LessonDetails from './components/LessonDetails/LessonDetails';
 
 function Layout() {
   const dispatch = useDispatch();
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
       {
         path: '/courses/:course_id',
         element: <CourseDetails />
+      },
+      {
+        path: '/courses/:course_id/lessons/:lesson_id',
+        element: <LessonDetails />
       }
     ]
   }

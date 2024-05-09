@@ -1,0 +1,14 @@
+.lessonDetails_container{
+    display: flex;
+    flex-direction: column;
+}
+.lesson_contents{
+    display: flex;
+    justify-content: space-between;
+}
+.lessoncontent{
+    width: 78%;
+}
+.table_of_contents{
+    width: 20%;
+}
