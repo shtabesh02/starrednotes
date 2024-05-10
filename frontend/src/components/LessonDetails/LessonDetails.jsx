@@ -12,20 +12,18 @@ const LessonDetails = () => {
 
     const lessons = useSelector(state => state.lessonReducer.lessons);
 
-    console.log('lessons: ', lessons)
-    // normalizing lessons, to find the index of default lesson
+    // normalizing lessons, to find the index of default lesson and use in the bellow useState 
     let normalizedLessons = {};
     lessons.forEach(lesson => {
         normalizedLessons[lesson.id] = lesson;
     })
     const defaultindex = lessons.indexOf(normalizedLessons[lesson_id])
-    console.log('default index: ', defaultindex)
 
-    console.log('normalized lessons: ', normalizedLessons)
     // Table of contents
     const [displayedLesson, setDisplayedLesson] = useState('');
     const [currentLessonIndex, setCurrentLessonIndex] = useState(defaultindex);
 
+    // display lessons from the table of content / sidebar
     const handleDisplayedLesson = (lesson_index) => {
         setDisplayedLesson(lessons[lesson_index])
         setCurrentLessonIndex(lesson_index)
