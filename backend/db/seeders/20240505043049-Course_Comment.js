@@ -18,7 +18,7 @@ module.exports = {
       },
       {
         user_id: 1,
-        course_id: 1,
+        course_id: 2,
         comment: 'This is a single course sufficient to learn this technology'
       },
       {
@@ -29,12 +29,12 @@ module.exports = {
       {
         user_id: 2,
         course_id: 2,
-        comment: 'comment2'
+        comment: 'After going through like tens of courses, finally I got blessed finding this course. It is amazing. If you are passinate about learning this course, then do not miss it.'
       },
       {
-        user_id: 3,
+        user_id: 1,
         course_id: 3,
-        comment: 'comment3'
+        comment: 'After going through like tens of courses, finally I got blessed finding this course. It is amazing. If you are passinate about learning this course, then do not miss it.'
       }
     ], {validate:true})
   },
@@ -43,7 +43,7 @@ module.exports = {
     options.tableName = 'Course_Comments';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      user_id: { [Op.in]: [1, 2, 3] }
+      user_id: { [Op.in]: [1, 2] }
     }, {});
   }
 };

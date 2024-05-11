@@ -41,4 +41,34 @@ router.get('/:course_id/comments', async (req, res) => {
     // console.log('comments list in the server: ', commentsList)
     res.status(200).json(commentsList);
 })
+
+// adding a new comment
+router.post('/:course_id/comment', async (req, res) => {
+    const {user_id, course_id, comment} = req.body;
+    const newcomment = await Course_Comment.create({user_id, course_id, comment});
+    // console.log()
+    res.status(200).json(newcomment);
+})
+
+// delete a comment
+router.delete('/comments/:comment_id', async (req, res) => {
+    const {comment_id} = req.params;
+    const thecomment = await Course_Comment.findOne({where: {id: comment_id}})
+    await thecomment.destroy();
+    res.status(200).json(thecomment);
+})
+
+// update a comment
+router.put('/comments/:comment_id', async (req, res) => {
+    const {user_id, course_id, comment} = req.body;
+    const commentid = req.params.comment_id;
+    const targetcomment = await Course_Comment.findOne({where: {id: commentid}})
+    const uc = await targetcomment.set({
+        user_id,
+        course_id,
+        comment
+    })
+    await targetcomment.save();
+    res.status(200).json(uc);
+})
 module.exports = router; 
