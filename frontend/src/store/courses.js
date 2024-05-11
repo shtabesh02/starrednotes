@@ -2,7 +2,8 @@ import { csrfFetch } from "./csrf";
 
 const LOADCOURSES = 'LOADCOURSES';
 // const AddCOURSE = 'AddCourse';
-const LOADCOURSE = 'LOADCOURSE'
+const LOADCOURSE = 'LOADCOURSE';
+const LOADMYCOURSES = 'loadmycourses';
 
 
 // regular action to load courses
@@ -19,6 +20,23 @@ export const loadCoursesfromDB = () => async (dispatch) => {
         const data = await response.json();
         console.log('data: ', data)
         dispatch(loadCourses(data))
+    }
+}
+
+// const regular action to load my courses
+const loadmycourses = (my_courses) => {
+    return {
+        type: LOADMYCOURSES,
+        my_courses
+    }
+}
+// thunk action to load only my courses from db
+export const loadmycoursesfromDB = (my_id) => async (dispatch) => {
+    const response = await csrfFetch(`api/courses/${my_id}`);
+    if(response.ok){
+        const data = await response.json();
+        console.log('my courses: ', data);
+        dispatch(loadmycourses(data));
     }
 }
 
@@ -58,6 +76,9 @@ const courseReducer = (state = initialState, action) => {
             // return newState[action.course.id] = {...newState[action.course.id], ...action.course}
             // return {...state, courseDetails: action.course} // it worked
             return {...state, courseDetails: action.course}
+        }
+        case LOADMYCOURSES: {
+            return {...state}
         }
         default:
             return state

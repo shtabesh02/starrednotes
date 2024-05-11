@@ -8,6 +8,9 @@ import * as sessionActions from './store/session';
 import Home from './components/Home';
 import CourseDetails from './components/CourseDetails'
 import LessonDetails from './components/LessonDetails/LessonDetails';
+import AddComment from './components/Comments/AddComment';
+import UpdateComment from './components/Comments/UpdateComment';
+import ManageCourses from './components/ManageCourses/ManageCourses';
 
 function Layout() {
   const dispatch = useDispatch();
@@ -42,6 +45,18 @@ const router = createBrowserRouter([
       {
         path: '/courses/:course_id/lessons/:lesson_id',
         element: <LessonDetails />
+      },
+      {
+        path: '/courses/:course_id/comment',
+        element: <AddComment />
+      },
+      {
+        path: '/courses/:course_id/comment/:comment_id',
+        element: <UpdateComment />
+      },
+      {
+        path: '/managecourses',
+        element: <ManageCourses />
       }
     ]
   }
