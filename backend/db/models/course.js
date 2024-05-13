@@ -25,9 +25,14 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'course_id',
         onDelete: 'CASCADE'
       })
+
+      Course.belongsTo(models.User, {
+        foreignKey: 'user_id'
+      })
     }
   }
   Course.init({
+    user_id: DataTypes.INTEGER,
     title: DataTypes.STRING,
     instructor: DataTypes.STRING,
     category: DataTypes.STRING,

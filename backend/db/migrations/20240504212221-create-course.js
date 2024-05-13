@@ -13,15 +13,15 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      // user_id: {
-      //   type: Sequelize.INTEGER,
-      //   references: {
-      //     model: 'Users',
-      //     key: 'id',
-      //   },
-      //   onDelete: 'cascade',
-      //   allowNull: false
-      // },
+      user_id: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Users',
+          key: 'id',
+        },
+        onDelete: 'cascade',
+        allowNull: false
+      },
       title: {
         type: Sequelize.STRING
       },

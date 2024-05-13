@@ -78,7 +78,7 @@ const Home = () => {
 
                 <ul className='view_recent'>
                   {courseByCategory[category]
-                    .slice(-1)
+                    .slice(-5)
                     .map((course) => (
                       <div key={course.id} className="course_container">
                         <NavLink to={`/courses/${course.id}`} style={{ textDecoration: "none" }}>

@@ -10,7 +10,12 @@ import CourseDetails from './components/CourseDetails'
 import LessonDetails from './components/LessonDetails/LessonDetails';
 import AddComment from './components/Comments/AddComment';
 import UpdateComment from './components/Comments/UpdateComment';
-import ManageCourses from './components/ManageCourses/ManageCourses';
+import ManageCourses from './components/ManageCourses';
+import AddCourse from './components/ManageCourses/AddCourse';
+import UpdateCourse from './components/ManageCourses/UpdateCourse';
+import ManageLessons from './components/ManageLessons/ManageLessons';
+import AddLesson from './components/ManageLessons/AddLesson';
+import UpdateLesson from './components/ManageLessons/UpdateLesson';
 
 function Layout() {
   const dispatch = useDispatch();
@@ -57,6 +62,26 @@ const router = createBrowserRouter([
       {
         path: '/managecourses',
         element: <ManageCourses />
+      },
+      {
+        path: '/managecourses/addcourse',
+        element: <AddCourse />
+      },
+      {
+        path: '/managecourses/updatecourse/:course_id',
+        element: <UpdateCourse />
+      },
+      {
+        path: '/courses/:course_id/managelessons',
+        element: <ManageLessons />
+      },
+      {
+        path: '/courses/:course_id/addlesson',
+        element: <AddLesson />
+      },
+      {
+        path: '/courses/:course_id/updatelesson/:lesson_id',
+        element: <UpdateLesson />
       }
     ]
   }

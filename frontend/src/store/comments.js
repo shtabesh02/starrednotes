@@ -70,7 +70,7 @@ const editacomment = (updatedcomment) => {
         updatedcomment
     }
 }
-// thunk action to edit a comment
+// thunk action to update a comment
 export const editcomment = (updatedcomment, comment_id) => async (dispatch) => {
     const response = await csrfFetch(`/api/courses/comments/${comment_id}`, {
         method: 'PUT',

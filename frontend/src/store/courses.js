@@ -1,9 +1,11 @@
 import { csrfFetch } from "./csrf";
 
 const LOADCOURSES = 'LOADCOURSES';
-// const AddCOURSE = 'AddCourse';
+const AddCOURSE = 'AddNewCourse';
 const LOADCOURSE = 'LOADCOURSE';
 const LOADMYCOURSES = 'loadmycourses';
+const UPDATETHISCOURSE = 'updatethiscourse';
+const DELETETHISCOURSE = 'deletethiscourse';
 
 
 // regular action to load courses
@@ -18,7 +20,6 @@ export const loadCoursesfromDB = () => async (dispatch) => {
     const response = await fetch('api/courses');
     if(response.ok){
         const data = await response.json();
-        console.log('data: ', data)
         dispatch(loadCourses(data))
     }
 }
@@ -32,10 +33,9 @@ const loadmycourses = (my_courses) => {
 }
 // thunk action to load only my courses from db
 export const loadmycoursesfromDB = (my_id) => async (dispatch) => {
-    const response = await csrfFetch(`api/courses/${my_id}`);
+    const response = await csrfFetch(`/api/courses/instructor/${my_id}`);
     if(response.ok){
         const data = await response.json();
-        console.log('my courses: ', data);
         dispatch(loadmycourses(data));
     }
 }
@@ -59,6 +59,66 @@ export const loadCoursefromDB = (course_id) => async (dispatch) => {
     }
 }
 
+// regular action to a add a new course
+const addcourse = (newcourse) => {
+    return {
+        type: AddCOURSE,
+        newcourse
+    }
+}
+// thunk action to add a new course
+export const addcoursetoDB = (newcourse) => async (dispatch) => {
+    const response = await csrfFetch('/api/courses/newcourse', {
+        method: 'POST',
+        headers: {'Content-Type':'Application/json'},
+        body: JSON.stringify(newcourse)
+    })
+    if(response.ok){
+        const data = await response.json();
+        dispatch(addcourse(data))
+        return true;
+    }
+}
+
+// regular action to update a course
+const updatethiscourse = (updaedcourse) => {
+    return {
+        type: UPDATETHISCOURSE,
+        updaedcourse
+    }
+}
+// thunk action to update a course
+export const updatecoursetoDB = (updatedcourse, course_id) => async (dispatch) => {
+    const response = await csrfFetch(`/api/courses/${course_id}/update`, {
+        method: 'PUT',
+        headers: {"Content-Type":"application/json"},
+        body: JSON.stringify(updatedcourse)
+    });
+    console.log('response: ', response)
+    if(response.ok){
+        const data = await response.json()
+        dispatch(updatethiscourse(data));
+        return true;
+    }
+}
+
+// regular action to delete a course
+const deletecourse = (course_id) => {
+    return{
+        type: DELETETHISCOURSE,
+        course_id
+    }
+}
+// thunk action to delete a course
+export const deletemycourse = (course_id) => async (dispatch) => {
+    const response = await csrfFetch(`/api/courses/${course_id}`, {
+        method: 'DELETE'
+    })
+    if(response.ok){
+        dispatch(deletecourse(course_id));
+        return true;
+    }
+}
 
 // course reducer
 const initialState = {
@@ -70,7 +130,10 @@ const courseReducer = (state = initialState, action) => {
     switch(action.type){
         case LOADCOURSES: {
             // return {...state, ...action.courses}
-            return {...state, courses: action.courses}
+            // return {...state, courses: action.courses}
+            const _mycourses = {};
+            action.courses.forEach(course => _mycourses[course.id] = course);
+            return {...state, courses: {...state.courses, ..._mycourses}}
         }
         case LOADCOURSE: {
             // return newState[action.course.id] = {...newState[action.course.id], ...action.course}
@@ -78,7 +141,20 @@ const courseReducer = (state = initialState, action) => {
             return {...state, courseDetails: action.course}
         }
         case LOADMYCOURSES: {
-            return {...state}
+            const _mycourses = {};
+            action.my_courses.forEach(course => _mycourses[course.id] = course);
+            return {...state, courses: {...state.courses, ..._mycourses}}
+        }
+        case AddCOURSE: {
+            return {...state, courses: {...state.courses, [action.newcourse.id]: action.newcourse}}
+        }
+        case UPDATETHISCOURSE: {
+            return {...state, courses: {...state.courses, [action.updaedcourse.id]: action.updaedcourse}}
+        }
+        case DELETETHISCOURSE: {
+            const newState = {...state};
+            delete newState.courses[action.course_id];
+            return newState;
         }
         default:
             return state

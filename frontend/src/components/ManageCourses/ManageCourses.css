@@ -1,0 +1,24 @@
+.mycourses{
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+.mycourses li{
+    list-style-type: none;
+}
+.course_cart{
+    border: 1px solid gray;
+    padding: 30px;
+    width: 200px;
+    height: 120px;
+    border-radius: 30px;
+    background-color: aliceblue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.btns{
+    display: flex;
+    justify-self: center;
+    gap: 5px;
+}
