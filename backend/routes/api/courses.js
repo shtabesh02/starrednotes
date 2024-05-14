@@ -12,25 +12,16 @@ router.get('/', async (req, res) => {
 // loading one course details by id
 router.get('/:course_id', async (req, res) => {
     const course_id = parseInt(req.params.course_id);
-    // console.log('course id: ', course_id)
     const course = await Course.findOne({ where: { id: course_id } })
-    // console.log('course from server: ', course)
     res.status(200).json(course);
 })
 
 // loading lessons for a course based on its id
 router.get('/:course_id/lessons', async (req, res) => {
     const {course_id} = req.params;
-    console.log('course_id from backedn: ', course_id)
     const lessons = await Lesson.findAll({ where: { course_id: course_id } });
-    console.log('from api: ', lessons)
-    // const lessonsList = [];
-    // lessons.forEach(lesson => {
-    //     lessonsList.push(lesson.toJSON());
-    // });
     res.status(200).json(lessons)
 })
-
 
 // loading comments for a course based on its id
 router.get('/:course_id/comments', async (req, res) => {

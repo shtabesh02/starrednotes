@@ -57,7 +57,6 @@ export const updatethislessontoDB = (updatedlesson, lesson_id) => async (dispatc
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updatedlesson)
     })
-    console.log('response: ', response)
     if (response.ok) {
         const data = await response.json();
         dispatch(updatelesson(data));
