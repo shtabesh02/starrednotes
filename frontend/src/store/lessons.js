@@ -1,3 +1,4 @@
+// frontend/src/store/lessons.js
 import { csrfFetch } from "./csrf";
 
 const LOADLESSONS = 'LOADLESSONS';
@@ -15,11 +16,8 @@ const loadlessons = (lessons) => {
 // thunk action to lead lessons from DB by course id
 export const loadlessonsfromDB = (course_id) => async (dispatch) => {
     const response = await csrfFetch(`/api/courses/${course_id}/lessons`);
-    console.log('response: ', response)
     if (response.ok) {
-        console.log('response.ok: ', response)
         const data = await response.json();
-        console.log('data response: ', data)
         dispatch(loadlessons(data));
     }
 }
@@ -62,7 +60,6 @@ export const updatethislessontoDB = (updatedlesson, lesson_id) => async (dispatc
     console.log('response: ', response)
     if (response.ok) {
         const data = await response.json();
-        console.log('data: ', data)
         dispatch(updatelesson(data));
         return true;
     }

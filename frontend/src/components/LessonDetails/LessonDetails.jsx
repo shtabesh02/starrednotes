@@ -10,7 +10,7 @@ const LessonDetails = () => {
 
     const { lesson_id } = useParams();
 
-    const lessons = useSelector(state => state.lessonReducer.lessons);
+    const lessons = useSelector(state => Object.values(state.lessonReducer.lessons));
 
     // normalizing lessons, to find the index of default lesson and use in the bellow useState 
     let normalizedLessons = {};

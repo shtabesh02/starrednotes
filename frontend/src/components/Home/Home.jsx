@@ -39,9 +39,6 @@ const Home = () => {
   }, [dispatch])
   return (
     <div className="home_container">
-
-
-      {/* <CoursesRibbon /> */}
       <div className="homepage">
         {Object.keys(courseByCategory)
           .sort()
@@ -57,44 +54,40 @@ const Home = () => {
                 </h3>
               </div>
               <hr />
-              {/* View the courses in groups as bellow */}
-              {/* if the last value o */}
-              {tabState[category] === 'va' ? (
-                <ul className='view_all'>
-                  {courseByCategory[category]
-                    .sort()
-                    .map((course) => (
-                      <div key={course.id} className='course_container'>
-                        <NavLink to={`/courses/${course.id}`} style={{ textDecoration: "none" }}>
-                          <div className='course_cart'>
-                            <li className='course_title'>{course.title}</li>
-                          </div>
-                        </NavLink>
-                        <p>Instructor: {course.instructor}</p>
-                      </div>
-                    ))}
-                </ul>
-              ) : (
+              <div className='coursesdisplay'>
+                {tabState[category] === 'va' ? (
+                  <ul className='view_all'>
+                    {courseByCategory[category]
+                      .sort()
+                      .map((course) => (
+                        <div key={course.id} className='course_container'>
+                          <NavLink className={'mlink'} to={`/courses/${course.id}`} style={{ textDecoration: "none"}}>
+                            <div className='course_cart'>
+                              <li className='course_title'>{course.title}</li>
+                            </div>
+                          </NavLink>
+                          <p className='instructor'>Instructor: {course.instructor}</p>
+                        </div>
+                      ))}
+                  </ul>
+                ) : (
 
-                <ul className='view_recent'>
-                  {courseByCategory[category]
-                    .slice(-5)
-                    .map((course) => (
-                      <div key={course.id} className="course_container">
-                        <NavLink to={`/courses/${course.id}`} style={{ textDecoration: "none" }}>
-                          <div className="course_cart">
-                            <li className='course_title'>{course?.title}</li>
-                          </div>
-                        </NavLink>
-                        <p>Instructor: {course.instructor}</p>
-                      </div>
-                    ))}
-                </ul>
-
-
-
-              )}
-
+                  <ul className='view_recent'>
+                    {courseByCategory[category]
+                      .slice(-4)
+                      .map((course) => (
+                        <div key={course.id} className="course_container">
+                          <NavLink className={'mlink'} to={`/courses/${course.id}`} style={{ textDecoration: "none" }}>
+                            <div className="course_cart">
+                              <li className='course_title'>{course?.title}</li>
+                            </div>
+                          </NavLink>
+                          <p>Instructor: {course.instructor}</p>
+                        </div>
+                      ))}
+                  </ul>
+                )}
+              </div>
             </div>
           ))}
       </div>

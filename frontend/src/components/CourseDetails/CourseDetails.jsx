@@ -9,7 +9,7 @@ import './CourseDetails.css'
 const CourseDetails = () => {
 
   const course = useSelector(state => state.courseReducer.courseDetails);
-  const lessons = useSelector(state => state.lessonReducer.lessons);
+  const lessons = useSelector(state => Object.values(state.lessonReducer.lessons));
   const comments = useSelector(state => Object.values(state.commentReducer?.comments));
   const current_user = useSelector(state => state.session.user?.id);
   const { course_id } = useParams();

@@ -1,3 +1,4 @@
+// backend/routes/api/courses.js
 const express = require('express');
 const { Course, Lesson, Course_Comment } = require('../../db/models');
 const { where, json } = require('sequelize');
