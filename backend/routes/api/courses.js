@@ -1,5 +1,7 @@
 // backend/routes/api/courses.js
 const express = require('express');
+const { check } = require('express-validator');
+const { handleValidationErrors } = require('../../utils/validation')
 const { Course, Lesson, Course_Comment } = require('../../db/models');
 const { where, json } = require('sequelize');
 const router = express.Router();
@@ -18,7 +20,7 @@ router.get('/:course_id', async (req, res) => {
 
 // loading lessons for a course based on its id
 router.get('/:course_id/lessons', async (req, res) => {
-    const {course_id} = req.params;
+    const { course_id } = req.params;
     const lessons = await Lesson.findAll({ where: { course_id: course_id } });
     res.status(200).json(lessons)
 })
@@ -74,7 +76,23 @@ router.put('/comments/:comment_id', async (req, res) => {
 })
 
 // ading a new course
-router.post('/newcourse', async (req, res) => {
+// validation
+const validateNewCourse = [
+    check('title')
+        .notEmpty()
+        .withMessage('Please provide the title.'),
+    check('instructor')
+        .notEmpty()
+        .withMessage('Please provide the instructor name.'),
+    check('category')
+        .notEmpty()
+        .withMessage('Please select the category.'),
+    check('description')
+        .notEmpty()
+        .withMessage('Please provide a brief description of the course.'),
+    handleValidationErrors
+]
+router.post('/newcourse', validateNewCourse, async (req, res) => {
     const { user_id, title, instructor, category, description } = req.body;
     const anewcourse = await Course.create({
         user_id,
@@ -82,7 +100,7 @@ router.post('/newcourse', async (req, res) => {
         instructor,
         category,
         description
-    })
+    });
     res.status(200).json(anewcourse)
 })
 
@@ -107,15 +125,15 @@ router.put('/:course_id/update', async (req, res) => {
 
 // deleting a course by its id
 router.delete('/:course_id', async (req, res) => {
-    const {course_id} = req.params;
-    const thecourse = await Course.findOne({where: {id: course_id}})
+    const { course_id } = req.params;
+    const thecourse = await Course.findOne({ where: { id: course_id } })
     thecourse.destroy();
     res.status(200).json(thecourse);
 })
 
 // adding new lesson to a course
 router.post('/:course_id/newlesson', async (req, res) => {
-    const {course_id, user_id, title, content} = req.body;
+    const { course_id, user_id, title, content } = req.body;
     const newlesson = await Lesson.create({
         course_id,
         user_id,
@@ -127,9 +145,9 @@ router.post('/:course_id/newlesson', async (req, res) => {
 
 // updating a lesson by its id
 router.put('/lessons/:lesson_id', async (req, res) => {
-    const {course_id, user_id, title, content} = req.body;
-    const {lesson_id} = req.params;
-    const updatinglesson = await Lesson.findOne({where: {id: lesson_id}});
+    const { course_id, user_id, title, content } = req.body;
+    const { lesson_id } = req.params;
+    const updatinglesson = await Lesson.findOne({ where: { id: lesson_id } });
     const updatedlesson = updatinglesson.set({
         course_id,
         user_id,
@@ -142,8 +160,8 @@ router.put('/lessons/:lesson_id', async (req, res) => {
 
 // deleting a lesson by its id
 router.delete('/lessons/:lesson_id', async (req, res) => {
-    const {lesson_id} = req.params;
-    const deletinglesson = await Lesson.findOne({where: {id: lesson_id}});
+    const { lesson_id } = req.params;
+    const deletinglesson = await Lesson.findOne({ where: { id: lesson_id } });
     deletinglesson.destroy();
     res.status(200).json(deletinglesson);
 })

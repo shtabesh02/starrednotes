@@ -68,16 +68,20 @@ const addcourse = (newcourse) => {
 }
 // thunk action to add a new course
 export const addcoursetoDB = (newcourse) => async (dispatch) => {
+    console.log('before fetch...')
     const response = await csrfFetch('/api/courses/newcourse', {
         method: 'POST',
         headers: {'Content-Type':'Application/json'},
         body: JSON.stringify(newcourse)
     })
-    if(response.ok){
-        const data = await response.json();
-        dispatch(addcourse(data))
-        return true;
-    }
+    const data = await response.json();
+    dispatch(addcourse(data))
+    return response;
+    // if(response.ok){
+    // }else{
+    //     const errors = await response.json();
+    //     return {result: false, errors};
+    // }
 }
 
 // regular action to update a course

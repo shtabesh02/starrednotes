@@ -1,3 +1,4 @@
+// frontend/src/store/store.js
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 import sessionReducer from './session';

@@ -26,7 +26,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       instructor: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       category: {
         type: Sequelize.STRING

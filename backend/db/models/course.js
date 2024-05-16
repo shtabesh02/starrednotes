@@ -34,7 +34,15 @@ module.exports = (sequelize, DataTypes) => {
   Course.init({
     user_id: DataTypes.INTEGER,
     title: DataTypes.STRING,
-    instructor: DataTypes.STRING,
+    instructor: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: "Please provide the name of the instructor."
+        }
+      }
+    },
     category: DataTypes.STRING,
     description: DataTypes.STRING
   }, {
