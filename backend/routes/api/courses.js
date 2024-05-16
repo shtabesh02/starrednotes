@@ -132,7 +132,17 @@ router.delete('/:course_id', async (req, res) => {
 })
 
 // adding new lesson to a course
-router.post('/:course_id/newlesson', async (req, res) => {
+// validation to add a new lesson
+const validateNewLesson = [
+    check('title')
+        .notEmpty()
+        .withMessage('Please write the title of the lesson.'),
+    check('content')
+        .notEmpty()
+        .withMessage('Please add the content of the lesson.'),
+    handleValidationErrors
+]
+router.post('/:course_id/newlesson',validateNewLesson, async (req, res) => {
     const { course_id, user_id, title, content } = req.body;
     const newlesson = await Lesson.create({
         course_id,

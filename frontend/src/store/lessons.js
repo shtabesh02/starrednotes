@@ -36,11 +36,15 @@ export const addnewlesson = (newlesson, course_id) => async (dispatch) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newlesson)
     })
-    if (response.ok) {
-        const data = await response.json();
-        dispatch(addlesson(data));
-        return true;
-    }
+    const data = await response.json();
+    dispatch(addlesson(data));
+    return response;
+
+    // if (response.ok) {
+    //     const data = await response.json();
+    //     dispatch(addlesson(data));
+    //     return true;
+    // }
 }
 
 // regular action to update a lesson
@@ -76,7 +80,7 @@ export const deltethelesson = (lesson_id) => async (dispatch) => {
     const response = await csrfFetch(`/api/courses/lessons/${lesson_id}`, {
         method: 'DELETE'
     })
-    if(response.ok){
+    if (response.ok) {
         dispatch(deletethislesson(lesson_id));
         return true;
     }
@@ -98,10 +102,10 @@ const lessonReducer = (state = initialState, action) => {
             return { ...state, lessons: { ...state.lessons, [action.newlesson.id]: action.newlesson } }
         }
         case UPDATETHISLESSON: {
-            return {...state, lessons: {...state.lessons, [action.updatedlesson.id]: action.updatedlesson}}
+            return { ...state, lessons: { ...state.lessons, [action.updatedlesson.id]: action.updatedlesson } }
         }
         case DELETEALESSON: {
-            const newState = {...state};
+            const newState = { ...state };
             delete newState.lessons[action.lesson_id]
             return newState
         }
