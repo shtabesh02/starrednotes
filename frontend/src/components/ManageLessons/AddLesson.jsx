@@ -31,7 +31,6 @@ const AddLesson = () => {
             const data = await res.json();
             if(data?.errors){
                 setErrors(data.errors);
-                console.log('errors: ', errors.title)
             }
         })
     }

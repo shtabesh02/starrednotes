@@ -98,11 +98,13 @@ export const updatecoursetoDB = (updatedcourse, course_id) => async (dispatch) =
         headers: {"Content-Type":"application/json"},
         body: JSON.stringify(updatedcourse)
     });
-    console.log('response: ', response)
     if(response.ok){
         const data = await response.json()
         dispatch(updatethiscourse(data));
         return true;
+    }else{
+        const data = await response.json();
+        return data;
     }
 }
 

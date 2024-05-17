@@ -106,7 +106,8 @@ router.post('/newcourse', validateNewCourse, async (req, res) => {
 
 // update a course based on its id
 router.put('/:course_id/update', async (req, res) => {
-    const { user_id, title, instructor, category, description } = req.body;
+    try {
+        const { user_id, title, instructor, category, description } = req.body;
     const { course_id } = req.params;
     const currcourse = await Course.findOne({ where: { id: course_id } });
     console.log('api Course findONe: ', currcourse)
@@ -121,6 +122,19 @@ router.put('/:course_id/update', async (req, res) => {
     );
     await updatedcourse.save();
     res.status(200).json(updatedcourse);
+    } catch (error) {
+        console.log('Model - Validation errors: ', error)
+        if(error.name === 'SequelizeValidationError'){
+            const modelValidationsMSGs = {};
+            error.errors.forEach(err => {
+                modelValidationsMSGs[err.path] = err.message;
+            })
+            res.status(400).json({
+                message: 'Model Validation Error',
+                errors: modelValidationsMSGs
+            });
+        }
+    }
 })
 
 // deleting a course by its id
