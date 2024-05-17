@@ -27,6 +27,9 @@ const ManageLessons = () => {
     }
     return (
         <div>
+            <div className="back2managecourses">
+                <button onClick={() => navigate('/managecourses')}>Back to course management</button>
+            </div>
             <h1>Manage {course_title} Lessons</h1>
             <div>
                 <button onClick={()=> navigate(`/courses/${course_id}/addlesson`)}>Add a new lesson</button>

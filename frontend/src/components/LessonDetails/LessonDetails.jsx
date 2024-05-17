@@ -2,14 +2,14 @@ import { useEffect, useState } from 'react'
 import './LessonDetails.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { loadlessonsfromDB } from '../../store/lessons';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const LessonDetails = () => {
     const dispatch = useDispatch();
     const { course_id } = useParams();
 
     const { lesson_id } = useParams();
-
+    const navigate = useNavigate();
     const lessons = useSelector(state => Object.values(state.lessonReducer.lessons));
 
     // normalizing lessons, to find the index of default lesson and use in the bellow useState 
@@ -55,6 +55,9 @@ const LessonDetails = () => {
 
     return (
         <div className="lessonDetails_container">
+            <div className="back2courseDetails">
+            <button onClick={() => navigate(`/courses/${course_id}`)}>Back to course details</button>
+            </div>
             <h1>Introduction to Sequelize.js</h1>
             <div className="lesson_contents">
                 <div className="lessoncontent">

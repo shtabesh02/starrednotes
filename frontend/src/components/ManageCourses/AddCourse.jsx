@@ -37,8 +37,10 @@ const AddCourse = () => {
         })
     }
   return (
-    <div>
-        <h1>AddCourse</h1>
+    <div><div className="back2managecourses">
+    <button onClick={() => navigate('/managecourses')}>Back to course management</button>
+</div>
+        <h1>Add a course</h1>
         <form onSubmit={addthiscourse}>
             <div>
                 <label htmlFor="title">Title</label>

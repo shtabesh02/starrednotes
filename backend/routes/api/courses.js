@@ -224,3 +224,12 @@ router.delete('/lessons/:lesson_id', async (req, res) => {
     res.status(200).json(deletinglesson);
 })
 module.exports = router; 
+
+
+// Note on using .json() in backend, thunk, and react component:
+
+// Each usage of `.json()` in the code has a specific purpose: sending
+// JSON from the backend, parsing the JSON response in the thunk, and
+// parsing it again in the React component to handle errors. This
+// ensures that data is correctly serialized and deserialized at each
+// stage of the data flow.

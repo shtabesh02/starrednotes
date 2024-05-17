@@ -40,6 +40,9 @@ const AddLesson = () => {
     }, [dispatch, course_id]);
     return (
         <div>
+            <div className="back2managelesson">
+                <button onClick={() => navigate(`/courses/${course_id}/managelessons`)}>Back to lesson management</button>
+            </div>
             <h1>Add a new lesson to {course_title} course</h1>
             <form onSubmit={addlesson}>
                 <div>

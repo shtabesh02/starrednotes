@@ -42,6 +42,9 @@ const UpdateLesson = () => {
     }
     return (
         <div>
+             <div className="back2managelesson">
+                <button onClick={() => navigate(`/courses/${course_id}/managelessons`)}>Back to lesson management</button>
+            </div>
             <h1>Update Lesson</h1>
             <form onSubmit={updatethelesson}>
                 <div>

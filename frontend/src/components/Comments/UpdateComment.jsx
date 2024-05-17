@@ -27,6 +27,9 @@ const UpdateComment = () => {
     }
     return (
         <div>
+             <div className="back2coursedetails">
+                <button onClick={() => navigate(`/courses/${course_id}`)}>Back to course details</button>
+            </div>
             <h1>Edit your comment here:</h1>
             <form onSubmit={updatethiscomment}>
                 <div>
