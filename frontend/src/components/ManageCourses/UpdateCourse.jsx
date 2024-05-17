@@ -34,8 +34,6 @@ const UpdateCourse = () => {
         })
         .catch(async (res) => {
             const data = await res.json();
-            console.log('erros from the updatecourse.jsx1: ', data.errors)
-            console.log('erros from the updatecourse.jsx2: ', data)
             setErrors(data?.errors)
         })
         // if(updatesuccess){

@@ -65,6 +65,9 @@ export const updatethislessontoDB = (updatedlesson, lesson_id) => async (dispatc
         const data = await response.json();
         dispatch(updatelesson(data));
         return true;
+    }else{
+        const data = await response.json();
+        return data;
     }
 }
 

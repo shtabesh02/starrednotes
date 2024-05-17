@@ -108,23 +108,22 @@ router.post('/newcourse', validateNewCourse, async (req, res) => {
 router.put('/:course_id/update', async (req, res) => {
     try {
         const { user_id, title, instructor, category, description } = req.body;
-    const { course_id } = req.params;
-    const currcourse = await Course.findOne({ where: { id: course_id } });
-    console.log('api Course findONe: ', currcourse)
-    const updatedcourse = currcourse.set(
-        {
-            user_id,
-            title,
-            instructor,
-            category,
-            description
-        }
-    );
-    await updatedcourse.save();
-    res.status(200).json(updatedcourse);
+        const { course_id } = req.params;
+        const currcourse = await Course.findOne({ where: { id: course_id } });
+        console.log('api Course findONe: ', currcourse)
+        const updatedcourse = currcourse.set(
+            {
+                user_id,
+                title,
+                instructor,
+                category,
+                description
+            }
+        );
+        await updatedcourse.save();
+        res.status(200).json(updatedcourse);
     } catch (error) {
-        console.log('Model - Validation errors: ', error)
-        if(error.name === 'SequelizeValidationError'){
+        if (error.name === 'SequelizeValidationError') {
             const modelValidationsMSGs = {};
             error.errors.forEach(err => {
                 modelValidationsMSGs[err.path] = err.message;
@@ -156,7 +155,7 @@ const validateNewLesson = [
         .withMessage('Please add the content of the lesson.'),
     handleValidationErrors
 ]
-router.post('/:course_id/newlesson',validateNewLesson, async (req, res) => {
+router.post('/:course_id/newlesson', validateNewLesson, async (req, res) => {
     const { course_id, user_id, title, content } = req.body;
     const newlesson = await Lesson.create({
         course_id,
@@ -169,17 +168,52 @@ router.post('/:course_id/newlesson',validateNewLesson, async (req, res) => {
 
 // updating a lesson by its id
 router.put('/lessons/:lesson_id', async (req, res) => {
-    const { course_id, user_id, title, content } = req.body;
-    const { lesson_id } = req.params;
-    const updatinglesson = await Lesson.findOne({ where: { id: lesson_id } });
-    const updatedlesson = updatinglesson.set({
-        course_id,
-        user_id,
-        title,
-        content
-    });
-    await updatinglesson.save();
-    res.status(200).json(updatedlesson)
+    try {
+        const { course_id, user_id, title, content } = req.body;
+        const { lesson_id } = req.params;
+        const updatinglesson = await Lesson.findOne({ where: { id: lesson_id } });
+        const updatedlesson = updatinglesson.set({
+            course_id,
+            user_id,
+            title,
+            content
+        });
+        await updatinglesson.save();
+        res.status(200).json(updatedlesson)
+    } catch (error) {
+        // The 'error' caught in the 'catch' block inherits properties from the base
+        // 'Error' class in JS, and it has a property 'name'. You may send it to the frontend
+        // and console.log() in a React Component, then you weill see.
+        // When you catch an error thrown by Sequelize, it typically looks something like this:
+        // {
+        //     name: 'SequelizeValidationError',
+        //     errors: [
+        //       {
+        //         message: 'Please provide the content of the lesson.',
+        //         type: 'Validation error',
+        //         path: 'content',
+        //         value: '',
+        //       },
+        //     ],
+        //   }
+          
+        if (error.name === "SequelizeValidationError") {
+            // if you console.log(error), you see it has a lot of details.
+            // So create an object and extract only the required details.
+            const modelValidationsMSGs = {};
+            error.errors.forEach(err => {
+                modelValidationsMSGs[err.path] = err.message
+            })
+            res.status(400).json({
+                message: 'Model Validation Error',
+                errors: modelValidationsMSGs // use this 'errors' key in UpdateLesson.jsx to get the errors.
+            }
+            )
+        }
+        // Note: if you use express-validator, you don't need this try-catch
+        // That is directly sent to your thunk, and then to the frontend.
+    }
+
 })
 
 // deleting a lesson by its id

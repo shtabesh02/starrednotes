@@ -23,8 +23,24 @@ module.exports = (sequelize, DataTypes) => {
   Lesson.init({
     course_id: DataTypes.INTEGER,
     user_id: DataTypes.INTEGER,
-    title: DataTypes.STRING,
-    content: DataTypes.STRING
+    title: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          msg: "Please provide a title for the course."
+        }
+      }
+
+    },
+    content: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          msg: "Please provide the content of the lesson."
+        }
+      }
+
+    }
   }, {
     sequelize,
     modelName: 'Lesson',
