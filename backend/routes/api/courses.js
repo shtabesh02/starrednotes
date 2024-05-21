@@ -4,6 +4,7 @@ const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation')
 const { Course, Lesson, Course_Comment } = require('../../db/models');
 const { where, json } = require('sequelize');
+const { requireAuth } = require('../../utils/auth');
 const router = express.Router();
 
 // comment validation
@@ -47,10 +48,19 @@ router.get('/:course_id/comments', async (req, res) => {
 })
 
 // loading all my courses
-router.get('/instructor/:my_id', async (req, res) => {
+router.get('/instructor/:my_id', requireAuth,async (req, res) => {
     const { my_id } = req.params;
-    const mycourses = await Course.findAll({ where: { user_id: my_id } });
-    res.status(200).json(mycourses);
+    const currentUserId = await req.user.id;
+    if(my_id == currentUserId){
+
+        const mycourses = await Course.findAll({ where: { user_id: my_id } });
+        res.status(200).json(mycourses);
+    }else{
+        console.log('Forbidden')
+        return res.status(403).json({
+            "message":"Forbidden"
+        })
+    }
 })
 
 // adding a new comment

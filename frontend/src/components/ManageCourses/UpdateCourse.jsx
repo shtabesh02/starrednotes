@@ -6,7 +6,7 @@ import { updatecoursetoDB } from '../../store/courses'
 import './UpdateCourse.css';
 
 const UpdateCourse = () => {
-    const {course_id} = useParams();
+    const { course_id } = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const updatingcourse = useSelector(state => state.courseReducer.courses[course_id])
@@ -28,50 +28,56 @@ const UpdateCourse = () => {
             description
         }
         dispatch(updatecoursetoDB(updatedcourse, course_id))
-        .then(()=> {
+            .then(() => {
                 navigate('/managecourses')
 
-        })
-        .catch(async (res) => {
-            const data = await res.json();
-            setErrors(data?.errors)
-        })
+            })
+            .catch(async (res) => {
+                const data = await res.json();
+                setErrors(data?.errors)
+            })
         // if(updatesuccess){
         // }
     }
-  return (
-    <div>
-        <div className="back2managecourses">
-                <button onClick={() => navigate('/managecourses')}>Back to course management</button>
+    return (
+        <>
+            <div className="back2managecourses">
+                <button onClick={() => navigate('/managecourses')}>Back</button>
             </div>
-        <h1>Update Course</h1>
-        <form onSubmit={updatethiscourse}>
-            <div>
-                <label htmlFor="title">Title</label>
-                <input type="text" value={title} onChange={(e) => setTitle(e.target.value)}/>
-                {erros.title  && <p className='errorcss'>{erros.title}</p>}
+            <div className="updatecoursecontainer">
+                <div className="updatethecourse">
+
+                
+                    <h1>Update Course</h1>
+                    <form onSubmit={updatethiscourse} className='courseform'>
+                        <div>
+                            <label htmlFor="title">Title</label>
+                            <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
+                            {erros.title && <p className='errorcss'>{erros.title}</p>}
+                        </div>
+                        <div>
+                            <label htmlFor="instructor">Instructor</label>
+                            <input type="text" value={instructor} onChange={(e) => setInstructor(e.target.value)} />
+                            {erros.instructor && <p className='errorcss'>{erros.instructor}</p>}
+                        </div>
+                        <div>
+                            <label htmlFor="category">Category</label>
+                            <input type="text" value={category} onChange={(e) => setCategory(e.target.value)} />
+                            {erros.category && <p className='errorcss'>{erros.category}</p>}
+                        </div>
+                        <div>
+                            <label htmlFor="description">Description</label>
+                            <input type="text" value={description} onChange={(e) => setDescription(e.target.value)} />
+                            {erros.description && <p className='errorcss'>{erros.description}</p>}
+                        </div>
+                        <div className='sbmtbtn'>
+                            <button>Submit</button>
+                        </div>
+                    </form>
+                    </div>
             </div>
-            <div>
-                <label htmlFor="instructor">Instructor</label>
-                <input type="text" value={instructor} onChange={(e)=> setInstructor(e.target.value)}/>
-                {erros.instructor  && <p className='errorcss'>{erros.instructor}</p>}
-            </div>
-            <div>
-                <label htmlFor="category">Category</label>
-                <input type="text" value={category} onChange={(e)=> setCategory(e.target.value)}/>
-                {erros.category  && <p className='errorcss'>{erros.category}</p>}
-            </div>
-            <div>
-                <label htmlFor="description">Description</label>
-                <input type="text" value={description} onChange={(e)=> setDescription(e.target.value)}/>
-                {erros.description  && <p className='errorcss'>{erros.description}</p>}
-            </div>
-            <div>
-                <button>Submit</button>
-            </div>
-        </form>
-    </div>
-  )
+        </>
+    )
 }
 
 export default UpdateCourse

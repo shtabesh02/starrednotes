@@ -5,15 +5,20 @@ import './ManageCourses.css'
 import { NavLink, useNavigate } from 'react-router-dom';
 
 const ManageCourses = () => {
-  const current_user = useSelector(state => state.session.user.id)
+  const current_user = useSelector(state => state.session.user?.id);
+  // const [authmsg, setAuthmsg] = useState('');
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const _courses = useSelector(state => Object.values(state.courseReducer.courses));
-  const courses = _courses.filter(course => course.user_id == current_user)
+  const courses = _courses.filter(course => course.user_id == current_user);
 
   useEffect(() => {
-    dispatch(loadmycoursesfromDB(current_user));
+    dispatch(loadmycoursesfromDB(current_user))
+    // .catch(() => async (res) => {
+    //   const _authmsg = await res.json();
+    //   console.log('_authmsg: ')
+    // })
   }, [dispatch, current_user]);
 
   // Handle Delete a course

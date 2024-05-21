@@ -7,7 +7,7 @@ import './UpdateLesson.css'
 
 const UpdateLesson = () => {
 
-    const {course_id, lesson_id} = useParams();
+    const { course_id, lesson_id } = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const user_id = useSelector(state => state.session.user.id)
@@ -27,13 +27,13 @@ const UpdateLesson = () => {
             content
         }
         dispatch(updatethislessontoDB(updatedlesson, lesson_id))
-        .then(()=> {
-            navigate(`/courses/${course_id}/managelessons`);
-        })
-        .catch(async (res) => {
-            const data = await res.json();            
-            setErrors(data?.errors)
-        })
+            .then(() => {
+                navigate(`/courses/${course_id}/managelessons`);
+            })
+            .catch(async (res) => {
+                const data = await res.json();
+                setErrors(data?.errors)
+            })
         // if(updatesuccess){
         //     navigate(`/courses/${course_id}/managelessons`);
         // }else{
@@ -41,27 +41,31 @@ const UpdateLesson = () => {
         // }
     }
     return (
-        <div>
-             <div className="back2managelesson">
-                <button onClick={() => navigate(`/courses/${course_id}/managelessons`)}>Back to lesson management</button>
+        <>
+            <div className="back2managelesson">
+                <button onClick={() => navigate(`/courses/${course_id}/managelessons`)}>Back</button>
             </div>
-            <h1>Update Lesson</h1>
-            <form onSubmit={updatethelesson}>
-                <div>
-                    <label htmlFor="title">Title</label>
-                    <input type="text" value={title} onChange={e => setTitle(e.target.value)} />
-                    {errors.title && <p className='errorcss'>{errors.title}</p>}
+            <div className='updatelessoncontainer'>
+                <div className='updatelesson'>
+                    <h1>Update Lesson</h1>
+                    <form onSubmit={updatethelesson} className='updatelessonform'>
+                        <div>
+                            <label htmlFor="title">Title</label>
+                            <input type="text" value={title} onChange={e => setTitle(e.target.value)} />
+                            {errors.title && <p className='errorcss'>{errors.title}</p>}
+                        </div>
+                        <div>
+                            <label htmlFor="content">Content</label>
+                            <textarea value={content} onChange={e => setContent(e.target.value)} name="lessoncontent" id="lessoncontent" cols="30" rows="10">Content</textarea>
+                            {errors.content && <p className='errorcss'>{errors.content}</p>}
+                        </div>
+                        <div className='sbmtbtn'>
+                            <button>Submit</button>
+                        </div>
+                    </form>
                 </div>
-                <div>
-                    <label htmlFor="content">Content</label>
-                    <textarea value={content} onChange={e => setContent(e.target.value)} name="lessoncontent" id="lessoncontent" cols="30" rows="10">Content</textarea>
-                    {errors.content && <p className='errorcss'>{errors.content}</p>}
-                </div>
-                <div>
-                    <button>Submit</button>
-                </div>
-            </form>
-        </div>
+            </div>
+        </>
     )
 }
 

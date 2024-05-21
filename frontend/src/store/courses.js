@@ -37,7 +37,14 @@ export const loadmycoursesfromDB = (my_id) => async (dispatch) => {
     if(response.ok){
         const data = await response.json();
         dispatch(loadmycourses(data));
+    }else{
+        const e = await response.json();
+        console.log('eeee: ', e)
+        return e;
     }
+    // const thisdata = await response.json();
+    // console.log('thisdata: ');
+    // return thisdata;
 }
 
 // regular action to load a course by id
