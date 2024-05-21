@@ -30,65 +30,74 @@ function LoginFormModal() {
   };
 
   const handleDemoLogin = async (e) => {
-		e.preventDefault();
-		
-		const serverResponse = await dispatch(
-			sessionActions.login({
-				credential: 'user2@demo.io',
-				password: 'password2',
-			}))
+    e.preventDefault();
+
+    const serverResponse = await dispatch(
+      sessionActions.login({
+        credential: 'user2@demo.io',
+        password: 'password2',
+      }))
       .then(closeModal)
-      .catch( async (res) => {
+      .catch(async (res) => {
         const data = await res.json();
-        if(data && data.errors){
+        if (data && data.errors) {
           setErrors(data.errors)
         }
       })
 
-		if (serverResponse) {
-			setErrors(serverResponse);
-		} else {
-			closeModal();
-		}
+    if (serverResponse) {
+      setErrors(serverResponse);
+    } else {
+      closeModal();
+    }
 
-	}
+  }
 
   return (
     <>
-      <h1 className='LoginModal__header'>Log In</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Username or Email
-          <input
-            type="text"
-            value={credential}
-            onChange={(e) => setCredential(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          Password
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </label>
-        {errors.credential && (
-          <p>{errors.credential}</p>
-        )}
-        <button type="submit">Log In</button>
-        <button type='button' style={{marginLeft:'15px'}} onClick={handleDemoLogin}>Log in as Demo User</button>
-      </form>
-      <div>
-        <h1>Create an account</h1>
+      <div className="logincontainer">
+        <h1 className='login'>Log In</h1>
+        <form onSubmit={handleSubmit} className='form'>
+          <div className='theusername'>
+            <label className='form-label'>
+              Username or Email
+            </label>
+            <input
+              type="text"
+              value={credential}
+              onChange={(e) => setCredential(e.target.value)}
+              required
+              className='form-input'
+            />
+          </div>
 
-        <OpenModalButton
-          buttonText="Sign Up"
-          modalComponent={<SignupFormModal />}
-        />
+          <div className='thepassword'>
+            <label className='form-label'>
+              Password
+            </label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              className='form-input'
+            />
+          </div>
 
+          {errors.credential && (
+            <p className='errors'>{errors.credential}</p>
+          )}
+          <button type="submit" className='login-form-button'>Log In</button>
+          <button type='button' style={{ marginLeft: '15px' }} onClick={handleDemoLogin} className='login-form-demo-login'>Demo User</button>
+        </form>
+        <div className='createanaccount'>
+          <p>Create an account:</p>
+
+          <OpenModalButton
+            buttonText="Sign Up"
+            modalComponent={<SignupFormModal />}
+          />
+        </div>
       </div>
     </>
   );

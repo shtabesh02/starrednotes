@@ -38,20 +38,27 @@ const UpdateComment = () => {
         // }
     }
     return (
-        <div>
-             <div className="back2coursedetails">
-                <button onClick={() => navigate(`/courses/${course_id}`)}>Back to course details</button>
+        <>
+             <div className="back2course">
+                <button onClick={() => navigate(`/courses/${course_id}`)}>Back</button>
             </div>
+        <div className="commentcontainer">
+            <div className="updatingcomment">
             <h1>Edit your comment here:</h1>
-            <form onSubmit={updatethiscomment}>
+            <form onSubmit={updatethiscomment} className="commentform">
                 <div>
                     <label htmlFor="comment">Comment</label>
                     <textarea value={comment} onChange={(e) => setComment(e.target.value)} />
                     {errors.comment && <p className="errorcss">{errors.comment}</p>}
                 </div>
+                <div className="sbmtbtn">
+
                 <button>Update</button>
+                </div>
             </form>
+            </div>
         </div>
+        </>
     )
 }
 

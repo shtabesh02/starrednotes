@@ -7,7 +7,7 @@ import './AddComment.css'
 
 const AddComment = () => {
     const [comment, setComment] = useState('');
-    const {course_id} = useParams();
+    const { course_id } = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const current_user = useSelector(state => state.session.user.id);
@@ -23,29 +23,38 @@ const AddComment = () => {
             comment
         }
         await dispatch(addnewcommenttoDB(newComment, course_id))
-        .then(()=> {
-            navigate(`/courses/${course_id}`)
-        })
-        .catch(async (res)=> {
-            const err = await res.json();
-            if(err?.errors){
-                setErrors(err.errors)
-            }
-        })
+            .then(() => {
+                navigate(`/courses/${course_id}`)
+            })
+            .catch(async (res) => {
+                const err = await res.json();
+                if (err?.errors) {
+                    setErrors(err.errors)
+                }
+            })
     }
-  return (
-    <div>
-        <h1>Add your comment</h1>
-        <form onSubmit={addcomment}>
-            <div>
-                <label htmlFor="comment">Comment</label>
-                <textarea value={comment} onChange={(e)=> setComment(e.target.value)}/>
-                {errors.comment && <p className='errorcss'>{errors.comment}</p>}
+    return (
+        <>
+            <div className="back2course">
+                <button onClick={() => navigate(`/courses/${course_id}`)}>Back</button>
             </div>
-            <button>Submit</button>
-        </form>
-    </div>
-  )
+            <div className='commentcontainer'>
+                <div className="addingcomment">
+                    <h1>Add your comment</h1>
+                    <form onSubmit={addcomment} className='commentform'>
+                        <div>
+                            <label htmlFor="comment">Comment</label>
+                            <textarea value={comment} onChange={(e) => setComment(e.target.value)} />
+                            {errors.comment && <p className='errorcss'>{errors.comment}</p>}
+                        </div>
+                        <div className='sbmtbtn'>
+                        <button>Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </>
+    )
 }
 
 export default AddComment
