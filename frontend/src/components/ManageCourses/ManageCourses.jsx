@@ -28,9 +28,18 @@ const ManageCourses = () => {
       navigate('/managecourses');
     }
   }
+
+  if(!current_user){
+    return (
+      <div>
+        <h1>Mange Courses</h1>
+        <p>You must be logged-in to manage courses.</p>
+      </div>
+    )
+  }
   return (
     <div>
-      <h1>ManageCourses</h1>
+      <h1>Manage Courses</h1>
       <div className='createcourse'>
         <button onClick={() => navigate('/managecourses/addcourse')}>Create a new course</button>
       </div>

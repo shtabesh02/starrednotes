@@ -12,6 +12,8 @@ const ManageLessons = () => {
     const lessons = useSelector(state => Object.values(state.lessonReducer?.lessons));
     const thiscourse = lessons.filter(lesson => lesson.course_id == course_id)
 
+    const current_user = useSelector(state => state.session.user?.id);
+
     useEffect(() => {
         dispatch(loadlessonsfromDB(course_id))
         dispatch(loadCoursefromDB(course_id))
@@ -25,6 +27,16 @@ const ManageLessons = () => {
         navigate(`/courses/${course_id}/managelessons`);
        }
     }
+
+    if(!current_user){
+        return (
+          <div>
+            <h1>Mange lessons</h1>
+            <p>You must be logged-in to manage the lessons.</p>
+          </div>
+        )
+      }
+
     return (
         <div>
             <div className="back2managecourses">
