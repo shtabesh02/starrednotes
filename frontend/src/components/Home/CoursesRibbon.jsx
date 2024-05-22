@@ -19,7 +19,7 @@ const CoursesRibbon = () => {
                 {courses ? (
                     courses.map(course => (
                         <NavLink to={''} style={{textDecoration: 'none'}} key={course.id}>
-                            <li>{course.title}</li>
+                            <li>{}</li>
                         </NavLink>
                     ))
                 ) : (null)}

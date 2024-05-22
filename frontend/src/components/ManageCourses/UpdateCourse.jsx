@@ -41,10 +41,10 @@ const UpdateCourse = () => {
     }
     return (
         <>
-            <div className="back2managecourses">
+            <div className="updatecoursecontainer">
+            <div className="back2mycourses">
                 <button onClick={() => navigate('/managecourses')}>Back</button>
             </div>
-            <div className="updatecoursecontainer">
                 <div className="updatethecourse">
 
                 

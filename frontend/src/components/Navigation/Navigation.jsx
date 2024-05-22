@@ -46,7 +46,7 @@ function Navigation({ isLoaded }) {
     
     <ul className='home-nav'>
       <li>
-        <NavLink to="/"><img src={'/public/sn-logo.png'} style={{width: '130px'}} alt="" /></NavLink>
+        <NavLink to="/"><img src={'/sn-logo.png'} style={{width: '130px'}} alt="" /></NavLink>
       </li>
       <li>
         <input type="text" name="search" id="search" className='search' placeholder='What course are you looking for?...'/>

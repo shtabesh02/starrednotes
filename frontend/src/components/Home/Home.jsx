@@ -38,6 +38,7 @@ const Home = () => {
     dispatch(loadCoursesfromDB());
   }, [dispatch])
   return (
+    <>
     <div className="home_container">
       <div className="homepage">
         {Object.keys(courseByCategory)
@@ -55,13 +56,48 @@ const Home = () => {
               </div>
               <hr />
               <div className='coursesdisplay'>
-                {tabState[category] === 'va' ? (
+                <ul className='coursecarts'>
+                  {
+                    tabState[category] === 'va' ? (
+                      courseByCategory[category]
+                        .sort()
+                        .map(course => (
+                          <li key={course.id} className='thecourse'>
+                            <NavLink to={`/courses/${course.id}`}>{course.title}</NavLink>
+                            <p className='instructor'>Instructor: {course.instructor}</p>
+                          </li>
+                        ))
+                    ) : (
+                      courseByCategory[category]
+                        .slice(-4)
+                        .map(course => (
+                          <li key={course.id} className='thecourse'>
+                            <NavLink to={`/courses/${course.id}`}>{course.title}</NavLink>
+                            <p className='instructor'>Instructor: {course.instructor}</p>
+                          </li>
+                        ))
+                    )
+                  }
+                </ul>
+              </div>
+            </div>
+          ))}
+      </div>
+    </div>
+    </>
+  );
+};
+
+export default Home;
+
+
+{/* {tabState[category] === 'va' ? (
                   <ul className='view_all'>
                     {courseByCategory[category]
                       .sort()
                       .map((course) => (
                         <div key={course.id} className='course_container'>
-                          <NavLink className={'mlink'} to={`/courses/${course.id}`} style={{ textDecoration: "none"}}>
+                          <NavLink className={'mlink'} to={`/courses/${course.id}`} style={{ textDecoration: "none" }}>
                             <div className='course_cart'>
                               <li className='course_title'>{course.title}</li>
                             </div>
@@ -86,13 +122,4 @@ const Home = () => {
                         </div>
                       ))}
                   </ul>
-                )}
-              </div>
-            </div>
-          ))}
-      </div>
-    </div>
-  );
-};
-
-export default Home;
+                )} */}

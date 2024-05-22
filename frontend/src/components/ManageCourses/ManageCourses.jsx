@@ -24,12 +24,12 @@ const ManageCourses = () => {
   // Handle Delete a course
   const deletecourse = async (course_id) => {
     const successdelete = await dispatch(deletemycourse(course_id))
-    if(successdelete){
+    if (successdelete) {
       navigate('/managecourses');
     }
   }
 
-  if(!current_user){
+  if (!current_user) {
     return (
       <div>
         <h1>Mange Courses</h1>
@@ -38,30 +38,30 @@ const ManageCourses = () => {
     )
   }
   return (
-    <div>
-      <h1>Manage Courses</h1>
+    <>
+    <div className='managecoursecontainer'>
       <div className='createcourse'>
         <button onClick={() => navigate('/managecourses/addcourse')}>Create a new course</button>
       </div>
-      <ul className='mycourses'>
+      <h1>Manage Courses</h1>
+      <ul className='coursecarts'>
         {courses.length > 0 && courses.map(course => (
-          <div key={course.id} className='course_container'>
-            <NavLink to={`/courses/${course.id}/managelessons`} style={{ textDecoration: "none" }}>
-              <div className='course_cart'>
-                {course.user_id == current_user &&
-                  <li className='course_title'> {course.title} </li>
-                }
-              </div>
-            </NavLink>
+          <li key={course.id} className='thecourse'>
+            {course.user_id == current_user &&
+              <NavLink to={`/courses/${course.id}/managelessons`} style={{ textDecoration: "none" }}>
+                {course.title}
+              </NavLink>
+            }
             <p className='btns'>
               <button onClick={() => deletecourse(course.id)}>Delete</button>
-              <button onClick={()=> navigate(`/managecourses/updatecourse/${course.id}`)}>Update</button>
+              <button onClick={() => navigate(`/managecourses/updatecourse/${course.id}`)}>Update</button>
             </p>
-          </div>
+          </li>
         )
         )}
       </ul>
     </div>
+    </>
   )
 }
 
