@@ -26,12 +26,12 @@ const CourseDetails = () => {
 
   // checking to see if the logged in user has already commented
   const [alreadyCommented, setAlreadyCommented] = useState(false)
-  useEffect(()=> {
-    if(alreadyCommented){
+  useEffect(() => {
+    if (alreadyCommented) {
       return
-    }else if(current_user && comments){
+    } else if (current_user && comments) {
       comments.forEach(comment => {
-        if(comment.user_id == current_user){
+        if (comment.user_id == current_user) {
           setAlreadyCommented(true)
         }
       })
@@ -42,14 +42,14 @@ const CourseDetails = () => {
   const addcomment = () => {
     navigate(`/courses/${course_id}/comment`)
   }
-  
+
   // delete a comment
   const deleteacomment = async (comment_id) => {
     const deleteSuceeeded = await dispatch(deletecomment(comment_id));
-    if(deleteSuceeeded){
+    if (deleteSuceeeded) {
       alert('Comment deleted successfully.');
       navigate(`/courses/${course_id}`);
-    }else{
+    } else {
       alert('Failed to delete...')
     }
   }
@@ -66,9 +66,13 @@ const CourseDetails = () => {
         <h3 onClick={() => setSelectedTab('comments')}>Comments</h3>
       </div>
       {selectedTab === 'course_content' &&
-        <ol>
+        <ol className="lessoncart">
           {lessons.length > 0 && lessons.map(lesson => (
-            <NavLink to={`/courses/${course_id}/lessons/${lesson.id}`} key={lesson.id} style={{ textDecoration: 'none' }}><li>{lesson.title}</li></NavLink>
+            <li key={lesson.id} className="thelesson">
+              <NavLink to={`/courses/${course_id}/lessons/${lesson.id}`} style={{ textDecoration: 'none' }}>
+                <span>{lesson.title}</span>
+              </NavLink>
+            </li>
           ))
           }
         </ol>
@@ -79,14 +83,14 @@ const CourseDetails = () => {
           {comments.length > 0 && comments.map(comment => (
             <li key={comment.id}>
               <div className="comments">
-                {!alreadyCommented && <p><button onClick={()=> addcomment()}>Add your comment</button></p>}
+                {!alreadyCommented && <p><button onClick={() => addcomment()}>Add your comment</button></p>}
                 <p>{comment.user_id}</p>
                 <p>{comment.createdAt}</p>
                 <p>{comment.comment}</p>
                 {comment.user_id === current_user && (
                   <p>
                     <button onClick={() => deleteacomment(comment.id)}>Delete</button>
-                  <button onClick={() => editcomment(comment.id)}>Edit</button>
+                    <button onClick={() => editcomment(comment.id)}>Edit</button>
                   </p>
                 )}
                 <hr />

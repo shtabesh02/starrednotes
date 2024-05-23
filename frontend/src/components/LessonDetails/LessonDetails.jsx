@@ -31,9 +31,9 @@ const LessonDetails = () => {
 
     // next
     const handlenext = () => {
-        if(currentLessonIndex == lessons.length-1){
+        if (currentLessonIndex == lessons.length - 1) {
             return
-        }else if(currentLessonIndex < lessons.length-1){
+        } else if (currentLessonIndex < lessons.length - 1) {
             setDisplayedLesson(lessons[currentLessonIndex + 1])
             setCurrentLessonIndex(currentLessonIndex + 1)
         }
@@ -41,9 +41,9 @@ const LessonDetails = () => {
 
     // pref
     const handleprev = () => {
-        if(currentLessonIndex == 0){
+        if (currentLessonIndex == 0) {
             return
-        }else if(currentLessonIndex > 0){
+        } else if (currentLessonIndex > 0) {
             setDisplayedLesson(lessons[currentLessonIndex - 1])
             setCurrentLessonIndex(currentLessonIndex - 1)
         }
@@ -54,47 +54,49 @@ const LessonDetails = () => {
     }, [dispatch, course_id])
 
     return (
-        <div className="lessonDetails_container">
-            <div className="back2courseDetails">
-            <button onClick={() => navigate(`/courses/${course_id}`)}>Back to course details</button>
-            </div>
-            <h1>Introduction to Sequelize.js</h1>
-            <div className="lesson_contents">
-                <div className="lessoncontent">
-                    {displayedLesson ? (
-                        <>
-                            <p>{displayedLesson.content}</p>
-                            <div className="next_prev">
-                                <button className='previusbtn' onClick={() => handleprev()}>Previous</button>
-                                <button className='nextbtn' onClick={() => handlenext()}>Next</button>
-                                </div>
-                        </>
-                    ) : (
-                        <>
-                            {lessons.length > 0 && lessons.map((lesson) => (
-                                <>
-                                    {lesson?.id === parseInt(lesson_id) && <p>{lesson.content}</p>}
-                                </>
-                            ))
-                            }
-                            <div className="next_prev">
-                                <button className='previusbtn' onClick={() => handleprev()}>Previous</button>
-                                <button className='nextbtn' onClick={() => handlenext()}>Next</button>
-                                </div>
-                        </>
-                    )
-                    }
+        <>
+            <div className="lessonDetails_container">
+                <div className="back2courseDetails">
+                    <button onClick={() => navigate(`/courses/${course_id}`)}>Back</button>
                 </div>
-                <div className="table_of_contents">
-                    <h3>Table of contents</h3>
-                    <ul>
-                        {lessons.length > 0 && lessons.map((lesson, index) => (
-                            <li key={lesson.id} onClick={() => handleDisplayedLesson(index)}>{lesson.title}</li>
-                        ))}
-                    </ul>
+                <h1>Introduction to Sequelize.js</h1>
+                <div className="lesson_contents">
+                    <div className="lessoncontent">
+                        {displayedLesson ? (
+                            <>
+                                <p>{displayedLesson.content}</p>
+                                <div className="next_prev">
+                                    <button className='previusbtn' onClick={() => handleprev()}>Previous</button>
+                                    <button className='nextbtn' onClick={() => handlenext()}>Next</button>
+                                </div>
+                            </>
+                        ) : (
+                            <>
+                                {lessons.length > 0 && lessons.map((lesson) => (
+                                    <>
+                                        {lesson?.id === parseInt(lesson_id) && <p>{lesson.content}</p>}
+                                    </>
+                                ))
+                                }
+                                <div className="next_prev">
+                                    <button className='previusbtn' onClick={() => handleprev()}>Previous</button>
+                                    <button className='nextbtn' onClick={() => handlenext()}>Next</button>
+                                </div>
+                            </>
+                        )
+                        }
+                    </div>
+                    <div className="table_of_contents">
+                        <h3>Table of contents</h3>
+                        <ul>
+                            {lessons.length > 0 && lessons.map((lesson, index) => (
+                                <li key={lesson.id} onClick={() => handleDisplayedLesson(index)}>{lesson.title}</li>
+                            ))}
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
+        </>
     )
 }
 

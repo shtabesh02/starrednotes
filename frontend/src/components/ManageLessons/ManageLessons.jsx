@@ -23,51 +23,51 @@ const ManageLessons = () => {
 
     // handel delete
     const deletelesson = async (lession_id) => {
-       const deletesuccess = await dispatch(deltethelesson(lession_id))
-       if(deletesuccess){
-        alert('Lesson deleted successfuly...')
-        navigate(`/courses/${course_id}/managelessons`);
-       }
+        const deletesuccess = await dispatch(deltethelesson(lession_id))
+        if (deletesuccess) {
+            alert('Lesson deleted successfuly...')
+            navigate(`/courses/${course_id}/managelessons`);
+        }
     }
 
-    if(!current_user){
+    if (!current_user) {
         return (
-          <div>
-            <h1>Mange lessons</h1>
-            <p>You must be logged-in to manage the lessons.</p>
-          </div>
+            <div>
+                <h1>Mange lessons</h1>
+                <p>You must be logged-in to manage the lessons.</p>
+            </div>
         )
-      }
+    }
 
     return (
         <>
-        <div className="managelessoncontainer">
-            <div className="back2mycourse">
-                <button onClick={() => navigate('/managecourses')}>Back</button>
+            <div className="managelessoncontainer">
+                <div className="back2mycourse">
+                    <button onClick={() => navigate('/managecourses')}>Back</button>
+                </div>
+                <h1>Manage {course_title} Lessons</h1>
+                <div className="createlesson">
+                    <button onClick={() => navigate(`/courses/${course_id}/addlesson`)}>Add a new lesson</button>
+                </div>
+                <ol className="lessoncart">
+                    {thiscourse.length > 0 ? (
+                        thiscourse.map(lesson => (
+                            <li key={lesson.id} className="thelesson">
+                                <span>{lesson.title}</span>
+                                <span className="btns">
+                                    <button onClick={() => deletelesson(lesson.id)}>Delete</button>
+                                    <button onClick={() => navigate(`/courses/${course_id}/updatelesson/${lesson.id}`)}>Update</button>
+                                </span>
+                            </li>
+                        ))
+                    ) : (
+                        <div>
+                            <p>No lessons found for this course.</p>
+                        </div>
+                    )
+                    }
+                </ol>
             </div>
-            <h1>Manage {course_title} Lessons</h1>
-            <div>
-                <button onClick={()=> navigate(`/courses/${course_id}/addlesson`)}>Add a new lesson</button>
-            </div>
-            <ol>
-                {thiscourse.length > 0 ? (
-                    thiscourse.map(lesson => (
-                        <li key={lesson.id}>
-                            <span>{lesson.title}</span>
-                            <span>
-                            <button onClick={() => deletelesson(lesson.id)}>Delete</button>
-                            <button onClick={() => navigate(`/courses/${course_id}/updatelesson/${lesson.id}`)}>Update</button>
-                            </span>
-                        </li>
-                    ))
-                ):(
-                    <div>
-                        <p>No lessons found for this course.</p>
-                    </div>
-                )
-                }
-            </ol>
-        </div>
         </>
     )
 }

@@ -94,3 +94,23 @@
 .thelesson {
     color: rgb(205, 130, 38);
 }
+.back2managelesson{
+    padding-bottom: 10px;
+    /* width: 50%; */
+    /* border-bottom: 1px dashed rgb(182, 181, 181); */
+    display: flex;
+
+  }
+.back2managelesson button{
+    padding: 5px 10px;
+    margin-right: 5px;
+    cursor: pointer;
+    border: none;
+    border-radius: 3px;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 1em;
+}
+.back2managelesson button:hover {
+    background-color: #0056b3; /* Darker shade of button color */
+  }

@@ -39,28 +39,28 @@ const ManageCourses = () => {
   }
   return (
     <>
-    <div className='managecoursecontainer'>
-      <div className='createcourse'>
-        <button onClick={() => navigate('/managecourses/addcourse')}>Create a new course</button>
+      <div className='managecoursecontainer'>
+        <div className='createcourse'>
+          <button onClick={() => navigate('/managecourses/addcourse')}>Create a new course</button>
+        </div>
+        <h1>Manage Courses</h1>
+        <ul className='coursecarts'>
+          {courses.length > 0 && courses.map(course => (
+            <li key={course.id} className='thecourse'>
+              {course.user_id == current_user &&
+                <NavLink to={`/courses/${course.id}/managelessons`} style={{ textDecoration: "none" }}>
+                  {course.title}
+                </NavLink>
+              }
+              <p className='btns'>
+                <button onClick={() => deletecourse(course.id)}>Delete</button>
+                <button onClick={() => navigate(`/managecourses/updatecourse/${course.id}`)}>Update</button>
+              </p>
+            </li>
+          )
+          )}
+        </ul>
       </div>
-      <h1>Manage Courses</h1>
-      <ul className='coursecarts'>
-        {courses.length > 0 && courses.map(course => (
-          <li key={course.id} className='thecourse'>
-            {course.user_id == current_user &&
-              <NavLink to={`/courses/${course.id}/managelessons`} style={{ textDecoration: "none" }}>
-                {course.title}
-              </NavLink>
-            }
-            <p className='btns'>
-              <button onClick={() => deletecourse(course.id)}>Delete</button>
-              <button onClick={() => navigate(`/managecourses/updatecourse/${course.id}`)}>Update</button>
-            </p>
-          </li>
-        )
-        )}
-      </ul>
-    </div>
     </>
   )
 }
