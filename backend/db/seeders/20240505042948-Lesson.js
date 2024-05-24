@@ -16,7 +16,7 @@ module.exports = {
       content: 'Model will be explained here...'
     },
     {
-      user_id: 2,
+      user_id: 3,
       course_id: 2,
       title: 'Migration',
       content: 'Migration will be explained here...'
@@ -28,7 +28,7 @@ module.exports = {
       content: 'Seeder will be explained here...'
     },
     {
-      user_id: 1,
+      user_id: 3,
       course_id: 1,
       title: 'InitializingSequelize',
       content: 'Sequelize will be explained here...'
