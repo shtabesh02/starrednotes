@@ -31,17 +31,14 @@ const LessonDetails = () => {
     const [prevdisabled, setPrevdisabled] = useState(false);
     // next
     const handlenext = () => {
+        // console.log('lesson_id: ', lesson_id)
         if (activeindex == lessons.length - 1) {
             setNextdisabled(true);
-            // console.log('next disabledd: ', nextdisabled)
             return
         } else if (activeindex < lessons.length - 1) {
-            activelesson = lessons.filter(lesson => lesson.id == parseInt(lesson_id) + 1);
-            activeindex = lessons.findIndex(lesson => lesson.id == lesson_id + 1)
-            // setDisplayedLesson(lessons[currentLessonIndex + 1]);
-            // setCurrentLessonIndex(currentLessonIndex + 1);
+            activeindex = lessons.findIndex(lesson => lesson.id == lesson_id);            
             setNextdisabled(false)
-            navigate(`/courses/${course_id}/lessons/${activelesson[0]?.id}`);
+            navigate(`/courses/${course_id}/lessons/${lessons[++activeindex]?.id}`);
         }
     }
     useEffect(() => {
@@ -57,11 +54,9 @@ const LessonDetails = () => {
         if (activeindex == 0) {
             return
         } else if (activeindex > 0) {
-            activelesson = lessons.filter(lesson => lesson.id == parseInt(lesson_id) - 1);
-            activeindex = lessons.findIndex(lesson => lesson.id == lesson_id - 1);
-            // setDisplayedLesson(lessons[currentLessonIndex - 1])
-            // setCurrentLessonIndex(currentLessonIndex - 1);
-            navigate(`/courses/${course_id}/lessons/${activelesson[0].id}`);
+            activeindex = lessons.findIndex(lesson => lesson.id == lesson_id);
+            // activelesson = lessons.filter(lesson => lesson.id == parseInt(lesson_id) - 1);
+            navigate(`/courses/${course_id}/lessons/${lessons[--activeindex]?.id}`);
         }
     }
     useEffect(() => {
@@ -74,7 +69,9 @@ const LessonDetails = () => {
 
     useEffect(() => {
         dispatch(loadlessonsfromDB(course_id))
-    }, [dispatch, course_id])
+    }, [dispatch, course_id]);
+
+
 
     return (
         <>
