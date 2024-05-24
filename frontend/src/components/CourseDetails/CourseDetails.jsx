@@ -61,6 +61,7 @@ const CourseDetails = () => {
   return (
     <div>
       <h1>{course.title}</h1>
+      <h3>heyhey</h3>
       <div className="tabs">
         <h3 onClick={() => setSelectedTab('course_content')}>Course contents</h3>
         <h3 onClick={() => setSelectedTab('comments')}>Comments</h3>

@@ -2,52 +2,76 @@ import { useEffect, useState } from 'react'
 import './LessonDetails.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { loadlessonsfromDB } from '../../store/lessons';
-import { useNavigate, useParams } from 'react-router-dom';
+import { NavLink, useNavigate, useParams } from 'react-router-dom';
 
 const LessonDetails = () => {
     const dispatch = useDispatch();
-    const { course_id } = useParams();
+    const { course_id, lesson_id } = useParams();
 
-    const { lesson_id } = useParams();
     const navigate = useNavigate();
     const lessons = useSelector(state => Object.values(state.lessonReducer.lessons));
+    let activelesson = lessons.filter(lesson => lesson.id == lesson_id);
 
+    let activeindex = lessons.findIndex(lesson => lesson.id == lesson_id)
+    console.log('lessons: ', lessons);
+    console.log('active lesson: ', activelesson);
+    console.log('active index: ', activeindex);
     // normalizing lessons, to find the index of default lesson and use in the bellow useState 
     let normalizedLessons = {};
     lessons.forEach(lesson => {
         normalizedLessons[lesson.id] = lesson;
     })
-    const defaultindex = lessons.indexOf(normalizedLessons[lesson_id])
+    // const defaultindex = lessons.indexOf(normalizedLessons[lesson_id])
 
     // Table of contents
-    const [displayedLesson, setDisplayedLesson] = useState('');
-    const [currentLessonIndex, setCurrentLessonIndex] = useState(defaultindex);
+    // const [displayedLesson, setDisplayedLesson] = useState(lessons[lesson_id]);
 
-    // display lessons from the table of content / sidebar
-    const handleDisplayedLesson = (lesson_index) => {
-        setDisplayedLesson(lessons[lesson_index])
-        setCurrentLessonIndex(lesson_index)
-    }
+    // const [currentLessonIndex, setCurrentLessonIndex] = useState(defaultindex);
+    const [nextdisabled, setNextdisabled] = useState(false);
+    const [prevdisabled, setPrevdisabled] = useState(false);
 
     // next
     const handlenext = () => {
-        if (currentLessonIndex == lessons.length - 1) {
+        if (activeindex == lessons.length - 1) {
+            setNextdisabled(true);
+            console.log('next disabledd: ', nextdisabled)
             return
-        } else if (currentLessonIndex < lessons.length - 1) {
-            setDisplayedLesson(lessons[currentLessonIndex + 1])
-            setCurrentLessonIndex(currentLessonIndex + 1)
+        } else if (activeindex < lessons.length - 1) {
+            activelesson = lessons.filter(lesson => lesson.id == parseInt(lesson_id) + 1);
+            activeindex = lessons.findIndex(lesson => lesson.id == lesson_id + 1)
+            // setDisplayedLesson(lessons[currentLessonIndex + 1]);
+            // setCurrentLessonIndex(currentLessonIndex + 1);
+            setNextdisabled(false)
+            navigate(`/courses/${course_id}/lessons/${activelesson[0]?.id}`);
         }
     }
+    useEffect(() => {
+        if (activeindex == lessons.length - 1) {
+            setNextdisabled(true);
+        } else {
+            setNextdisabled(false)
+        }
+    }, [activeindex, lessons.length]);
 
     // pref
     const handleprev = () => {
-        if (currentLessonIndex == 0) {
+        if (activeindex == 0) {
             return
-        } else if (currentLessonIndex > 0) {
-            setDisplayedLesson(lessons[currentLessonIndex - 1])
-            setCurrentLessonIndex(currentLessonIndex - 1)
+        } else if (activeindex > 0) {
+            activelesson = lessons.filter(lesson => lesson.id == parseInt(lesson_id) - 1);
+            activeindex = lessons.findIndex(lesson => lesson.id == lesson_id - 1);
+            // setDisplayedLesson(lessons[currentLessonIndex - 1])
+            // setCurrentLessonIndex(currentLessonIndex - 1);
+            navigate(`/courses/${course_id}/lessons/${activelesson[0].id}`);
         }
     }
+    useEffect(() => {
+        if (activeindex == 0) {
+            setPrevdisabled(true)
+        } else {
+            setPrevdisabled(false)
+        }
+    }, [activeindex]);
 
     useEffect(() => {
         dispatch(loadlessonsfromDB(course_id))
@@ -60,14 +84,16 @@ const LessonDetails = () => {
                     <button onClick={() => navigate(`/courses/${course_id}`)}>Back</button>
                 </div>
                 <h1>Introduction to Sequelize.js</h1>
+                <h2>{activelesson[0]?.title}</h2>
                 <div className="lesson_contents">
                     <div className="lessoncontent">
-                        {displayedLesson ? (
+                        {activelesson ? (
+                            // {displayedLesson ? (
                             <>
-                                <p>{displayedLesson.content}</p>
+                                <p>{activelesson[0]?.content}</p>
                                 <div className="next_prev">
-                                    <button className='previusbtn' onClick={() => handleprev()}>Previous</button>
-                                    <button className='nextbtn' onClick={() => handlenext()}>Next</button>
+                                    <button className={`prevbtn ${prevdisabled ? 'disabled' : false}`} onClick={() => handleprev()}>Previous</button>
+                                    <button className={`nextbtn ${nextdisabled ? 'disabled' : false}`} onClick={() => handlenext()}>Next</button>
                                 </div>
                             </>
                         ) : (
@@ -79,8 +105,9 @@ const LessonDetails = () => {
                                 ))
                                 }
                                 <div className="next_prev">
-                                    <button className='previusbtn' onClick={() => handleprev()}>Previous</button>
-                                    <button className='nextbtn' onClick={() => handlenext()}>Next</button>
+                                    <button className={`prevbtn ${prevdisabled ? 'disabled' : false}`} onClick={() => handleprev()}>Previous</button>
+                                    <button className={`nextbtn ${nextdisabled ? 'disabled' : false}`} onClick={() => handlenext()}>Next</button>
+                                    {/* <button className='nextbtn' onClick={() => navigate(`/courses/${course_id}/lessons/${lesson.id}`)}>Next</button> */}
                                 </div>
                             </>
                         )
@@ -88,9 +115,15 @@ const LessonDetails = () => {
                     </div>
                     <div className="table_of_contents">
                         <h3>Table of contents</h3>
-                        <ul>
-                            {lessons.length > 0 && lessons.map((lesson, index) => (
-                                <li key={lesson.id} onClick={() => handleDisplayedLesson(index)}>{lesson.title}</li>
+                        <ul className='toc'>
+                            {lessons.length > 0 && lessons.map((lesson) => (
+                                // <li key={lesson.id} onClick={() => handleDisplayedLesson(index)}>{lesson.title}</li> index is a parameter of map
+                                // <li key={lesson.id} onClick={() => navigate(`/courses/${course_id}/lessons/${lesson.id}`)}>{lesson.title}</li>
+                                <li key={lesson.id}>
+                                    <NavLink to={`/courses/${course_id}/lessons/${lesson.id}`} style={{ textDecoration: "none" }}>
+                                        {lesson.title}
+                                    </NavLink>
+                                </li>
                             ))}
                         </ul>
                     </div>

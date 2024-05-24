@@ -31,6 +31,7 @@ router.get('/:course_id', async (req, res) => {
 router.get('/:course_id/lessons', async (req, res) => {
     const { course_id } = req.params;
     const lessons = await Lesson.findAll({ where: { course_id: course_id } });
+    // console.log('lessons: ', lessons)
     res.status(200).json(lessons)
 })
 

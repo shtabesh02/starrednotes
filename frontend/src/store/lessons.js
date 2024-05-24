@@ -97,9 +97,12 @@ const initialState = {
 const lessonReducer = (state = initialState, action) => {
     switch (action.type) {
         case LOADLESSONS: {
-            const _lessons = {};
-            action.lessons.forEach(lesson => _lessons[lesson.id] = lesson);
-            return { ...state, lessons: { ...state.lessons, ..._lessons } }
+            // The bellow code works:
+
+            // const _lessons = {};
+            // action.lessons.forEach(lesson => _lessons[lesson.id] = lesson);
+            // return { ...state, lessons: { ...state.lessons, ..._lessons } }
+            return {...state, lessons: action.lessons}
         }
         case ADDANEWLESSON: {
             return { ...state, lessons: { ...state.lessons, [action.newlesson.id]: action.newlesson } }

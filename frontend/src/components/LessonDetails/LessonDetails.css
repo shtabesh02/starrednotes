@@ -39,6 +39,11 @@ h1 {
     flex: 2;
 }
 
+.toc a.active{
+    color: #391dda;
+    font-weight: bold;
+}
+
 .lessoncontent p {
     font-size: 1rem;
     line-height: 1.5;
@@ -91,3 +96,8 @@ h1 {
     color: #007BFF;
 }
 
+.nextbtn.disabled, .prevbtn.disabled{
+    cursor: not-allowed;
+    pointer-events: none;
+    background-color: gray;
+}
