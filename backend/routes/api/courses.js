@@ -99,16 +99,24 @@ router.put('/comments/:comment_id', validateComment,async (req, res) => {
 const validateNewCourse = [
     check('title')
         .notEmpty()
-        .withMessage('Please provide the title.'),
+        .withMessage('Please provide the title.')
+        .isLength({max: 50})
+        .withMessage('Title must be less than 50 characters.'),
     check('instructor')
         .notEmpty()
-        .withMessage('Please provide the instructor name.'),
+        .withMessage('Please provide the instructor name.')
+        .isLength({max: 50})
+        .withMessage('The instructor name must be less than 50 characters.'),
     check('category')
         .notEmpty()
-        .withMessage('Please select the category.'),
+        .withMessage('Please select the category.')
+        .isLength({max: 50})
+        .withMessage('The category must be less than 50 characters.'),
     check('description')
         .notEmpty()
-        .withMessage('Please provide a brief description of the course.'),
+        .withMessage('Please provide a brief description of the course.')
+        .isLength({max: 255})
+        .withMessage('The description must be less than 255 characters.'),
     handleValidationErrors
 ]
 router.post('/newcourse', validateNewCourse, async (req, res) => {
@@ -124,7 +132,7 @@ router.post('/newcourse', validateNewCourse, async (req, res) => {
 })
 
 // update a course based on its id
-router.put('/:course_id/update', async (req, res) => {
+router.put('/:course_id/update', validateNewCourse, async (req, res) => {
     try {
         const { user_id, title, instructor, category, description } = req.body;
         const { course_id } = req.params;
@@ -168,10 +176,14 @@ router.delete('/:course_id', async (req, res) => {
 const validateNewLesson = [
     check('title')
         .notEmpty()
-        .withMessage('Please write the title of the lesson.'),
+        .withMessage('Please write the title of the lesson.')
+        .isLength({max: 50})
+        .withMessage('Title must be less than 50 characters.'),
     check('content')
         .notEmpty()
-        .withMessage('Please add the content of the lesson.'),
+        .withMessage('Please add the content of the lesson.')
+        .isLength({max: 255})
+        .withMessage('The content must be less than 255 characters.'),
     handleValidationErrors
 ]
 router.post('/:course_id/newlesson', validateNewLesson, async (req, res) => {
@@ -186,7 +198,7 @@ router.post('/:course_id/newlesson', validateNewLesson, async (req, res) => {
 })
 
 // updating a lesson by its id
-router.put('/lessons/:lesson_id', async (req, res) => {
+router.put('/lessons/:lesson_id', validateNewLesson, async (req, res) => {
     try {
         const { course_id, user_id, title, content } = req.body;
         const { lesson_id } = req.params;

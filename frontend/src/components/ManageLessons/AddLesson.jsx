@@ -8,7 +8,7 @@ import { loadCoursefromDB } from "../../store/courses";
 import './AddLesson.css'
 
 const AddLesson = () => {
-    const [title, setTitle] = useState();
+    const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [errors, setErrors] = useState({});
     const user_id = useSelector(state => state.session.user.id);
@@ -31,9 +31,10 @@ const AddLesson = () => {
             })
             .catch(async (res) => {
                 const data = await res.json();
-                if (data?.errors) {
-                    setErrors(data.errors);
-                }
+                // if (data?.errors) {
+                //     setErrors(data?.errors);
+                // }
+                setErrors(data?.errors);
             })
     }
 

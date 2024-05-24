@@ -1,7 +1,7 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import { updatethislessontoDB } from '../../store/lessons';
+import { loadlessonsfromDB, updatethislessontoDB } from '../../store/lessons';
 
 import './UpdateLesson.css'
 
@@ -11,9 +11,12 @@ const UpdateLesson = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const user_id = useSelector(state => state.session.user.id)
-    const updatinglesson = useSelector(state => state.lessonReducer.lessons[lesson_id])
-    const [title, setTitle] = useState(updatinglesson.title);
-    const [content, setContent] = useState(updatinglesson.content);
+    const alllessons = useSelector(state => Object.values(state.lessonReducer?.lessons));
+    const updatinglesson = alllessons.filter(lesson => lesson.id == lesson_id);
+    // const updatinglesson = useSelector(state => state.lessonReducer.lessons[lesson_id])
+    console.log('updatinglesson: ', updatinglesson)
+    const [title, setTitle] = useState(updatinglesson[0].title);
+    const [content, setContent] = useState(updatinglesson[0].content);
 
     const [errors, setErrors] = useState({});
 
@@ -40,6 +43,9 @@ const UpdateLesson = () => {
         //     console.log('failed to update...')
         // }
     }
+    useEffect(() => {
+        dispatch(loadlessonsfromDB(course_id))
+    }, [dispatch, course_id]);
     return (
         <>
             <div className="back2managelesson">

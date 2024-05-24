@@ -29,7 +29,6 @@ const LessonDetails = () => {
     // const [currentLessonIndex, setCurrentLessonIndex] = useState(defaultindex);
     const [nextdisabled, setNextdisabled] = useState(false);
     const [prevdisabled, setPrevdisabled] = useState(false);
-
     // next
     const handlenext = () => {
         if (activeindex == lessons.length - 1) {
