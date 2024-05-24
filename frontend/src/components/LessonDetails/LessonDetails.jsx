@@ -13,9 +13,9 @@ const LessonDetails = () => {
     let activelesson = lessons.filter(lesson => lesson.id == lesson_id);
 
     let activeindex = lessons.findIndex(lesson => lesson.id == lesson_id)
-    console.log('lessons: ', lessons);
-    console.log('active lesson: ', activelesson);
-    console.log('active index: ', activeindex);
+    // console.log('lessons: ', lessons);
+    // console.log('active lesson: ', activelesson);
+    // console.log('active index: ', activeindex);
     // normalizing lessons, to find the index of default lesson and use in the bellow useState 
     let normalizedLessons = {};
     lessons.forEach(lesson => {
