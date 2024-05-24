@@ -33,7 +33,7 @@ const LessonDetails = () => {
     const handlenext = () => {
         if (activeindex == lessons.length - 1) {
             setNextdisabled(true);
-            console.log('next disabledd: ', nextdisabled)
+            // console.log('next disabledd: ', nextdisabled)
             return
         } else if (activeindex < lessons.length - 1) {
             activelesson = lessons.filter(lesson => lesson.id == parseInt(lesson_id) + 1);

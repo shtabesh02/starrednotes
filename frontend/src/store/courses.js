@@ -75,7 +75,7 @@ const addcourse = (newcourse) => {
 }
 // thunk action to add a new course
 export const addcoursetoDB = (newcourse) => async (dispatch) => {
-    console.log('before fetch...')
+    // console.log('before fetch...')
     const response = await csrfFetch('/api/courses/newcourse', {
         method: 'POST',
         headers: {'Content-Type':'Application/json'},

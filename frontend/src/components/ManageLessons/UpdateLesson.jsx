@@ -14,7 +14,7 @@ const UpdateLesson = () => {
     const alllessons = useSelector(state => Object.values(state.lessonReducer?.lessons));
     const updatinglesson = alllessons.filter(lesson => lesson.id == lesson_id);
     // const updatinglesson = useSelector(state => state.lessonReducer.lessons[lesson_id])
-    console.log('updatinglesson: ', updatinglesson)
+    // console.log('updatinglesson: ', updatinglesson)
     const [title, setTitle] = useState(updatinglesson[0].title);
     const [content, setContent] = useState(updatinglesson[0].content);
 
