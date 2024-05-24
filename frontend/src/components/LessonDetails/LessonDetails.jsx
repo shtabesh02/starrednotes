@@ -36,9 +36,9 @@ const LessonDetails = () => {
             setNextdisabled(true);
             return
         } else if (activeindex < lessons.length - 1) {
-            activeindex = lessons.findIndex(lesson => lesson.id == lesson_id);            
+            // activeindex = lessons.findIndex(lesson => lesson.id == lesson_id);            
             setNextdisabled(false)
-            navigate(`/courses/${course_id}/lessons/${lessons[++activeindex]?.id}`);
+            navigate(`/courses/${course_id}/lessons/${lessons[activeindex + 1]?.id}`);
         }
     }
     useEffect(() => {
@@ -54,9 +54,9 @@ const LessonDetails = () => {
         if (activeindex == 0) {
             return
         } else if (activeindex > 0) {
-            activeindex = lessons.findIndex(lesson => lesson.id == lesson_id);
+            // activeindex = lessons.findIndex(lesson => lesson.id == lesson_id);
             // activelesson = lessons.filter(lesson => lesson.id == parseInt(lesson_id) - 1);
-            navigate(`/courses/${course_id}/lessons/${lessons[--activeindex]?.id}`);
+            navigate(`/courses/${course_id}/lessons/${lessons[activeindex - 1]?.id}`);
         }
     }
     useEffect(() => {
