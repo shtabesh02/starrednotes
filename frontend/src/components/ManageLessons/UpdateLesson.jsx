@@ -13,13 +13,30 @@ const UpdateLesson = () => {
     const user_id = useSelector(state => state.session.user.id)
     const alllessons = useSelector(state => Object.values(state.lessonReducer?.lessons));
     const updatinglesson = alllessons.filter(lesson => lesson.id == lesson_id);
+
     // const updatinglesson = useSelector(state => state.lessonReducer.lessons[lesson_id])
     // console.log('updatinglesson: ', updatinglesson)
     const [title, setTitle] = useState(updatinglesson[0]?.title);
     const [content, setContent] = useState(updatinglesson[0]?.content);
 
     const [errors, setErrors] = useState({});
-
+    useEffect(() => {
+        dispatch(loadlessonsfromDB(course_id))
+    }, [dispatch, course_id]);
+    
+    // useEffect(() => {
+    //     const lesson = alllessons.find(lesson => lesson.id == lesson_id);
+    //     if (lesson) {
+    //         // setTitle(lesson.title || '');
+    //         // setContent(lesson.content || '')
+    //     }
+    // }, [alllessons, lesson_id]);
+    // useEffect(()=> {
+    //     if(updatinglesson[0]){
+    //         setTitle(updatinglesson[0]?.title || '');
+    //         setContent(updatinglesson[0]?.content || '');
+    //     }
+    // }, [updatinglesson]);
     // update this lesson
     const updatethelesson = async (e) => {
         e.preventDefault();
@@ -37,15 +54,8 @@ const UpdateLesson = () => {
                 const data = await res.json();
                 setErrors(data?.errors)
             })
-        // if(updatesuccess){
-        //     navigate(`/courses/${course_id}/managelessons`);
-        // }else{
-        //     console.log('failed to update...')
-        // }
     }
-    useEffect(() => {
-        dispatch(loadlessonsfromDB(course_id))
-    }, [dispatch, course_id]);
+
     return (
         <>
             <div className="back2managelesson">
@@ -57,12 +67,12 @@ const UpdateLesson = () => {
                     <form onSubmit={updatethelesson} className='updatelessonform'>
                         <div>
                             <label htmlFor="title">Title</label>
-                            <input type="text" value={updatinglesson[0]?.title} onChange={e => setTitle(e.target.value)} />
+                            <input type="text" value={title} onChange={e => setTitle(e.target.value)} />
                             {errors.title && <p className='errorcss'>{errors.title}</p>}
                         </div>
                         <div>
                             <label htmlFor="content">Content</label>
-                            <textarea value={updatinglesson[0]?.content} onChange={e => setContent(e.target.value)} name="lessoncontent" id="lessoncontent" cols="30" rows="10">Content</textarea>
+                            <textarea value={content} onChange={e => setContent(e.target.value)} name="lessoncontent" id="lessoncontent" cols="30" rows="10">Content</textarea>
                             {errors.content && <p className='errorcss'>{errors.content}</p>}
                         </div>
                         <div className='sbmtbtn'>

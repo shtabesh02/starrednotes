@@ -73,24 +73,24 @@ const UpdateCourse = () => {
                         <div>
                             <label htmlFor="title">Title</label>
                             {updatingcourse?.title && 
-                            <input type="text" value={updatingcourse.title} onChange={(e) => setTitle(e.target.value)} />
+                            <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
                             }
                             
                             {erros.title && <p className='errorcss'>{erros.title}</p>}
                         </div>
                         <div>
                             <label htmlFor="instructor">Instructor</label>
-                            <input type="text" value={updatingcourse?.instructor} onChange={(e) => setInstructor(e.target.value)} />
+                            <input type="text" value={instructor} onChange={(e) => setInstructor(e.target.value)} />
                             {erros.instructor && <p className='errorcss'>{erros.instructor}</p>}
                         </div>
                         <div>
                             <label htmlFor="category">Category</label>
-                            <input type="text" value={updatingcourse?.category} onChange={(e) => setCategory(e.target.value)} />
+                            <input type="text" value={category} onChange={(e) => setCategory(e.target.value)} />
                             {erros.category && <p className='errorcss'>{erros.category}</p>}
                         </div>
                         <div>
                             <label htmlFor="description">Description</label>
-                            <input type="text" value={updatingcourse?.description} onChange={(e) => setDescription(e.target.value)} />
+                            <input type="text" value={description} onChange={(e) => setDescription(e.target.value)} />
                             {erros.description && <p className='errorcss'>{erros.description}</p>}
                         </div>
                         <div className='sbmtbtn'>
