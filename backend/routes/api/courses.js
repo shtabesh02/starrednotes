@@ -7,14 +7,6 @@ const { where, json } = require('sequelize');
 const { requireAuth } = require('../../utils/auth');
 const router = express.Router();
 
-// comment validation
-const validateComment = [
-    check('comment')
-        .notEmpty()
-        .withMessage('Add a comment.'),
-    handleValidationErrors
-]
-
 router.get('/', async (req, res) => {
     const courses = await Course.findAll();
     res.status(200).json(courses)
@@ -65,6 +57,15 @@ router.get('/instructor/:my_id', requireAuth,async (req, res) => {
 })
 
 // adding a new comment
+// comment validation
+const validateComment = [
+    check('comment')
+        .notEmpty()
+        .withMessage('Add a comment.')
+        .isLength({max:255})
+        .withMessage('The comment must be less than 255 characters.'),
+    handleValidationErrors
+]
 router.post('/:course_id/comment', validateComment,async (req, res) => {
     const { user_id, course_id, comment } = req.body;
     const newcomment = await Course_Comment.create({ user_id, course_id, comment });
@@ -81,7 +82,7 @@ router.delete('/comments/:comment_id', async (req, res) => {
 })
 
 // update a comment
-router.put('/comments/:comment_id', validateComment,async (req, res) => {
+router.put('/comments/:comment_id', validateComment, async (req, res) => {
     const { user_id, course_id, comment } = req.body;
     const commentid = req.params.comment_id;
     const targetcomment = await Course_Comment.findOne({ where: { id: commentid } })

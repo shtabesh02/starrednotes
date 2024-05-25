@@ -7,12 +7,13 @@ import { deletecomment, loadcommentsfromDB } from "../../store/comments";
 
 import './CourseDetails.css'
 const CourseDetails = () => {
+  const { course_id } = useParams();
 
   const course = useSelector(state => state.courseReducer.courseDetails);
   const lessons = useSelector(state => Object.values(state.lessonReducer.lessons));
   const comments = useSelector(state => Object.values(state.commentReducer?.comments));
   const current_user = useSelector(state => state.session.user?.id);
-  const { course_id } = useParams();
+  // const currentcoursecomments = comments.filter(comment => comment.course_id == course_id)
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -26,16 +27,22 @@ const CourseDetails = () => {
 
   // checking to see if the logged in user has already commented
   const [alreadyCommented, setAlreadyCommented] = useState(false)
+
   useEffect(() => {
-    if (alreadyCommented) {
-      return
-    } else if (current_user && comments) {
+    if (current_user && comments.length > 0) {
       comments.forEach(comment => {
-        if (comment.user_id == current_user) {
+        if(comment.user_id == current_user){
           setAlreadyCommented(true)
         }
       })
     }
+    // else if (current_user && comments) {
+    //   comments.forEach(comment => {
+    //     if (comment.user_id == current_user) {
+    //       setAlreadyCommented(true)
+    //     }
+    //   })
+    // }
   }, [comments, current_user, alreadyCommented]);
 
   // navigate to add comment page
@@ -80,23 +87,32 @@ const CourseDetails = () => {
       {
         selectedTab === 'comments' &&
         <ul className="comments_container">
-          {comments.length > 0 && comments.map(comment => (
-            <li key={comment.id}>
-              <div className="comments">
-                {!alreadyCommented && <p><button onClick={() => addcomment()}>Add your comment</button></p>}
-                <p>{comment.user_id}</p>
-                <p>{comment.createdAt}</p>
-                <p>{comment.comment}</p>
-                {comment.user_id === current_user && (
-                  <p>
-                    <button onClick={() => deleteacomment(comment.id)}>Delete</button>
-                    <button onClick={() => editcomment(comment.id)}>Edit</button>
-                  </p>
-                )}
-                <hr />
-              </div>
-            </li>
-          ))}
+          
+          {
+          comments.length > 0 ? (
+            comments.map(comment => (
+              <li key={comment.id}>
+                <div className="comments">
+                  <p>{comment.user_id}</p>
+                  <p>{comment.createdAt}</p>
+                  <p>{comment.comment}</p>
+                  {comment.user_id === current_user && (
+                    <p>
+                      <button onClick={() => deleteacomment(comment.id)}>Delete</button>
+                      <button onClick={() => editcomment(comment.id)}>Edit</button>
+                    </p>
+                  )}
+                  <hr />
+                </div>
+              </li>
+            ))
+          ):(
+            <>
+            <li>No comments found.</li>
+            {!alreadyCommented && current_user && <li><button onClick={() => addcomment()}>Add your comment</button></li>}
+            </>
+          )
+          }
         </ul>
       }
     </div>

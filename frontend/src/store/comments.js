@@ -103,10 +103,14 @@ const commentReducer = (state = initialState, action) => {
         case LOADCOMMENTS: {
             // return {...state, comments: action.comments} // it works fine
             // Comments are loaded as an array of object. so you can manipulate as bellow:
-            const _comments = action.comments;
-            const _commentsobj = {};
-            _comments.forEach(comment => _commentsobj[comment.id] = comment);
-            return { ...state, comments: { ...state.comments, ..._commentsobj } }
+
+
+            // const _comments = action.comments;
+            // const _commentsobj = {};
+            // _comments.forEach(comment => _commentsobj[comment.id] = comment);
+            // return { ...state, comments: { ...state.comments, ..._commentsobj } }
+
+            return {...state, comments: action.comments}
         }
         case ADDANEWCOMMENT: {
             // The new comment comes as an object
