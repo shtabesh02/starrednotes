@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate, useParams } from "react-router-dom"
-import { editcomment } from "../../store/comments";
+import { editcomment, loadcommentsfromDB } from "../../store/comments";
 
 import './UpdateComment.css'
 
@@ -13,7 +13,10 @@ const UpdateComment = () => {
     const navigate = useNavigate();
     const thetargetcomment = comments.filter(comment => comment.id == comment_id);
 
-    const [comment, setComment] = useState(thetargetcomment[0].comment);
+    const [comment, setComment] = useState(thetargetcomment[0]?.comment);
+    console.log('comment: ', thetargetcomment)
+
+
     const [errors, setErrors] = useState({});
 
     const updatethiscomment = async (e) => {
@@ -37,6 +40,10 @@ const UpdateComment = () => {
         //     navigate(`/courses/${course_id}`)
         // }
     }
+
+    useEffect(() => {
+        dispatch(loadcommentsfromDB(course_id))
+    }, [dispatch, course_id]);
     return (
         <>
              <div className="back2course">
@@ -48,7 +55,7 @@ const UpdateComment = () => {
             <form onSubmit={updatethiscomment} className="commentform">
                 <div>
                     <label htmlFor="comment">Comment</label>
-                    <textarea value={comment} onChange={(e) => setComment(e.target.value)} />
+                    <textarea value={thetargetcomment[0]?.comment} onChange={(e) => setComment(e.target.value)} />
                     {errors.comment && <p className="errorcss">{errors.comment}</p>}
                 </div>
                 <div className="sbmtbtn">
