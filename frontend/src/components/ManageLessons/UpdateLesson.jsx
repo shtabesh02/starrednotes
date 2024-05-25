@@ -15,8 +15,8 @@ const UpdateLesson = () => {
     const updatinglesson = alllessons.filter(lesson => lesson.id == lesson_id);
     // const updatinglesson = useSelector(state => state.lessonReducer.lessons[lesson_id])
     // console.log('updatinglesson: ', updatinglesson)
-    const [title, setTitle] = useState(updatinglesson[0].title);
-    const [content, setContent] = useState(updatinglesson[0].content);
+    const [title, setTitle] = useState(updatinglesson[0]?.title);
+    const [content, setContent] = useState(updatinglesson[0]?.content);
 
     const [errors, setErrors] = useState({});
 
@@ -57,12 +57,12 @@ const UpdateLesson = () => {
                     <form onSubmit={updatethelesson} className='updatelessonform'>
                         <div>
                             <label htmlFor="title">Title</label>
-                            <input type="text" value={title} onChange={e => setTitle(e.target.value)} />
+                            <input type="text" value={updatinglesson[0]?.title} onChange={e => setTitle(e.target.value)} />
                             {errors.title && <p className='errorcss'>{errors.title}</p>}
                         </div>
                         <div>
                             <label htmlFor="content">Content</label>
-                            <textarea value={content} onChange={e => setContent(e.target.value)} name="lessoncontent" id="lessoncontent" cols="30" rows="10">Content</textarea>
+                            <textarea value={updatinglesson[0]?.content} onChange={e => setContent(e.target.value)} name="lessoncontent" id="lessoncontent" cols="30" rows="10">Content</textarea>
                             {errors.content && <p className='errorcss'>{errors.content}</p>}
                         </div>
                         <div className='sbmtbtn'>
