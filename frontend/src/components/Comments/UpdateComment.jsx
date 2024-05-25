@@ -14,7 +14,10 @@ const UpdateComment = () => {
     const thetargetcomment = comments.filter(comment => comment.id == comment_id);
 
     const [comment, setComment] = useState(thetargetcomment[0]?.comment);
-    console.log('comment: ', thetargetcomment)
+    // console.log('comment: ', thetargetcomment)
+    // useEffect(()=> {
+    //     setComment(thetargetcomment[0]?.comment)
+    // }, [thetargetcomment]);
 
 
     const [errors, setErrors] = useState({});
@@ -55,7 +58,7 @@ const UpdateComment = () => {
             <form onSubmit={updatethiscomment} className="commentform">
                 <div>
                     <label htmlFor="comment">Comment</label>
-                    <textarea value={thetargetcomment[0]?.comment} onChange={(e) => setComment(e.target.value)} />
+                    <textarea value={comment} onChange={(e) => setComment(e.target.value)} />
                     {errors.comment && <p className="errorcss">{errors.comment}</p>}
                 </div>
                 <div className="sbmtbtn">

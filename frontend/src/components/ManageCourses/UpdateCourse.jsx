@@ -23,12 +23,13 @@ const UpdateCourse = () => {
     const [category, setCategory] = useState(updatingcourse?.category);
     const [description, setDescription] = useState(updatingcourse?.description);
     
-    useEffect(()=> {
-        setTitle(updatingcourse?.title);
-        setInstructor(updatingcourse?.instructor);
-        setCategory(updatingcourse?.category);
-        setDescription(updatingcourse?.description)
-    }, [updatingcourse]);
+    // useEffect(()=> {
+    //     setTitle(updatingcourse?.title);
+    //     setInstructor(updatingcourse?.instructor);
+    //     setCategory(updatingcourse?.category);
+    //     setDescription(updatingcourse?.description)
+    // }, [updatingcourse]);
+
     const [erros, setErrors] = useState({});
     
     const updatethiscourse = (e) => {
