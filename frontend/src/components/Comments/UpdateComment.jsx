@@ -14,10 +14,6 @@ const UpdateComment = () => {
     const thetargetcomment = comments.filter(comment => comment.id == comment_id);
 
     const [comment, setComment] = useState(thetargetcomment[0]?.comment);
-    // console.log('comment: ', thetargetcomment)
-    // useEffect(()=> {
-    //     setComment(thetargetcomment[0]?.comment)
-    // }, [thetargetcomment]);
 
 
     const [errors, setErrors] = useState({});
