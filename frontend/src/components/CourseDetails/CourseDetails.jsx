@@ -76,7 +76,8 @@ const CourseDetails = () => {
         <ol className="lessoncart">
           {lessons.length > 0 && lessons.map(lesson => (
             <li key={lesson.id} className="thelesson">
-              <NavLink to={`/courses/${course_id}/lessons/${lesson.id}`} style={{ textDecoration: 'none' }}>
+              <NavLink to={`/courses/${course_id}/lessons/${lesson.id}`}
+                style={{ textDecoration: 'none' }}>
                 <span>{lesson.title}</span>
               </NavLink>
             </li>

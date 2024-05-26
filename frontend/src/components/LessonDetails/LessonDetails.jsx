@@ -3,30 +3,24 @@ import './LessonDetails.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { loadlessonsfromDB } from '../../store/lessons';
 import { NavLink, useNavigate, useParams } from 'react-router-dom';
+import { loadCoursefromDB } from '../../store/courses';
 
 const LessonDetails = () => {
     const dispatch = useDispatch();
     const { course_id, lesson_id } = useParams();
 
     const navigate = useNavigate();
+    const course = useSelector(state => state.courseReducer.courseDetails);
     const lessons = useSelector(state => Object.values(state.lessonReducer.lessons));
     let activelesson = lessons.filter(lesson => lesson.id == lesson_id);
 
     let activeindex = lessons.findIndex(lesson => lesson.id == lesson_id)
-    // console.log('lessons: ', lessons);
-    // console.log('active lesson: ', activelesson);
-    // console.log('active index: ', activeindex);
-    // normalizing lessons, to find the index of default lesson and use in the bellow useState 
+
     let normalizedLessons = {};
     lessons.forEach(lesson => {
         normalizedLessons[lesson.id] = lesson;
     })
-    // const defaultindex = lessons.indexOf(normalizedLessons[lesson_id])
 
-    // Table of contents
-    // const [displayedLesson, setDisplayedLesson] = useState(lessons[lesson_id]);
-
-    // const [currentLessonIndex, setCurrentLessonIndex] = useState(defaultindex);
     const [nextdisabled, setNextdisabled] = useState(false);
     const [prevdisabled, setPrevdisabled] = useState(false);
     // next
@@ -54,8 +48,6 @@ const LessonDetails = () => {
         if (activeindex == 0) {
             return
         } else if (activeindex > 0) {
-            // activeindex = lessons.findIndex(lesson => lesson.id == lesson_id);
-            // activelesson = lessons.filter(lesson => lesson.id == parseInt(lesson_id) - 1);
             navigate(`/courses/${course_id}/lessons/${lessons[activeindex - 1]?.id}`);
         }
     }
@@ -68,9 +60,12 @@ const LessonDetails = () => {
     }, [activeindex]);
 
     useEffect(() => {
-        dispatch(loadlessonsfromDB(course_id))
+        dispatch(loadlessonsfromDB(course_id));
     }, [dispatch, course_id]);
-
+     
+    useEffect(() => {
+        dispatch(loadCoursefromDB(course_id))
+    }, [dispatch, course_id]);
 
 
     return (
@@ -79,7 +74,7 @@ const LessonDetails = () => {
                 <div className="back2courseDetails">
                     <button onClick={() => navigate(`/courses/${course_id}`)}>Back</button>
                 </div>
-                <h1>Introduction to Sequelize.js</h1>
+                <h1>{course.title}</h1>
                 <h2>{activelesson[0]?.title}</h2>
                 <div className="lesson_contents">
                     <div className="lessoncontent">
