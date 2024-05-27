@@ -5,6 +5,7 @@ const LOADLESSONS = 'LOADLESSONS';
 const ADDANEWLESSON = 'addanewlesson';
 const UPDATETHISLESSON = 'updatethislessondb';
 const DELETEALESSON = 'deletealesson';
+const LOADMYLESSON1 = 'loadmylesson1'
 
 // regular action to load lessons
 const loadlessons = (lessons) => {
@@ -21,6 +22,23 @@ export const loadlessonsfromDB = (course_id) => async (dispatch) => {
         dispatch(loadlessons(data));
     }
 }
+
+// regular action to load a lesson based on its id
+const loadMyLesson = (mylesson) => {
+    return {
+        type: LOADMYLESSON1,
+        mylesson
+    }
+}
+// thunk action to load a lesson by its id
+export const loadmylesson = (course_id, lesson_id) => async (dispatch) => {
+    const response = await csrfFetch(`/api/courses/${course_id}/${lesson_id}`);
+    if(response.ok){
+        const data = await response.json();
+        dispatch(loadMyLesson(data))
+    }
+}
+
 
 // regular action to add new lesson to state
 const addlesson = (newlesson) => {
@@ -92,7 +110,8 @@ export const deltethelesson = (lesson_id) => async (dispatch) => {
 // lessons reducer
 const initialState = {
     lessons: {},
-    lessonDetails: {}
+    lessonDetails: {},
+    my_lesson: {}
 }
 const lessonReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -102,7 +121,13 @@ const lessonReducer = (state = initialState, action) => {
             // const _lessons = {};
             // action.lessons.forEach(lesson => _lessons[lesson.id] = lesson);
             // return { ...state, lessons: { ...state.lessons, ..._lessons } }
+                                    
             return {...state, lessons: action.lessons}
+        }
+        case LOADMYLESSON1: {
+            const _mylesson = {};
+            action.mylesson.forEach(lesson => _mylesson[lesson.id] = lesson);
+            return {...state, my_lesson: {...state.my_lesson, ..._mylesson}}
         }
         case ADDANEWLESSON: {
             return { ...state, lessons: { ...state.lessons, [action.newlesson.id]: action.newlesson } }

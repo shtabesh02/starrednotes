@@ -1,19 +1,20 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate, useParams } from "react-router-dom"
-import { editcomment, loadcommentsfromDB } from "../../store/comments";
+import { editcomment, loadmycomment } from "../../store/comments";
 
 import './UpdateComment.css'
 
 const UpdateComment = () => {
-    const comments = useSelector(state => Object.values(state.commentReducer?.comments))
-    const user_id = useSelector(state => state.session.user.id)
     const { course_id, comment_id } = useParams();
+    // const comments = useSelector(state => Object.values(state.commentReducer?.comments))
+    const updatingmycomment = useSelector(state => state.commentReducer?.my_comment[comment_id])
+    const user_id = useSelector(state => state.session.user.id)
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const thetargetcomment = comments.filter(comment => comment.id == comment_id);
+    // const thetargetcomment = comments.filter(comment => comment?.id == comment_id);
 
-    const [comment, setComment] = useState(thetargetcomment[0]?.comment);
+    const [comment, setComment] = useState(updatingmycomment?.comment || '');
 
 
     const [errors, setErrors] = useState({});
@@ -41,8 +42,20 @@ const UpdateComment = () => {
     }
 
     useEffect(() => {
-        dispatch(loadcommentsfromDB(course_id))
-    }, [dispatch, course_id]);
+        dispatch(loadmycomment(comment_id, course_id))
+            .then(()=> console.log('my comment loaded.'))
+            .catch(async (res) => {
+                const data = await res.json();
+                console.log('error of my comment: ', data)
+            })
+        // dispatch(loadcommentsfromDB(course_id))
+    }, [dispatch, comment_id, course_id]);
+
+    useEffect(() => {
+        if(updatingmycomment){
+            setComment(updatingmycomment.comment || '')
+        }
+    }, [updatingmycomment])
     return (
         <>
              <div className="back2course">
@@ -54,7 +67,7 @@ const UpdateComment = () => {
             <form onSubmit={updatethiscomment} className="commentform">
                 <div>
                     <label htmlFor="comment">Comment</label>
-                    <textarea value={comment} onChange={(e) => setComment(e.target.value)} />
+                    <textarea id="comment" name="comment" value={comment} onChange={(e) => setComment(e.target.value)} />
                     {errors.comment && <p className="errorcss">{errors.comment}</p>}
                 </div>
                 <div className="sbmtbtn">

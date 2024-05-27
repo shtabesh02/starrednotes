@@ -19,7 +19,7 @@ router.get('/:course_id', async (req, res) => {
     res.status(200).json(course);
 })
 
-// loading lessons for a course based on its id
+// loading lessons for a course based on course id
 router.get('/:course_id/lessons', async (req, res) => {
     const { course_id } = req.params;
     const lessons = await Lesson.findAll({ where: { course_id: course_id } });
@@ -40,6 +40,21 @@ router.get('/:course_id/comments', async (req, res) => {
     res.status(200).json(commentsList);
 })
 
+// loading a lesson based on its id
+router.get('/:course_id/:lesson_id', async (req, res) => {
+    const {course_id, lesson_id} = req.params;
+    const mylesson = await Lesson.findAll({where: {id: lesson_id, course_id: course_id}});
+    res.status(200).json(mylesson);
+});
+
+// loading a comment by its id
+router.get('/:course_id/comments/:comment_id', async (req, res) => {
+    const {course_id, comment_id} = req.params;
+    const mycomment = await Course_Comment.findAll({where: {id: comment_id, course_id: course_id}})
+    // console.log('my coment from db: ', mycomment)
+    res.status(200).json(mycomment)
+})
+
 // loading all my courses
 router.get('/instructor/:my_id', requireAuth,async (req, res) => {
     const { my_id } = req.params;
@@ -47,6 +62,7 @@ router.get('/instructor/:my_id', requireAuth,async (req, res) => {
     if(my_id == currentUserId){
 
         const mycourses = await Course.findAll({ where: { user_id: my_id } });
+        // console.log('mycourses: ', mycourses)
         res.status(200).json(mycourses);
     }else{
         console.log('Forbidden')

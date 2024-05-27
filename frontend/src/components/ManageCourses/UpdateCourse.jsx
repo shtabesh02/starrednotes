@@ -51,10 +51,7 @@ const UpdateCourse = () => {
     useEffect(() => {
         dispatch(loadmycoursesfromDB(user_id))
             .then(() => console.log('my courses loaded'))
-            .catch(async (res) => {
-                const data = await res.json();
-                console.log('data as errors: ', data)
-            })
+            .catch(() => console.log('could not load the courses from db.'))
     }, [dispatch, user_id]);
 
     useEffect(() => {

@@ -10,8 +10,9 @@ import AddComment from "../Comments/AddComment";
 const CourseDetails = () => {
   const { course_id } = useParams();
 
-  const course = useSelector(state => state.courseReducer.courseDetails);
-  const lessons = useSelector(state => Object.values(state.lessonReducer.lessons));
+  const course = useSelector(state => state.courseReducer?.courseDetails);
+  const lessons = useSelector(state => state.lessonReducer?.lessons);
+  // console.log('lessons: ', lessons)
   const comments = useSelector(state => Object.values(state.commentReducer?.comments));
   const current_user = useSelector(state => state.session.user?.id);
   // const currentcoursecomments = comments.filter(comment => comment.course_id == course_id)

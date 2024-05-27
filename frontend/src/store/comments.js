@@ -4,6 +4,7 @@ const LOADCOMMENTS = 'loaddallcomments';
 const ADDANEWCOMMENT = 'addanewcomment';
 const DELETEACOMMENT = 'deleteacomment';
 const UPDATETHISCOMMENT = 'updatethiscomment';
+const LOADMYCOMMENT1 = 'loadmycomment1';
 
 // regular action to load comments
 const loadcomments = (comments) => {
@@ -20,6 +21,26 @@ export const loadcommentsfromDB = (course_id) => async (dispatch) => {
         // NOTE: the data is array of objects. So when designing the state be aware of that.
         // You may create an object of objects as the state.
         dispatch(loadcomments(data));
+    }
+}
+
+// regular action to load a comment by its id
+const loadthiscomment = (mycomment) => {
+    return {
+        type: LOADMYCOMMENT1,
+        mycomment
+    }
+}
+// thunk action to load a comment by its id
+export const loadmycomment = (comment_id, course_id) => async (dispatch) => {
+    const response = await csrfFetch(`/api/courses/${course_id}/comments/${comment_id}`);
+    // console.log('my comment from thunk: ', response)
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(loadthiscomment(data));
+    }else{
+        const e = await response.json();
+        return e;
     }
 }
 
@@ -82,9 +103,9 @@ export const editcomment = (updatedcomment, comment_id) => async (dispatch) => {
         body: JSON.stringify(updatedcomment)
     });
     const data = await response.json();
-        // The updated comment is sent to the reducer as an object
-        dispatch(editacomment(data))
-        return response;
+    // The updated comment is sent to the reducer as an object
+    dispatch(editacomment(data))
+    return response;
 
     // if (response.ok) {
     //     const data = await response.json();
@@ -96,7 +117,10 @@ export const editcomment = (updatedcomment, comment_id) => async (dispatch) => {
 
 
 // comments reducer
-const initialState = { comments: {} };
+const initialState = {
+    comments: {},
+    my_comment: {}
+};
 const commentReducer = (state = initialState, action) => {
     let newState = {};
     switch (action.type) {
@@ -110,7 +134,7 @@ const commentReducer = (state = initialState, action) => {
             // _comments.forEach(comment => _commentsobj[comment.id] = comment);
             // return { ...state, comments: { ...state.comments, ..._commentsobj } }
 
-            return {...state, comments: action.comments}
+            return { ...state, comments: action.comments }
         }
         case ADDANEWCOMMENT: {
             // The new comment comes as an object
@@ -125,6 +149,11 @@ const commentReducer = (state = initialState, action) => {
         case UPDATETHISCOMMENT: {
             // The updated comment comes as an object, so similar to ADDing a comment to the state, add this to the state.
             return { ...state, comments: { ...state.comments, [action.updatedcomment.id]: action.updatedcomment } }
+        }
+        case LOADMYCOMMENT1: {
+            const _mycomment = {};
+            action.mycomment.forEach(comment => _mycomment[comment.id] = comment);
+            return { ...state, my_comment: {...state.my_comment, ..._mycomment}}
         }
         default:
             return state
