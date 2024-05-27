@@ -76,9 +76,7 @@ const UpdateCourse = () => {
                     <form onSubmit={updatethiscourse} className='courseform'>
                         <div>
                             <label htmlFor="title">Title</label>
-                            {updatingcourse?.title &&
-                                <input id='title' type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
-                            }
+                            <input id='title' type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
                             {erros.title && <p className='errorcss'>{erros.title}</p>}
                         </div>
                         <div>
