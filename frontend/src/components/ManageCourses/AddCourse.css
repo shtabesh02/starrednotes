@@ -47,7 +47,7 @@
     color: #555;
     margin-bottom: 5px;
 }
-.courseform input[type='text'] {
+.courseform input[type='text'], .courseform select {
     width: 100%;
     padding: 10px;
     border: 1px solid #ddd;

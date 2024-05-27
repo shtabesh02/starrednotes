@@ -10,6 +10,8 @@ const AddCourse = () => {
     const [instructor, setInstructor] = useState('');
     const [category, setCategory] = useState('');
     const [description, setDescription] = useState('');
+    
+    const categories = ['Javascript', 'Python'];
 
     const [errors, setErrors] = useState({});
 
@@ -55,9 +57,19 @@ const AddCourse = () => {
                             <input type="text" value={instructor} onChange={(e) => setInstructor(e.target.value)} />
                             {errors.instructor && <p className="errorcss">{errors.instructor}</p>}
                         </div>
-                        <div>
+                        {/* <div>
                             <label htmlFor="category">Category</label>
                             <input type="text" value={category} onChange={(e) => setCategory(e.target.value)} />
+                            {errors.category && <p className="errorcss">{errors.category}</p>}
+                        </div> */}
+                        <div>
+                            <label htmlFor="category">Category</label>
+                            <select name="category" id="category" value={category} onChange={e => setCategory(e.target.value)}>
+                                <option value="" disabled>Select the category</option>
+                                {categories.map((category, index) => (
+                                    <option key={index} value={category}>{category}</option>
+                                ))}
+                            </select>
                             {errors.category && <p className="errorcss">{errors.category}</p>}
                         </div>
                         <div>
