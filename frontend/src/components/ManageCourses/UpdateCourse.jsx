@@ -75,7 +75,6 @@ const UpdateCourse = () => {
                     <h1>Update Course</h1>
                     <form onSubmit={updatethiscourse} className='courseform'>
                         <div>
-                            {updatingcourse?.title}
                             <label htmlFor="title">Title</label>
                             {updatingcourse?.title &&
                                 <input id='title' type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
