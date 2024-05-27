@@ -16,7 +16,7 @@ const CoursesRibbon = () => {
         }
     })
 
-    console.log('unique category: ', coursesCategory)
+    // console.log('unique category: ', coursesCategory)
 
 
     // console.log('course type: ', typeof (courses))

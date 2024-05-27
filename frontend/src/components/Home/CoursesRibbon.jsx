@@ -5,7 +5,7 @@ import { loadCoursesfromDB } from '../../store/courses';
 import './cr.css'
 const CoursesRibbon = () => {
     const courses = useSelector(state => Object.values(state.courseReducer.courses))
-    console.log('course type: ', typeof (courses))
+    // console.log('course type: ', typeof (courses))
     const dispatch = useDispatch();
 
     useEffect(() => {

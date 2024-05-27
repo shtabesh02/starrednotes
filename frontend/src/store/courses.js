@@ -39,7 +39,7 @@ export const loadmycoursesfromDB = (my_id) => async (dispatch) => {
         dispatch(loadmycourses(data));
     }else{
         const e = await response.json();
-        console.log('eeee: ', e)
+        // console.log('eeee: ', e)
         return e;
     }
     // const thisdata = await response.json();

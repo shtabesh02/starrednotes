@@ -16,7 +16,7 @@ const CourseDetails = () => {
   const current_user = useSelector(state => state.session.user?.id);
   // const currentcoursecomments = comments.filter(comment => comment.course_id == course_id)
   const current_user_comment = comments.filter(comment => comment?.user_id == current_user) || '';
-  console.log('current user comment: ', current_user_comment)
+  // console.log('current user comment: ', current_user_comment)
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [selectedTab, setSelectedTab] = useState('course_content')

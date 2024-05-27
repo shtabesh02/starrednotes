@@ -7,7 +7,7 @@ import './UpdateCourse.css';
 
 const UpdateCourse = () => {
     const { course_id } = useParams();
-    console.log('course_id from UpdateCourse.jsx: ', course_id)
+    // console.log('course_id from UpdateCourse.jsx: ', course_id)
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const updatingcourse = useSelector(state => state.courseReducer?.courses[course_id]);

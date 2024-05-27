@@ -4,7 +4,7 @@
 const ViewAll = ({courseCategories}) => {
   // const allCourses = useSelector(state => Object.values(state.courseReducer))
 
-  console.log('courseCategories form ViewAll: ', courseCategories)
+  // console.log('courseCategories form ViewAll: ', courseCategories)
   return (
     <div className='viewall'>
       {courseCategories}

@@ -138,7 +138,7 @@ router.put('/:course_id/update', validateNewCourse, async (req, res) => {
         const { user_id, title, instructor, category, description } = req.body;
         const { course_id } = req.params;
         const currcourse = await Course.findOne({ where: { id: course_id } });
-        console.log('api Course findONe: ', currcourse)
+        // console.log('api Course findONe: ', currcourse)
         const updatedcourse = currcourse.set(
             {
                 user_id,
