@@ -5,7 +5,7 @@ import { addnewcommenttoDB } from '../../store/comments';
 
 import './AddComment.css'
 
-const AddComment = () => {
+const AddComment = ({ setSelectedTab }) => {
     const [comment, setComment] = useState('');
     const { course_id } = useParams();
     const dispatch = useDispatch();
@@ -31,13 +31,14 @@ const AddComment = () => {
                 if (err?.errors) {
                     setErrors(err.errors)
                 }
-            })
+            });
+            setSelectedTab('comments')
     }
     return (
         <>
-            <div className="back2course">
+            {/* <div className="back2course">
                 <button onClick={() => navigate(`/courses/${course_id}`)}>Back</button>
-            </div>
+            </div> */}
             <div className='commentcontainer'>
                 <div className="addingcomment">
                     <h1>Add your comment</h1>
@@ -48,7 +49,7 @@ const AddComment = () => {
                             {errors.comment && <p className='errorcss'>{errors.comment}</p>}
                         </div>
                         <div className='sbmtbtn'>
-                        <button>Submit</button>
+                            <button>Submit</button>
                         </div>
                     </form>
                 </div>

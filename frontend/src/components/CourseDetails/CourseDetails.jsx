@@ -6,6 +6,7 @@ import { loadlessonsfromDB } from "../../store/lessons";
 import { deletecomment, loadcommentsfromDB } from "../../store/comments";
 
 import './CourseDetails.css'
+import AddComment from "../Comments/AddComment";
 const CourseDetails = () => {
   const { course_id } = useParams();
 
@@ -14,7 +15,8 @@ const CourseDetails = () => {
   const comments = useSelector(state => Object.values(state.commentReducer?.comments));
   const current_user = useSelector(state => state.session.user?.id);
   // const currentcoursecomments = comments.filter(comment => comment.course_id == course_id)
-
+  const current_user_comment = comments.filter(comment => comment?.user_id == current_user) || '';
+  console.log('current user comment: ', current_user_comment)
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [selectedTab, setSelectedTab] = useState('course_content')
@@ -26,34 +28,25 @@ const CourseDetails = () => {
   }, [dispatch, course_id])
 
   // checking to see if the logged in user has already commented
-  const [alreadyCommented, setAlreadyCommented] = useState(false)
+  // const [alreadyCommented, setAlreadyCommented] = useState(false);
+  // if (current_user_comment.length > 0) {
+  //   setAlreadyCommented(true);
+  // }
 
-  useEffect(() => {
-    if (current_user && comments.length > 0) {
-      comments.forEach(comment => {
-        if(comment.user_id == current_user){
-          setAlreadyCommented(true)
-        }
-      })
-    }
-    // else if (current_user && comments) {
-    //   comments.forEach(comment => {
-    //     if (comment.user_id == current_user) {
-    //       setAlreadyCommented(true)
-    //     }
-    //   })
-    // }
-  }, [comments, current_user, alreadyCommented]);
+
 
   // navigate to add comment page
-  const addcomment = () => {
-    navigate(`/courses/${course_id}/comment`)
-  }
+  // const addcomment = () => {
+  //   navigate(`/courses/${course_id}/comment`);
+  //   // setSelectedTab('comments');
+  // }
 
   // delete a comment
   const deleteacomment = async (comment_id) => {
     const deleteSuceeeded = await dispatch(deletecomment(comment_id));
     if (deleteSuceeeded) {
+      await dispatch(loadcommentsfromDB(course_id));
+      // setAlreadyCommented(false);
       alert('Comment deleted successfully.');
       navigate(`/courses/${course_id}`);
     } else {
@@ -74,45 +67,51 @@ const CourseDetails = () => {
       </div>
       {selectedTab === 'course_content' &&
         <ol className="lessoncart">
-          {lessons.length > 0 && lessons.map(lesson => (
-            <li key={lesson.id} className="thelesson">
-              <NavLink to={`/courses/${course_id}/lessons/${lesson.id}`}
-                style={{ textDecoration: 'none' }}>
-                <span>{lesson.title}</span>
-              </NavLink>
-            </li>
-          ))
+          {lessons.length > 0 ? (
+            lessons.map(lesson => (
+              <li key={lesson.id} className="thelesson">
+                <NavLink to={`/courses/${course_id}/lessons/${lesson.id}`}
+                  style={{ textDecoration: 'none' }}>
+                  <span>{lesson.title}</span>
+                </NavLink>
+              </li>
+            ))
+          ) : (
+            <p>No lesson found.</p>
+          )
+
           }
         </ol>
       }
       {
         selectedTab === 'comments' &&
         <ul className="comments_container">
-          
           {
-          comments.length > 0 ? (
-            comments.map(comment => (
-              <li key={comment.id}>
-                <div className="comments">
-                  <p>{comment.user_id}</p>
-                  <p>{comment.createdAt}</p>
-                  <p>{comment.comment}</p>
-                  {comment.user_id === current_user && (
-                    <p>
-                      <button onClick={() => deleteacomment(comment.id)}>Delete</button>
-                      <button onClick={() => editcomment(comment.id)}>Edit</button>
-                    </p>
-                  )}
-                  <hr />
-                </div>
-              </li>
-            ))
-          ):(
-            <>
-            <li>No comments found.</li>
-            {!alreadyCommented && current_user && <li><button onClick={() => addcomment()}>Add your comment</button></li>}
-            </>
-          )
+            comments.length > 0 ? (
+              comments.map(comment => (
+
+                <li key={comment.id}>
+                  <div className="comments">
+                    <p>{comment.user_id}</p>
+                    <p>{comment.createdAt}</p>
+                    <p>{comment.comment}</p>
+                    {comment.user_id === current_user && (
+                      <p>
+                        <button onClick={() => deleteacomment(comment.id)}>Delete</button>
+                        <button onClick={() => editcomment(comment.id)}>Edit</button>
+                      </p>
+                    )}
+                    <hr />
+                  </div>
+                </li>
+
+              ))
+            ) : (
+              <p>No comments yet.</p>
+            )
+          }
+          {
+            current_user && current_user_comment.length == 0 && (<AddComment setSelectedTab={setSelectedTab} />) 
           }
         </ul>
       }

@@ -5,7 +5,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { loadCoursefromDB } from "../../store/courses";
 
 import './ManageLessons.css'
-
 const ManageLessons = () => {
     const dispatch = useDispatch();
     const { course_id } = useParams();
@@ -26,6 +25,7 @@ const ManageLessons = () => {
         const deletesuccess = await dispatch(deltethelesson(lession_id))
         if (deletesuccess) {
             alert('Lesson deleted successfuly...')
+            await dispatch(loadlessonsfromDB(course_id));
             navigate(`/courses/${course_id}/managelessons`);
         }
     }
@@ -50,13 +50,17 @@ const ManageLessons = () => {
                     <button onClick={() => navigate(`/courses/${course_id}/addlesson`)}>Add a new lesson</button>
                 </div>
                 <ol className="lessoncart">
-                    {thiscourse.length > 0 ? (
+                    {thiscourse?.length > 0 ? (
                         thiscourse.map(lesson => (
                             <li key={lesson.id} className="thelesson">
                                 <span>{lesson.title}</span>
                                 <span className="btns">
+
                                     <button onClick={() => deletelesson(lesson.id)}>Delete</button>
                                     <button onClick={() => navigate(`/courses/${course_id}/updatelesson/${lesson.id}`)}>Update</button>
+                                </span>
+                                <span>
+
                                 </span>
                             </li>
                         ))
