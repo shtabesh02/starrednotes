@@ -10,7 +10,7 @@ const AddCourse = () => {
     const [instructor, setInstructor] = useState('');
     const [category, setCategory] = useState('');
     const [description, setDescription] = useState('');
-    
+
     const categories = ['Javascript', 'Python'];
 
     const [errors, setErrors] = useState({});
