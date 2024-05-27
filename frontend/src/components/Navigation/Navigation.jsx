@@ -7,7 +7,7 @@ import OpenModalButton from '../OpenModalButton';
 import LoginFormModal from '../LoginFormModal';
 // import SignupFormModal from '../SignupFormModal';
 import './Navigation.css';
-import CoursesRibbon from '../CoursesRibbon';
+// import CoursesRibbon from '../CoursesRibbon';
 // import { FaUserCircle } from 'react-icons/fa';
 
 function Navigation({ isLoaded }) {
@@ -53,7 +53,8 @@ function Navigation({ isLoaded }) {
       </li>
       {isLoaded && sessionLinks}
     </ul>
-    <CoursesRibbon />
+    {/* <CoursesRibbon /> */}
+    <hr />
     </>
   );
 }

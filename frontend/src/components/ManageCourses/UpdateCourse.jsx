@@ -14,24 +14,19 @@ const UpdateCourse = () => {
     // console.log('updatingcourse: ', updatingcourse);
     // console.log('updatingcourse.id: ', updatingcourse?.id);
     // console.log('updatingcourse.title: ', updatingcourse?.title)
-    const user_id = useSelector(state => state.session.user.id);
+    const user_id = useSelector(state => state.session?.user.id);
     // const current_user = useSelector(state => state.session.user?.id);
 
-    const [title, setTitle] = useState(updatingcourse?.title);
-    const [instructor, setInstructor] = useState(updatingcourse?.instructor);
+    const [title, setTitle] = useState(updatingcourse?.title || '');
+    const [instructor, setInstructor] = useState(updatingcourse?.instructor || '');
     // const [instructor, setInstructor] = useState(allcourses[course_id].instructor);
-    const [category, setCategory] = useState(updatingcourse?.category);
-    const [description, setDescription] = useState(updatingcourse?.description);
-    
-    // useEffect(()=> {
-    //     setTitle(updatingcourse?.title);
-    //     setInstructor(updatingcourse?.instructor);
-    //     setCategory(updatingcourse?.category);
-    //     setDescription(updatingcourse?.description)
-    // }, [updatingcourse]);
+    const [category, setCategory] = useState(updatingcourse?.category || '');
+    const [description, setDescription] = useState(updatingcourse?.description || '');
+
+    const categories = ['Javascript', 'Python'];
 
     const [erros, setErrors] = useState({});
-    
+
     const updatethiscourse = (e) => {
         e.preventDefault();
         const updatedcourse = {
@@ -55,34 +50,36 @@ const UpdateCourse = () => {
     }
     useEffect(() => {
         dispatch(loadmycoursesfromDB(user_id))
-        .then(()=> console.log('my courses loaded'))
-        .catch(async (res) => {
-            const data = await res.json();
-            console.log('data as errors: ', data)
-        })
-        // .catch(() => async (res) => {
-        //   const _authmsg = await res.json();
-        //   console.log('_authmsg: ')
-        // })
-      }, [dispatch, user_id]);
+            .then(() => console.log('my courses loaded'))
+            .catch(async (res) => {
+                const data = await res.json();
+                console.log('data as errors: ', data)
+            })
+    }, [dispatch, user_id]);
 
+    useEffect(() => {
+        if (updatingcourse) {
+            setTitle(updatingcourse.title || '');
+            setInstructor(updatingcourse.instructor || '');
+            setCategory(updatingcourse.category || '');
+            setDescription(updatingcourse.description || '');
+        }
+    }, [updatingcourse]);
     return (
         <>
             <div className="updatecoursecontainer">
-            <div className="back2mycourses">
-                <button onClick={() => navigate('/managecourses')}>Back</button>
-            </div>
+                <div className="back2mycourses">
+                    <button onClick={() => navigate('/managecourses')}>Back</button>
+                </div>
                 <div className="updatethecourse">
-
-                
                     <h1>Update Course</h1>
                     <form onSubmit={updatethiscourse} className='courseform'>
                         <div>
+                            {updatingcourse?.title}
                             <label htmlFor="title">Title</label>
-                            {updatingcourse?.title && 
-                            <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
+                            {updatingcourse?.title &&
+                                <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
                             }
-                            
                             {erros.title && <p className='errorcss'>{erros.title}</p>}
                         </div>
                         <div>
@@ -90,10 +87,20 @@ const UpdateCourse = () => {
                             <input type="text" value={instructor} onChange={(e) => setInstructor(e.target.value)} />
                             {erros.instructor && <p className='errorcss'>{erros.instructor}</p>}
                         </div>
-                        <div>
+                        {/* <div>
                             <label htmlFor="category">Category</label>
                             <input type="text" value={category} onChange={(e) => setCategory(e.target.value)} />
                             {erros.category && <p className='errorcss'>{erros.category}</p>}
+                        </div> */}
+                        <div>
+                            <label htmlFor="category">Category</label>
+                            <select name="category" id="category" value={category} onChange={e => setCategory(e.target.value)}>
+                                <option value="" disabled>Select the category</option>
+                                {categories.map((category, index) => (
+                                    <option key={index} value={category}>{category}</option>
+                                ))}
+                            </select>
+                            {erros.category && <p className="errorcss">{erros.category}</p>}
                         </div>
                         <div>
                             <label htmlFor="description">Description</label>
@@ -104,7 +111,7 @@ const UpdateCourse = () => {
                             <button>Submit</button>
                         </div>
                     </form>
-                    </div>
+                </div>
             </div>
         </>
     )
