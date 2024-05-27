@@ -61,6 +61,7 @@ const ManageCourses = () => {
           )}
         </ul>
       </div>
+      {courses?.length == 0 && <p>You do not have any course yet. Click on the above button to create your courses.</p>}
     </>
   )
 }
