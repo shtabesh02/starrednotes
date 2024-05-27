@@ -27,26 +27,11 @@ const CourseDetails = () => {
     dispatch(loadcommentsfromDB(course_id))
   }, [dispatch, course_id])
 
-  // checking to see if the logged in user has already commented
-  // const [alreadyCommented, setAlreadyCommented] = useState(false);
-  // if (current_user_comment.length > 0) {
-  //   setAlreadyCommented(true);
-  // }
-
-
-
-  // navigate to add comment page
-  // const addcomment = () => {
-  //   navigate(`/courses/${course_id}/comment`);
-  //   // setSelectedTab('comments');
-  // }
-
   // delete a comment
   const deleteacomment = async (comment_id) => {
     const deleteSuceeeded = await dispatch(deletecomment(comment_id));
     if (deleteSuceeeded) {
       await dispatch(loadcommentsfromDB(course_id));
-      // setAlreadyCommented(false);
       alert('Comment deleted successfully.');
       navigate(`/courses/${course_id}`);
     } else {
