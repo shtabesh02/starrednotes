@@ -10,6 +10,8 @@ const { requireAuth } = require('../../utils/auth.js');
 const sessionRouter = require('./session.js');
 const usersRouter = require('./users.js');
 const courseRouter = require('./courses.js');
+const lessonRouter = require('./lessons.js');
+const commentRouter = require('./comments.js');
 
 
 
@@ -20,6 +22,8 @@ router.use('/session', sessionRouter);
 
 router.use('/users', usersRouter);
 router.use('/courses', courseRouter);
+router.use('/lessons', lessonRouter);
+router.use('/comments', commentRouter);
 
 
 

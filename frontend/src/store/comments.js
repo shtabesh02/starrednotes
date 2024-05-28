@@ -15,7 +15,7 @@ const loadcomments = (comments) => {
 }
 // thunk action to load comments from db
 export const loadcommentsfromDB = (course_id) => async (dispatch) => {
-    const response = await csrfFetch(`/api/courses/${course_id}/comments`);
+    const response = await csrfFetch(`/api/comments/${course_id}/comments`);
     if (response.ok) {
         const data = await response.json();
         // NOTE: the data is array of objects. So when designing the state be aware of that.
@@ -33,7 +33,7 @@ const loadthiscomment = (mycomment) => {
 }
 // thunk action to load a comment by its id
 export const loadmycomment = (comment_id, course_id) => async (dispatch) => {
-    const response = await csrfFetch(`/api/courses/${course_id}/comments/${comment_id}`);
+    const response = await csrfFetch(`/api/comments/${course_id}/comments/${comment_id}`);
     // console.log('my comment from thunk: ', response)
     if (response.ok) {
         const data = await response.json();
@@ -53,7 +53,7 @@ const addnewcomment = (comment) => {
 }
 // thunk action to add new comment
 export const addnewcommenttoDB = (new_comment, course_id) => async (dispatch) => {
-    const response = await csrfFetch(`/api/courses/${course_id}/comment`, {
+    const response = await csrfFetch(`/api/comments/${course_id}/comment`, {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(new_comment)
@@ -62,11 +62,6 @@ export const addnewcommenttoDB = (new_comment, course_id) => async (dispatch) =>
     // The new comment is sent to the reducer as an object
     dispatch(addnewcomment(data))
     return response;
-    // if(response.ok){
-    //     const data = await response.json();
-    //     // The new comment is sent to the reducer as an object
-    //     dispatch(addnewcomment(data))
-    // }
 }
 
 // regular action to delete a comment
@@ -78,7 +73,7 @@ const dcomment = (comment_id) => {
 }
 // thunk action to delete a comment
 export const deletecomment = (comment_id) => async (dispatch) => {
-    const response = await csrfFetch(`/api/courses/comments/${comment_id}`, {
+    const response = await csrfFetch(`/api/comments/${comment_id}`, {
         method: 'DELETE'
     });
     if (response.ok) {
@@ -97,7 +92,7 @@ const editacomment = (updatedcomment) => {
 }
 // thunk action to update a comment
 export const editcomment = (updatedcomment, comment_id) => async (dispatch) => {
-    const response = await csrfFetch(`/api/courses/comments/${comment_id}`, {
+    const response = await csrfFetch(`/api/comments/${comment_id}`, {
         method: 'PUT',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updatedcomment)
@@ -106,13 +101,6 @@ export const editcomment = (updatedcomment, comment_id) => async (dispatch) => {
     // The updated comment is sent to the reducer as an object
     dispatch(editacomment(data))
     return response;
-
-    // if (response.ok) {
-    //     const data = await response.json();
-    //     // The updated comment is sent to the reducer as an object
-    //     dispatch(editacomment(data))
-    //     return true;
-    // }
 }
 
 

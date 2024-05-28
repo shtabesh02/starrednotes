@@ -16,7 +16,7 @@ const loadlessons = (lessons) => {
 }
 // thunk action to lead lessons from DB by course id
 export const loadlessonsfromDB = (course_id) => async (dispatch) => {
-    const response = await csrfFetch(`/api/courses/${course_id}/lessons`);
+    const response = await csrfFetch(`/api/lessons/${course_id}/lessons`);
     if (response.ok) {
         const data = await response.json();
         dispatch(loadlessons(data));
@@ -32,7 +32,7 @@ const loadMyLesson = (mylesson) => {
 }
 // thunk action to load a lesson by its id
 export const loadmylesson = (course_id, lesson_id) => async (dispatch) => {
-    const response = await csrfFetch(`/api/courses/${course_id}/${lesson_id}`);
+    const response = await csrfFetch(`/api/lessons/${course_id}/lessons/${lesson_id}`);
     if(response.ok){
         const data = await response.json();
         dispatch(loadMyLesson(data))
