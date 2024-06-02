@@ -28,6 +28,16 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'user_id',
         onDelete: 'CASCADE'
       })
+
+      User.hasMany(models.StarredNote, {
+        foreignKey: 'user_id',
+        onDelete: 'CASCADE'
+      })
+
+      User.hasMany(models.StarredNoteComment, {
+        foreignKey: 'user_id',
+        onDelete: 'CASCADE'
+      })
     }
   };
 
