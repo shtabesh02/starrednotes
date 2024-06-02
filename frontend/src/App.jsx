@@ -15,6 +15,7 @@ import UpdateCourse from './components/ManageCourses/UpdateCourse';
 import ManageLessons from './components/ManageLessons/ManageLessons';
 import AddLesson from './components/ManageLessons/AddLesson';
 import UpdateLesson from './components/ManageLessons/UpdateLesson';
+import StarredNotes from './components/StarredNotes';
 
 function Layout() {
   const dispatch = useDispatch();
@@ -81,6 +82,10 @@ const router = createBrowserRouter([
       {
         path: '/courses/:course_id/updatelesson/:lesson_id',
         element: <UpdateLesson />
+      },
+      {
+        path: '/starrednotes',
+        element: <StarredNotes />
       }
     ]
   }

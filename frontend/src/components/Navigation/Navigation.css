@@ -28,3 +28,17 @@
   border-radius: 40px;
   padding: 10px;
 }
+
+.top-headings{
+  list-style-type: none;
+  display: flex;
+  gap: 30px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+.top-headings li{
+  cursor: pointer;
+}
+.top-headings a.active{
+  color: #391dda;
+  font-weight: bold;
+}

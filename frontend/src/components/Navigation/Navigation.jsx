@@ -12,7 +12,6 @@ import './Navigation.css';
 
 function Navigation({ isLoaded }) {
   const sessionUser = useSelector((state) => state.session.user);
-
   let sessionLinks;
   if (sessionUser) {
     sessionLinks = (
@@ -54,6 +53,11 @@ function Navigation({ isLoaded }) {
       {isLoaded && sessionLinks}
     </ul>
     {/* <CoursesRibbon /> */}
+    <hr />
+    <ul className='top-headings'>
+      <li><NavLink to={'/'} style={{textDecoration: "none"}}>Courses</NavLink></li>
+      <li><NavLink to={'/starrednotes'} style={{textDecoration: "none"}}>Starred Notes</NavLink></li>
+    </ul>
     <hr />
     </>
   );

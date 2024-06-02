@@ -60,9 +60,9 @@ const ManageCourses = () => {
             </li>
           )
           )}
+          {courses?.length == 0 && <li>You do not have any course yet. Click on the above button to create your courses.</li>}
         </ul>
       </div>
-      {courses?.length == 0 && <p>You do not have any course yet. Click on the above button to create your courses.</p>}
     </>
   )
 }
