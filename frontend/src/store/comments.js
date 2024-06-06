@@ -107,7 +107,7 @@ export const editcomment = (updatedcomment, comment_id) => async (dispatch) => {
 // comments reducer
 const initialState = {
     comments: {},
-    my_comment: {}
+    my_comment: {},
 };
 const commentReducer = (state = initialState, action) => {
     let newState = {};
@@ -118,11 +118,13 @@ const commentReducer = (state = initialState, action) => {
 
 
             // const _comments = action.comments;
-            // const _commentsobj = {};
-            // _comments.forEach(comment => _commentsobj[comment.id] = comment);
-            // return { ...state, comments: { ...state.comments, ..._commentsobj } }
+            const _commentsobj = {};
+            action.comments.forEach(comment => _commentsobj[comment.id] = comment);
+            return {  comments: {..._commentsobj } }
 
-            return { ...state, comments: action.comments }
+
+            // if the above doesn't work, the bellow return works
+            // return { ...state, comments: action.comments }
         }
         case ADDANEWCOMMENT: {
             // The new comment comes as an object

@@ -64,7 +64,7 @@ const StarredNotes = () => {
           starrednotes && starrednotes.map(note => (
             <li className='one-note' key={note.id}>
               <div className='one-note-container'>
-                <span className='user-icon'><i className="fa-solid fa-user fa-lg"></i></span><span>{note.User.firstName + ' ' + note.User.lastName}</span><span>{note.createdAt}</span>
+                <span className='user-icon'><i className="fa-solid fa-user fa-lg"></i></span><span>{note.User.firstName + ' ' + note.User.lastName}</span><span>{new Date(note.createdAt).toLocaleString('en-US', { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</span>
                 <NavLink to={`/starrednotes/${note.id}`} style={{ textDecoration: "none" }}>
                   {/* <hr /> */}
                   <h3>{note.title}</h3>

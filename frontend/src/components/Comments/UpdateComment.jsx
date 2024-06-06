@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate, useParams } from "react-router-dom"
-import { editcomment, loadmycomment } from "../../store/comments";
+import { editcomment, loadcommentsfromDB } from "../../store/comments";
 
 import './UpdateComment.css'
 
 const UpdateComment = () => {
     const { course_id, comment_id } = useParams();
+    console.log('comment_id: ', comment_id)
     // const comments = useSelector(state => Object.values(state.commentReducer?.comments))
-    const updatingmycomment = useSelector(state => state.commentReducer?.my_comment[comment_id])
-    const user_id = useSelector(state => state.session.user.id)
+    const updatingmycomment = useSelector(state => state.commentReducer?.comments[comment_id])
+    const user_id = useSelector(state => state.session?.user.id)
     const dispatch = useDispatch();
     const navigate = useNavigate();
     // const thetargetcomment = comments.filter(comment => comment?.id == comment_id);
@@ -36,14 +37,12 @@ const UpdateComment = () => {
                 setErrors(err.errors)
             }
         })
-        // if(updatesuccess){
-        //     navigate(`/courses/${course_id}`)
-        // }
     }
 
     useEffect(() => {
-        dispatch(loadmycomment(comment_id, course_id))
-            .then(()=> console.log('my comment loaded.'))
+        dispatch(loadcommentsfromDB(course_id))
+        // dispatch(loadmycomment(comment_id, course_id))
+            .then(()=> console.log('comments loaded.'))
             .catch(async (res) => {
                 const data = await res.json();
                 console.log('error of my comment: ', data)

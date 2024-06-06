@@ -2,12 +2,15 @@ const express = require('express');
 const router = express.Router();
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation')
-const { Course_Comment } = require('../../db/models');
+const { Course_Comment, User } = require('../../db/models');
 
 // loading comments for a course based on its id -->
 router.get('/:course_id/comments', async (req, res) => {
     const course_id = parseInt(req.params.course_id);
-    const comments = await Course_Comment.findAll({ where: { course_id: course_id } })
+    const comments = await Course_Comment.findAll({ where: { course_id: course_id },
+    include: [
+        {model: User, attributes: ['id', 'firstName', 'lastName']}
+    ] })
     // console.log('comments in the server: ', comments)
     const commentsList = []
     comments.forEach(comment => {

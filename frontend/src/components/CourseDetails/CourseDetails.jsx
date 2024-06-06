@@ -78,8 +78,8 @@ const CourseDetails = () => {
 
                 <li key={comment.id}>
                   <div className="comments">
-                    <p>{comment.user_id}</p>
-                    <p>{comment.createdAt}</p>
+                    <p>{comment.User.firstName + ' ' + comment.User.lastName}</p>
+                    <p>{new Date(comment.createdAt).toLocaleString('en-US', { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</p>
                     <p>{comment.comment}</p>
                     {comment.user_id === current_user && (
                       <p>
