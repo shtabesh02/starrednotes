@@ -5,13 +5,15 @@ import sessionReducer from './session';
 import courseReducer from './courses';
 import lessonReducer from './lessons';
 import commentReducer from './comments';
+import starrednotesReducer from './starrednotes'
 
 const rootReducer = combineReducers({
   // ADD REDUCERS HERE
   session: sessionReducer,
   courseReducer: courseReducer,
   lessonReducer: lessonReducer,
-  commentReducer: commentReducer
+  commentReducer: commentReducer,
+  starrednotesReducer: starrednotesReducer
 });
 
 let enhancer;
