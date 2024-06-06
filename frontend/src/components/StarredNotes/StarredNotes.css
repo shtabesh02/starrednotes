@@ -72,3 +72,8 @@ h1 {
     border-radius: 5px;
     transition: border-color 0.3s;
 }
+
+.more-less{
+    color: rgb(39, 24, 245);
+    font-weight: bold;
+}

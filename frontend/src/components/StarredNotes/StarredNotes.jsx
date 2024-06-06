@@ -15,6 +15,14 @@ const StarredNotes = () => {
   const [title, setTitle] = useState('');
 
 
+  // displaying 300 character states
+  const [expandedNotes, setExpandedNotes] = useState({});
+  const togleExpand = (starrednote_id) => {
+    setExpandedNotes(currentState => ({
+      ...currentState, [starrednote_id]: !currentState[starrednote_id]
+    }))
+  }
+
   // console.log('formModal: ', formModal);
   useEffect(() => {
     dispatch(loadStarredNotes());
@@ -56,12 +64,23 @@ const StarredNotes = () => {
           starrednotes && starrednotes.map(note => (
             <li className='one-note' key={note.id}>
               <div className='one-note-container'>
-                <span className='user-icon'><i className="fa-solid fa-user fa-lg"></i></span><span>{note.user_id}</span><span>{note.createdAt}</span>
+                <span className='user-icon'><i className="fa-solid fa-user fa-lg"></i></span><span>{note.User.firstName + ' ' + note.User.lastName}</span><span>{note.createdAt}</span>
                 <NavLink to={`/starrednotes/${note.id}`} style={{ textDecoration: "none" }}>
                   {/* <hr /> */}
                   <h3>{note.title}</h3>
                 </NavLink>
-                  <p>{note.content}</p>
+                  {/* <p>{note.content}</p> */}
+                  <div>
+                    {expandedNotes[note.id] ? (
+                    <span>{note.content}</span>
+                    ) : (
+                    <span>{`${note.content.substring(0, 400)}... `}</span>
+                    )}
+                    {note.content.length > 400 && 
+                    <span className='more-less' onClick={() => togleExpand(note.id)}>
+                      {expandedNotes[note.id] ? ' See less' : 'See more'}
+                      </span>}
+                  </div>
               </div>
             </li>
           ))

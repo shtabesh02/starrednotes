@@ -1,13 +1,17 @@
 const express = require('express');
 const router = express.Router();
-const {StarredNote} = require('../../db/models');
+const {StarredNote, User} = require('../../db/models');
 
 const {handleValidationErrors} = require('../../utils/validation');
 const { check } = require('express-validator');
 const { where } = require('sequelize');
 
 router.get('/', async (req, res) => {
-    const SN = await StarredNote.findAll();
+    const SN = await StarredNote.findAll({
+        include: [
+            {model: User, attributes: ['id', 'firstName', 'lastName']}
+        ]
+    });
     // console.log('SN: ', SN);
     res.status(200).json(SN);
 });
