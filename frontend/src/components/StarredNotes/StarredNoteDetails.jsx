@@ -33,7 +33,7 @@ const StarredNoteDetails = () => {
                 <div className="starrednotedetails">
                     <div className="noteinfo">
                         <span className='user-icon'><i className="fa-solid fa-user fa-lg"></i></span>
-                        <span>{notedetails.user_id}</span>
+                        <span>{notedetails.User.firstName + ' ' + notedetails.User.lastName}</span>
                         <span>{notedetails.createdAt}</span>
                     </div>
                     <div>

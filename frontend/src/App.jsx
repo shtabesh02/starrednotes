@@ -19,6 +19,7 @@ import StarredNotes from './components/StarredNotes';
 import StarredNoteModal from './components/StarredNoteModal/StarredNoteModal';
 import StarredNoteDetails from './components/StarredNotes/StarredNoteDetails';
 import UpdateStarredNote from './components/StarredNotes/UpdateStarredNote';
+import UserProfile from './components/UserProfile/UserProfile';
 
 function Layout() {
   const dispatch = useDispatch();
@@ -101,6 +102,10 @@ const router = createBrowserRouter([
       {
         path: '/starrednotes/:starrednote_id/update',
         element: <UpdateStarredNote />
+      },
+      {
+        path: '/:username',
+        element: <UserProfile />
       },
     ]
   }

@@ -42,45 +42,51 @@ const StarredNotes = () => {
     <div className='starrednotes-container'>
       <ul className='notes'>
         <li className='one-note'>
-            {user_id &&
-          <div className='one-note-container'>
+          {user_id &&
+            <div className='one-note-container'>
               <form className='noteform' onSubmit={addnewnote}>
-              <div>
-                <input value={title} onChange={e => setTitle(e.target.value)} type="text" placeholder='title'/>
-                <textarea onChange={(e) => setNote(e.target.value)} value={note} onFocus={() => setFormModal(true)} className='addnote' placeholder='Share your note here now, use it later and anytime...' />
-                {formModal && 
-                  <div className='addnotebtn'>
-                    <input type="file" />
-                    <button>Add this note</button>
-                  </div>
-                }
-              </div>
-            </form>
-          </div>
-            }
+                <div>
+                  <input value={title} onChange={e => setTitle(e.target.value)} type="text" placeholder='title' />
+                  <textarea onChange={(e) => setNote(e.target.value)} value={note} onFocus={() => setFormModal(true)} className='addnote' placeholder='Share your note here now, use it later and anytime...' />
+                  {formModal &&
+                    <div className='addnotebtn'>
+                      <input type="file" />
+                      <button>Add this note</button>
+                    </div>
+                  }
+                </div>
+              </form>
+            </div>
+          }
         </li>
         <hr />
         {
           starrednotes && starrednotes.map(note => (
             <li className='one-note' key={note.id}>
               <div className='one-note-container'>
-                <span className='user-icon'><i className="fa-solid fa-user fa-lg"></i></span><span>{note.User.firstName + ' ' + note.User.lastName}</span><span>{new Date(note.createdAt).toLocaleString('en-US', { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</span>
+                <NavLink to={`/${note.User?.username}`} style={{textDecoration: "none"}}>
+
+                <span className='user-icon'><i className="fa-solid fa-user fa-lg"></i>
+                </span>
+                <span>{note.User?.firstName + ' ' + note.User?.lastName}</span>
+                </NavLink>
+                <span>{new Date(note.createdAt).toLocaleString('en-US', { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</span>
                 <NavLink to={`/starrednotes/${note.id}`} style={{ textDecoration: "none" }}>
                   {/* <hr /> */}
                   <h3>{note.title}</h3>
                 </NavLink>
-                  {/* <p>{note.content}</p> */}
-                  <div>
-                    {expandedNotes[note.id] ? (
+                {/* <p>{note.content}</p> */}
+                <div>
+                  {expandedNotes[note.id] ? (
                     <span>{note.content}</span>
-                    ) : (
+                  ) : (
                     <span>{`${note.content.substring(0, 400)}... `}</span>
-                    )}
-                    {note.content.length > 400 && 
+                  )}
+                  {note.content.length > 400 &&
                     <span className='more-less' onClick={() => togleExpand(note.id)}>
                       {expandedNotes[note.id] ? ' See less' : 'See more'}
-                      </span>}
-                  </div>
+                    </span>}
+                </div>
               </div>
             </li>
           ))

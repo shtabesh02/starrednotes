@@ -1,15 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const {StarredNote, User} = require('../../db/models');
+const { StarredNote, User } = require('../../db/models');
 
-const {handleValidationErrors} = require('../../utils/validation');
+const { handleValidationErrors } = require('../../utils/validation');
 const { check } = require('express-validator');
 const { where } = require('sequelize');
 
 router.get('/', async (req, res) => {
     const SN = await StarredNote.findAll({
         include: [
-            {model: User, attributes: ['id', 'firstName', 'lastName']}
+            { model: User, attributes: ['id', 'firstName', 'lastName', 'username'] }
         ]
     });
     // console.log('SN: ', SN);
@@ -27,7 +27,7 @@ const validateNewnote = [
 ]
 
 router.post('/', validateNewnote, async (req, res) => {
-    const {user_id, title, note} = req.body;
+    const { user_id, title, note } = req.body;
     const newnote = await StarredNote.create({
         user_id,
         title,
@@ -37,17 +37,26 @@ router.post('/', validateNewnote, async (req, res) => {
     res.status(200).json(newnote);
 });
 
-router.get('/:starrednote_id', async(req, res) => {
-    const {starrednote_id} = req.params;
-    const thenote = await StarredNote.findAll({where: {id: starrednote_id}});
+router.get('/:starrednote_id', async (req, res) => {
+    const { starrednote_id } = req.params;
+    const thenote = await StarredNote.findAll(
+        {
+            where: {
+                id: starrednote_id
+            },
+            include: {
+                model: User, attributes: ['id', 'firstName', 'lastName']
+            }
+        }
+    );
     // console.log('thenote: ', thenote);
     res.status(200).json(thenote);
 })
 
 router.put('/:starrednote_id/update', async (req, res) => {
     const { starrednote_id } = req.params;
-    const {title, content} = req.body;
-    const updatednote = await StarredNote.findOne({where: {id: starrednote_id}});
+    const { title, content } = req.body;
+    const updatednote = await StarredNote.findOne({ where: { id: starrednote_id } });
     const setUpdatednote = updatednote.set({
         title,
         content
@@ -58,8 +67,8 @@ router.put('/:starrednote_id/update', async (req, res) => {
 })
 
 router.delete('/:starrednote_id', async (req, res) => {
-    const {starrednote_id} = req.params;
-    const deletenote = await StarredNote.findOne({where: {id: starrednote_id}});
+    const { starrednote_id } = req.params;
+    const deletenote = await StarredNote.findOne({ where: { id: starrednote_id } });
     deletenote.destroy();
     res.status(200).json(deletenote);
 })
