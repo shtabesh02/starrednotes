@@ -33,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
 
     },
     content: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT, // Changed it from STRING to TEXT
       validate: {
         notEmpty: {
           msg: "Please provide the content of the lesson."

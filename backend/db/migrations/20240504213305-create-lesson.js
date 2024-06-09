@@ -34,7 +34,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       content: {
-        type: Sequelize.STRING
+        type: Sequelize.TEXT // changed it from STRING to TEXT
       },
       createdAt: {
         allowNull: false,

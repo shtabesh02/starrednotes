@@ -4,6 +4,7 @@ import { loadCoursefromDB } from "../../store/courses";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { loadlessonsfromDB } from "../../store/lessons";
 import { deletecomment, loadcommentsfromDB } from "../../store/comments";
+import DOMPurify from "dompurify";
 
 import './CourseDetails.css'
 import AddComment from "../Comments/AddComment";
@@ -80,7 +81,11 @@ const CourseDetails = () => {
                   <div className="comments">
                     <p>{comment.User.firstName + ' ' + comment.User.lastName}</p>
                     <p>{new Date(comment.createdAt).toLocaleString('en-US', { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</p>
-                    <p>{comment.comment}</p>
+                    <div dangerouslySetInnerHTML={{
+                            __html: DOMPurify.sanitize(comment.comment.replace(/\n/g, '<br>')),
+                        }}>
+                      {/* {comment.comment} */}
+                    </div>
                     {comment.user_id === current_user && (
                       <p>
                         <button onClick={() => deleteacomment(comment.id)}>Delete</button>

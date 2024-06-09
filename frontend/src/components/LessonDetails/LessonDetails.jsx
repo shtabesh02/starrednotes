@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { loadlessonsfromDB } from '../../store/lessons';
 import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import { loadCoursefromDB } from '../../store/courses';
+import DOMPurify from 'dompurify';
 
 const LessonDetails = () => {
     const dispatch = useDispatch();
@@ -81,7 +82,12 @@ const LessonDetails = () => {
                         {activelesson ? (
                             // {displayedLesson ? (
                             <>
-                                <p>{activelesson[0]?.content}</p>
+                                <div dangerouslySetInnerHTML={{
+                            __html: DOMPurify.sanitize(activelesson[0]?.content.replace(/\n/g, '<br>')),
+                        }}>
+                                    {/* {activelesson[0]?.content} */}
+                                    
+                                </div>
                                 <div className="next_prev">
                                     <button className={`prevbtn ${prevdisabled ? 'disabled' : false}`} onClick={() => handleprev()}>Previous</button>
                                     <button className={`nextbtn ${nextdisabled ? 'disabled' : false}`} onClick={() => handlenext()}>Next</button>

@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom"
 import { deleteanote, loadthenote } from "../../store/starrednotes";
+import { NavLink } from "react-router-dom";
+import DOMPurify from 'dompurify'
 import './StarredNoteDetails.css'
 
 const StarredNoteDetails = () => {
@@ -20,30 +22,37 @@ const StarredNoteDetails = () => {
     // handle deleting a note
     const deletethisnote = () => {
         dispatch(deleteanote(starrednote_id))
-        .then(() => {
-            alert('The note successfully deleted.')
-            navigate('/starrednotes')
-        })
+            .then(() => {
+                alert('The note successfully deleted.')
+                navigate('/starrednotes')
+            })
     }
     return (
-        <div className="notedetailscontainer">
-            <h1>{notedetails?.title}</h1>
-            {
-                notedetails &&
-                <div className="starrednotedetails">
-                    <div className="noteinfo">
-                        <span className='user-icon'><i className="fa-solid fa-user fa-lg"></i></span>
-                        <span>{notedetails.User.firstName + ' ' + notedetails.User.lastName}</span>
-                        <span>{notedetails.createdAt}</span>
+        <div className="centerdiv">
+            <div className="notedetailscontainer">
+                <h1>{notedetails?.title}</h1>
+                {
+                    notedetails &&
+                    <div className="starrednotedetails">
+                        <div className="noteinfo">
+                            <NavLink to={`/${notedetails.User?.username}`} style={{textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '10px'}}>
+                            <span className='user-icon'><i className="fa-solid fa-user fa-lg"></i></span>
+                            <span>{notedetails.User.firstName + ' ' + notedetails.User.lastName}</span>
+                            </NavLink>
+                            <span>{new Date(notedetails.createdAt).toLocaleString('en-US', {month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric'})}</span>
+                            {/* <span>{new Date(note.createdAt).toLocaleString('en-US', { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</span> */}
+                        </div>
+                        <div dangerouslySetInnerHTML={{
+                            __html: DOMPurify.sanitize(notedetails.content.replace(/\n/g, '<br>')),
+                        }}>
+                            {/* {notedetails.content} */}
+                        </div>
+                        {notedetails.user_id == currentuser && <div className="notebtn">
+                            <span><button onClick={() => navigate(`/starrednotes/${notedetails.id}/update`)}>Update</button></span><span><button onClick={() => deletethisnote()}>Delete</button></span>
+                        </div>}
                     </div>
-                    <div>
-                        {notedetails.content}
-                    </div>
-                    {notedetails.user_id == currentuser && <div className="notebtn">
-                        <span><button onClick={() => navigate(`/starrednotes/${notedetails.id}/update`)}>Update</button></span><span><button onClick={() => deletethisnote()}>Delete</button></span>
-                    </div>}
-                </div>
-            }
+                }
+            </div>
         </div>
     )
 }

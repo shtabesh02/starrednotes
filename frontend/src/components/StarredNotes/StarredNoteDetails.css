@@ -1,16 +1,25 @@
+.centerdiv{
+    display: flex;
+    justify-content: center;
+}
 .notedetailscontainer{
     display: flex;
     flex-direction: column;
     align-items: center;
     box-shadow: inset;
     margin: 20px;
-    padding: 10px;
+    padding: 20px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    width: 1200px;
 }
 .starrednotedetails{
-
+/* border: 1px solid gray; */
+padding: 30px 10px;
+max-width: 1000px;
 }
-
+ .starrednotedetails > * {
+    margin: 20px 5px;
+ }
 .notebtn{
     display: flex;
     gap: 10px;

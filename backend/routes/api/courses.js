@@ -119,9 +119,9 @@ const validateNewLesson = [
         .withMessage('Title must be less than 50 characters.'),
     check('content')
         .notEmpty()
-        .withMessage('Please add the content of the lesson.')
-        .isLength({ max: 255 })
-        .withMessage('The content must be less than 255 characters.'),
+        .withMessage('Please add the content of the lesson.'),
+        // .isLength({ max: 255 })
+        // .withMessage('The content must be less than 255 characters.'),
     handleValidationErrors
 ]
 router.post('/:course_id/newlesson', validateNewLesson, async (req, res) => {

@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom'
 import './StarredNotes.css'
 import { useDispatch, useSelector } from 'react-redux';
 import { insertnewnote, loadStarredNotes } from '../../store/starrednotes';
+import DOMPurify from 'dompurify';
 // import OpenModalButton from '../OpenModalButton';
 // import StarredNoteModal from '../StarredNoteModal';
 
@@ -37,6 +38,11 @@ const StarredNotes = () => {
       note
     }
     dispatch(insertnewnote(newnote))
+    .then(() => {
+      setTitle('');
+      setNote('');
+      setFormModal(false);
+    })
   }
   return (
     <div className='starrednotes-container'>
@@ -61,7 +67,9 @@ const StarredNotes = () => {
         </li>
         <hr />
         {
-          starrednotes && starrednotes.map(note => (
+          starrednotes && starrednotes
+          .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)) 
+          .map(note => (
             <li className='one-note' key={note.id}>
               <div className='one-note-container'>
                 <NavLink to={`/${note.User?.username}`} style={{textDecoration: "none"}}>
@@ -78,7 +86,11 @@ const StarredNotes = () => {
                 {/* <p>{note.content}</p> */}
                 <div>
                   {expandedNotes[note.id] ? (
-                    <span>{note.content}</span>
+                    <span dangerouslySetInnerHTML={{
+                      __html: DOMPurify.sanitize(note.content.replace(/\n/g, '<br>')),
+                  }}>
+                      {/* {note.content} */}
+                      </span>
                   ) : (
                     <span>{`${note.content.substring(0, 400)}... `}</span>
                   )}
