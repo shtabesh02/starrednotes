@@ -8,7 +8,7 @@ import './StarredNoteDetails.css'
 
 const StarredNoteDetails = () => {
     const { starrednote_id } = useParams();
-    const currentuser = useSelector(state => state.session.user.id);
+    const currentuser = useSelector(state => state.session.user?.id);
     console.log('starrednote_id: ', starrednote_id)
     const notedetails = useSelector(state => state.starrednotesReducer?.StarredNoteDetails[0]);
     console.log('notedetails: ', notedetails);

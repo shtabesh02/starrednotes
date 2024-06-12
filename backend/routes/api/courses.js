@@ -3,13 +3,18 @@
 const express = require('express');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation')
-const { Course, Lesson, Course_Comment } = require('../../db/models');
+const { Course, Lesson, Course_Comment, User } = require('../../db/models');
 const { where, json } = require('sequelize');
 const { requireAuth } = require('../../utils/auth');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-    const courses = await Course.findAll();
+    const courses = await Course.findAll({
+        include: {
+            model: User, attributes: ['id', 'firstName', 'lastName', 'username']
+        }
+    });
+    // console.log('coruses: ', courses)
     res.status(200).json(courses)
 })
 
@@ -25,7 +30,11 @@ router.get('/:course_id', async (req, res) => {
 // loading all my courses
 router.get('/:current_user/currentcourses', async (req, res) => {
     const { current_user } = req.params;
-    const mycourses = await Course.findAll({ where: { user_id: current_user } });
+    const mycourses = await Course.findAll({ where: { user_id: current_user },
+        include: {
+            model: User, attributes: ['id', 'firstName', 'lastName', 'username']
+        }
+     });
     res.status(200).json(mycourses);
 })
 
@@ -35,6 +44,9 @@ router.get('/:current_user/currentcourses', async (req, res) => {
 // ading a new course
 // validation
 const validateNewCourse = [
+    check('user_id')
+        .isInt()
+        .withMessage('User ID must be integer.'),
     check('title')
         .notEmpty()
         .withMessage('Please provide the title.')
@@ -59,6 +71,7 @@ const validateNewCourse = [
 ]
 router.post('/newcourse', validateNewCourse, async (req, res) => {
     const { user_id, title, instructor, category, description } = req.body;
+    // console.log('Creating course with user_id:', user_id);
     const anewcourse = await Course.create({
         user_id,
         title,
@@ -66,7 +79,19 @@ router.post('/newcourse', validateNewCourse, async (req, res) => {
         category,
         description
     });
-    res.status(200).json(anewcourse)
+    // console.log('Created course:', anewcourse);
+
+    const theNewcourse = await Course.findOne({
+        where: {id: anewcourse.id},
+        include: {
+            model: User, attributes: ['id', 'firstName', 'lastName', 'username']
+        }
+    });
+
+    // console.log('Fetched course with user:', theNewcourse); 
+    // const author = await anewcourse.getUser();
+    // console.log('author: ', author)
+    res.status(200).json(theNewcourse)
 })
 
 // update a course based on its id

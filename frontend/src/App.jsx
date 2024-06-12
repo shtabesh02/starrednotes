@@ -20,6 +20,8 @@ import StarredNoteModal from './components/StarredNoteModal/StarredNoteModal';
 import StarredNoteDetails from './components/StarredNotes/StarredNoteDetails';
 import UpdateStarredNote from './components/StarredNotes/UpdateStarredNote';
 import UserProfile from './components/UserProfile/UserProfile';
+import UpdateProfile from './components/UserProfile/UpdateProfile';
+import AddProfile from './components/UserProfile/AdduserProfile';
 
 function Layout() {
   const dispatch = useDispatch();
@@ -106,6 +108,14 @@ const router = createBrowserRouter([
       {
         path: '/:username',
         element: <UserProfile />
+      },
+      {
+        path: '/:username/update',
+        element: <UpdateProfile />
+      },
+      {
+        path: '/:username/addprofile',
+        element: <AddProfile />
       },
     ]
   }

@@ -39,87 +39,64 @@ const Home = () => {
   }, [dispatch])
   return (
     <>
-    <div className="home_container">
-      <div className="homepage">
-        {Object.keys(courseByCategory)
-          .sort()
-          .map((category) => (
-            <div key={category}>
-              <h1>{category}</h1>
-              <div className="tabs">
-                <h3 onClick={() => setTabState({ ...tabState, [category]: 'mr' })}>
-                  Most recent
-                </h3>
-                <h3 onClick={() => setTabState({ ...tabState, [category]: 'va' })}>
-                  View all
-                </h3>
+      <div className="home_container">
+        <div className="homepage">
+          {Object.keys(courseByCategory)
+            .sort()
+            .map((category) => (
+              <div key={category}>
+                <h1>{category}</h1>
+                <div className="tabs">
+                  <h3 onClick={() => setTabState({ ...tabState, [category]: 'mr' })}>
+                    Most recent
+                  </h3>
+                  <h3 onClick={() => setTabState({ ...tabState, [category]: 'va' })}>
+                    View all
+                  </h3>
+                </div>
+                <hr />
+                <div className='coursesdisplay'>
+                  <ul className='coursecarts'>
+                    {
+                      tabState[category] === 'va' ? (
+                        courseByCategory[category]
+                          .sort()
+                          .map(course => (
+                            <li key={course.id} className='thecourse'>
+                              <NavLink to={`/courses/${course.id}`}>{course.title}</NavLink>
+                              <p className='instructor'>
+                                Instructor: {course.instructor}
+                                {/* <NavLink to={`/${course.Users[0]?.username}`} style={{ fontWeight: 'lighter', fontSize: '1em', color: 'black' }}>Instructor:  
+                                {course.instructor} 
+                                {course.Users[0]?.firstName + ' ' + course.Users[0]?.lastName}
+                                </NavLink> */}
+                              </p>
+                            </li>
+                          ))
+                      ) : (
+                        courseByCategory[category]
+                          .slice(-4)
+                          .map(course => (
+                            <li key={course.id} className='thecourse'>
+                              <NavLink to={`/courses/${course.id}`}>{course.title}</NavLink>
+                              <p className='instructor'>
+                                Instructor: {course.instructor}
+                                {/* <NavLink to={`/${course.Users[0]?.username}`} style={{ fontWeight: 'lighter', fontSize: '1em', color: 'black' }}>Instructor:  
+                                {course.Users[0]?.firstName + ' ' + course.Users[0]?.lastName}
+                                </NavLink> */}
+                              </p>
+                            </li>
+                          ))
+                      )
+                    }
+                  </ul>
+                </div>
               </div>
-              <hr />
-              <div className='coursesdisplay'>
-                <ul className='coursecarts'>
-                  {
-                    tabState[category] === 'va' ? (
-                      courseByCategory[category]
-                        .sort()
-                        .map(course => (
-                          <li key={course.id} className='thecourse'>
-                            <NavLink to={`/courses/${course.id}`}>{course.title}</NavLink>
-                            <p className='instructor'>Instructor: {course.instructor}</p>
-                          </li>
-                        ))
-                    ) : (
-                      courseByCategory[category]
-                        .slice(-4)
-                        .map(course => (
-                          <li key={course.id} className='thecourse'>
-                            <NavLink to={`/courses/${course.id}`}>{course.title}</NavLink>
-                            <p className='instructor'>Instructor: {course.instructor}</p>
-                          </li>
-                        ))
-                    )
-                  }
-                </ul>
-              </div>
-            </div>
-          ))}
+            ))}
+        </div>
       </div>
-    </div>
     </>
   );
 };
 
 export default Home;
-
-
-{/* {tabState[category] === 'va' ? (
-                  <ul className='view_all'>
-                    {courseByCategory[category]
-                      .sort()
-                      .map((course) => (
-                        <div key={course.id} className='course_container'>
-                          <NavLink className={'mlink'} to={`/courses/${course.id}`} style={{ textDecoration: "none" }}>
-                            <div className='course_cart'>
-                              <li className='course_title'>{course.title}</li>
-                            </div>
-                          </NavLink>
-                          <p className='instructor'>Instructor: {course.instructor}</p>
-                        </div>
-                      ))}
-                  </ul>
-                ) : (
-
-                  <ul className='view_recent'>
-                    {courseByCategory[category]
-                      .slice(-4)
-                      .map((course) => (
-                        <div key={course.id} className="course_container">
-                          <NavLink className={'mlink'} to={`/courses/${course.id}`} style={{ textDecoration: "none" }}>
-                            <div className="course_cart">
-                              <li className='course_title'>{course?.title}</li>
-                            </div>
-                          </NavLink>
-                          <p>Instructor: {course.instructor}</p>
-                        </div>
-                      ))}
-                  </ul>
-                )} */}
