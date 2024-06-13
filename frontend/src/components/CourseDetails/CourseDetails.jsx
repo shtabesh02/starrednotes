@@ -46,17 +46,27 @@ const CourseDetails = () => {
     navigate(`/courses/${course_id}/comment/${comment_id}`)
   }
   return (
-    <div>
+    <div className="coursedetailscontainer">
+      <div className="enroll-now">
+       <button className="enrollbtn">
+       <span>Enroll now</span> <i className="fa-solid fa-pen-to-square"></i>
+        </button> 
+      </div>
       <h1>{course.title}</h1>
       <div className="tabs">
         <h3 onClick={() => setSelectedTab('course_content')}>Course contents</h3>
         <h3 onClick={() => setSelectedTab('comments')}>Comments</h3>
       </div>
+      <div className="msg2students">
+        <p>
+          The following titles are explained in this course. If you like them, you can get enrolled in this course and track your progress. If you have any comments, go to Comment section and add your comments. We read the comments and update the course materials.
+        </p>
+      </div>
       {selectedTab === 'course_content' &&
-        <ol className="lessoncart">
+        <ol className="lessoncartt">
           {lessons.length > 0 ? (
             lessons.map(lesson => (
-              <li key={lesson.id} className="thelesson">
+              <li key={lesson.id} className="thelessonn">
                 <NavLink to={`/courses/${course_id}/lessons/${lesson.id}`}
                   style={{ textDecoration: 'none' }}>
                   <span>{lesson.title}</span>
@@ -82,8 +92,8 @@ const CourseDetails = () => {
                     <p>{comment.User.firstName + ' ' + comment.User.lastName}</p>
                     <p>{new Date(comment.createdAt).toLocaleString('en-US', { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</p>
                     <div dangerouslySetInnerHTML={{
-                            __html: DOMPurify.sanitize(comment.comment.replace(/\n/g, '<br>')),
-                        }}>
+                      __html: DOMPurify.sanitize(comment.comment.replace(/\n/g, '<br>')),
+                    }}>
                       {/* {comment.comment} */}
                     </div>
                     {comment.user_id === current_user && (
@@ -102,7 +112,7 @@ const CourseDetails = () => {
             )
           }
           {
-            current_user && current_user_comment.length == 0 && (<AddComment setSelectedTab={setSelectedTab} />) 
+            current_user && current_user_comment.length == 0 && (<AddComment setSelectedTab={setSelectedTab} />)
           }
         </ul>
       }

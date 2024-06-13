@@ -44,7 +44,7 @@ const ManageCourses = () => {
         <div className='createcourse'>
           <button onClick={() => navigate('/managecourses/addcourse')}>Create a new course</button>
         </div>
-        <h1>Manage Courses</h1>
+        <h1>Courses I&apos;m Teaching</h1>
         <ul className='coursecarts'>
           {courses.length > 0 && courses.map(course => (
             <li key={course.id} className='thecourse'>
@@ -62,6 +62,8 @@ const ManageCourses = () => {
           )}
           {courses?.length == 0 && <li>You do not have any course yet. Click on the above button to create your courses.</li>}
         </ul>
+        <hr />
+        <h1>Courses I&apos;m enrolled in</h1>
       </div>
     </>
   )
