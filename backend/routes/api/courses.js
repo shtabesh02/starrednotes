@@ -150,12 +150,13 @@ const validateNewLesson = [
     handleValidationErrors
 ]
 router.post('/:course_id/newlesson', validateNewLesson, async (req, res) => {
-    const { course_id, user_id, title, content } = req.body;
+    const { course_id, user_id, title, content, completed } = req.body;
     const newlesson = await Lesson.create({
         course_id,
         user_id,
         title,
-        content
+        content,
+        completed
     })
     res.status(200).json(newlesson);
 })

@@ -5,11 +5,12 @@ import { loadlessonsfromDB } from '../../store/lessons';
 import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import { loadCoursefromDB } from '../../store/courses';
 import DOMPurify from 'dompurify';
+import { loadCompletedlesson, markascompleteLesson } from '../../store/completedlesson';
 
 const LessonDetails = () => {
     const dispatch = useDispatch();
     const { course_id, lesson_id } = useParams();
-
+    const user_id = useSelector(state => state.session.user.id)
     const navigate = useNavigate();
     const course = useSelector(state => state.courseReducer.courseDetails);
     const lessons = useSelector(state => Object.values(state.lessonReducer.lessons));
@@ -22,6 +23,10 @@ const LessonDetails = () => {
         normalizedLessons[lesson.id] = lesson;
     })
 
+
+    const completedLessons = useSelector(state => Object.values(state.completedLessons?.lessons));
+    const thisLesson = completedLessons.filter(lesson => lesson.lesson_id == lesson_id)
+    // console.log('thisLesson: ', thisLesson)
     const [nextdisabled, setNextdisabled] = useState(false);
     const [prevdisabled, setPrevdisabled] = useState(false);
     // next
@@ -63,11 +68,25 @@ const LessonDetails = () => {
     useEffect(() => {
         dispatch(loadlessonsfromDB(course_id));
     }, [dispatch, course_id]);
-     
+
     useEffect(() => {
         dispatch(loadCoursefromDB(course_id))
     }, [dispatch, course_id]);
 
+    useEffect(() => {
+        dispatch(loadCompletedlesson(user_id))
+    }, [dispatch, user_id])
+    // Mark as complete
+    const handlemarkascomplete = (e) => {
+        e.preventDefault();
+        const markedcomplete = {
+            lesson_id,
+            course_id,
+            user_id
+        }
+        dispatch(markascompleteLesson(markedcomplete))
+        .then(() => navigate(`/courses/${course_id}/lessons/${lesson_id}`))
+    }
 
     return (
         <>
@@ -83,11 +102,16 @@ const LessonDetails = () => {
                             // {displayedLesson ? (
                             <>
                                 <div dangerouslySetInnerHTML={{
-                            __html: DOMPurify.sanitize(activelesson[0]?.content.replace(/\n/g, '<br>')),
-                        }}>
+                                    __html: DOMPurify.sanitize(activelesson[0]?.content.replace(/\n/g, '<br>')),
+                                }}>
                                     {/* {activelesson[0]?.content} */}
-                                    
+
                                 </div>
+                                {thisLesson.length == 0 &&
+                                    <form onSubmit={handlemarkascomplete}>
+                                        <button>Mark As Complete</button>
+                                    </form>
+                                }
                                 <div className="next_prev">
                                     <button className={`prevbtn ${prevdisabled ? 'disabled' : false}`} onClick={() => handleprev()}>Previous</button>
                                     <button className={`nextbtn ${nextdisabled ? 'disabled' : false}`} onClick={() => handlenext()}>Next</button>
@@ -97,7 +121,7 @@ const LessonDetails = () => {
                             <>
                                 {lessons.length > 0 && lessons.map((lesson) => (
                                     <>
-                                        {lesson?.id === parseInt(lesson_id) && <p>{lesson.content}</p>}
+                                        {lesson?.id === parseInt(lesson_id) && <p key={lesson.id}>{lesson.content}</p>}
                                     </>
                                 ))
                                 }
@@ -106,6 +130,7 @@ const LessonDetails = () => {
                                     <button className={`nextbtn ${nextdisabled ? 'disabled' : false}`} onClick={() => handlenext()}>Next</button>
                                     {/* <button className='nextbtn' onClick={() => navigate(`/courses/${course_id}/lessons/${lesson.id}`)}>Next</button> */}
                                 </div>
+
                             </>
                         )
                         }

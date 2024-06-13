@@ -14,6 +14,7 @@ const lessonRouter = require('./lessons.js');
 const commentRouter = require('./comments.js');
 const starrednotesRouter = require('./starrednotes.js');
 const userprofileRouter = require('./userprofile.js');
+const completedRouter = require('./completed.js');
 
 
 
@@ -26,8 +27,9 @@ router.use('/users', usersRouter);
 router.use('/courses', courseRouter);
 router.use('/lessons', lessonRouter);
 router.use('/comments', commentRouter);
-router.use('/starrednotes', starrednotesRouter)
-router.use('/userprofile', userprofileRouter)
+router.use('/starrednotes', starrednotesRouter);
+router.use('/userprofile', userprofileRouter);
+router.use('/completed', completedRouter)
 
 
 

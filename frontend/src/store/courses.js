@@ -7,6 +7,7 @@ const LOADCOURSE = 'LOADCOURSE';
 const LOADMYCOURSES = 'loadmycourses';
 const UPDATETHISCOURSE = 'updatethiscourse';
 const DELETETHISCOURSE = 'deletethiscourse';
+const LOADuSERcourses = 'loadallthecourseslforoneuser';
 
 
 // regular action to load courses
@@ -22,6 +23,23 @@ export const loadCoursesfromDB = () => async (dispatch) => {
     if(response.ok){
         const data = await response.json();
         dispatch(loadCourses(data))
+    }
+}
+
+// regular action to add user courses to the state
+const loadusercourses = (usercourses) => {
+    return {
+        type: LOADuSERcourses,
+        usercourses
+    }
+}
+// thunk action to load user courses
+export const loadUserCoursesfromDB = (username) => async (dispatch) => {
+    console.log('called...')
+    const response = await csrfFetch(`api/users/${username}`);
+    if(response.ok){
+        const usercourses = await response.json();
+        dispatch(loadusercourses(usercourses))
     }
 }
 
@@ -134,7 +152,8 @@ export const deletemycourse = (course_id) => async (dispatch) => {
 // course reducer
 const initialState = {
     courses: {},
-    courseDetails: {}
+    courseDetails: {},
+    userCourses: {}
 };
 const courseReducer = (state = initialState, action) => {
     // const newState = {...state};
@@ -166,6 +185,9 @@ const courseReducer = (state = initialState, action) => {
             const newState = {...state};
             delete newState.courses[action.course_id];
             return newState;
+        }
+        case LOADuSERcourses: {
+            return {...state, userCourses: action.usercourses}
         }
         default:
             return state

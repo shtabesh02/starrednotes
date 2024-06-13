@@ -5,13 +5,13 @@ import { NavLink } from 'react-router-dom';
 import DOMPurify from 'dompurify';
 import './UserNotes.css';
 
-function UserNotes() {
-  const currentuser = useSelector(state => state.session.user.id)
+function UserNotes({username}) {
+  // const currentuser = useSelector(state => state.session.user.id)
   const dispatch = useDispatch();
-  const currentusernotes = useSelector(state => Object.values(state.starrednotesReducer.StarredNotes))
+  const currentusernotes = useSelector(state => Object.values(state.starrednotesReducer?.StarredNotes))
   const currentStarredNotes = [];
   currentusernotes.forEach(note => {
-    if(note.user_id == currentuser){
+    if(note?.User.username == username){
       currentStarredNotes.push(note);
     }
   });

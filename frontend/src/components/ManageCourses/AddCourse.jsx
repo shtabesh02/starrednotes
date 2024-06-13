@@ -5,9 +5,9 @@ import { useNavigate } from "react-router-dom";
 import './AddCourse.css';
 
 const AddCourse = () => {
-    const user_id = useSelector(state => state.session.user.id);
+    const currentuser = useSelector(state => state.session?.user);
     const [title, setTitle] = useState('');
-    const [instructor, setInstructor] = useState('');
+    // const [instructor, setInstructor] = useState('');
     const [category, setCategory] = useState('');
     const [description, setDescription] = useState('');
 
@@ -21,9 +21,9 @@ const AddCourse = () => {
     const addthiscourse = (e) => {
         e.preventDefault();
         const mynewcourse = {
-            user_id,
+            user_id: currentuser.id,
             title,
-            instructor,
+            instructor: currentuser.firstName + ' ' + currentuser.lastName,
             category,
             description
         }
@@ -52,11 +52,11 @@ const AddCourse = () => {
                             <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
                             {errors.title && <p className="errorcss">{errors.title}</p>}
                         </div>
-                        <div>
+                        {/* <div>
                             <label htmlFor="instructor">Instructor</label>
                             <input type="text" value={instructor} onChange={(e) => setInstructor(e.target.value)} />
                             {errors.instructor && <p className="errorcss">{errors.instructor}</p>}
-                        </div>
+                        </div> */}
                         {/* <div>
                             <label htmlFor="category">Category</label>
                             <input type="text" value={category} onChange={(e) => setCategory(e.target.value)} />

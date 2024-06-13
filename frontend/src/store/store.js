@@ -7,6 +7,7 @@ import lessonReducer from './lessons';
 import commentReducer from './comments';
 import starrednotesReducer from './starrednotes'
 import profileReducer from './userprofile';
+import completedLessons from './completedlesson';
 
 const rootReducer = combineReducers({
   // ADD REDUCERS HERE
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   commentReducer: commentReducer,
   starrednotesReducer: starrednotesReducer,
   profileReducer: profileReducer,
+  completedLessons: completedLessons,
 });
 
 let enhancer;

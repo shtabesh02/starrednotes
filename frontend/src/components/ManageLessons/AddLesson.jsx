@@ -23,7 +23,8 @@ const AddLesson = () => {
             course_id,
             user_id,
             title,
-            content
+            content,
+            completed: false
         }
         dispatch(addnewlesson(newlesson, course_id))
             .then(() => {

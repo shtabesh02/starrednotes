@@ -29,6 +29,11 @@ module.exports = (sequelize, DataTypes) => {
       Course.belongsTo(models.User, {
         foreignKey: 'user_id'
       })
+
+      Course.hasMany(models.Completedlesson, {
+        foreignKey: 'course_id',
+        onDelete: 'CASCADE'
+      })
     }
   }
   Course.init({

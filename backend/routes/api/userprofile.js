@@ -48,7 +48,12 @@ router.post('/:user_id', async (req, res) => {
         linkedin,
         bio
     });
-    res.status(200).json(addedprofile);
+    const profilesuser = await User.findOne({where: {id: user_id},
+    include: {
+        model: UserProfile
+    }});
+    console.log('profilesuser: ', profilesuser)
+    res.status(200).json(profilesuser);
 })
 
 module.exports = router

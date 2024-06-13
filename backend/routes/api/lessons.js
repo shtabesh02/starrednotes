@@ -18,4 +18,5 @@ router.get('/:course_id/lessons', async (req, res) => {
     res.status(200).json(lessons)
 })
 
+
 module.exports = router;
