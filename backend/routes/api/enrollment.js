@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const { User, Course_Enrollment, Course } = require('../../db/models');
-const { where } = require('sequelize');
+const { User, Course_Enrollment, Course, Lesson } = require('../../db/models');
+const { where, Sequelize } = require('sequelize');
 
 
 router.get('/:user_id', async (req, res) => {
@@ -17,7 +17,13 @@ router.get('/:user_id', async (req, res) => {
 
     const user = await User.findByPk(user_id);
 
-    const enrolledCourses = await user.getCourses();
+    const enrolledCourses = await user.getCourses({
+        attributes: ['id', 'title', 'instructor', 'category', 'description', 'createdAt', 'updatedAt', [Sequelize.fn('COUNT', Sequelize.col('Lessons.id')), 'numOfLessons']],
+        include: [{
+            model: Lesson,
+        }],
+        group: ['Course.id']
+    });
 
     // console.log('enrolledCourses: ', enrolledCourses)
     res.status(200).json(enrolledCourses);
