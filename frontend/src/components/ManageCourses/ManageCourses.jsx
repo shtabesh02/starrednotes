@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { deletemycourse, loadmycoursesfromDB } from '../../store/courses';
 import './ManageCourses.css'
 import { NavLink, useNavigate } from 'react-router-dom';
+import { loadEnrollment } from '../../store/enrollment';
+import { loadCompletedlesson } from '../../store/completedlesson';
 
 const ManageCourses = () => {
   const current_user = useSelector(state => state.session.user?.id);
@@ -21,6 +23,23 @@ const ManageCourses = () => {
     //   console.log('_authmsg: ')
     // })
   }, [dispatch, current_user]);
+
+  // load the completed lessons
+  useEffect(() => {
+    dispatch(loadCompletedlesson(current_user));
+  }, [dispatch, current_user]);
+  const numOfLessons = {};
+
+
+
+
+
+  // Enrollment
+  useEffect(() => {
+    dispatch(loadEnrollment(current_user));
+  }, [dispatch, current_user]);
+
+  const enrolledCourses = useSelector(state => Object.values(state.enrollmentReducer?.enrolled));
 
   // Handle Delete a course
   const deletecourse = async (course_id) => {
@@ -64,6 +83,28 @@ const ManageCourses = () => {
         </ul>
         <hr />
         <h1>Courses I&apos;m enrolled in</h1>
+        <ul className='coursecarts'>
+          {enrolledCourses.length > 0 && enrolledCourses.map(course => (
+            <li key={course.id} className='thecourse'>
+
+              <NavLink to={`/courses/${course.id}`} style={{ textDecoration: "none" }}>
+                {course.title}
+              </NavLink>
+              <p>
+                Instructor: {course.instructor}
+              </p>
+              <div className="progress">
+                <span>Progress:</span>
+                <span className='progress-bar'>
+                  <span className='percentage-progress' style={{width: `${50}%`, height:'4px' }}></span>
+                  <span>{10} &#37;</span>
+                </span>
+              </div>
+            </li>
+          )
+          )}
+          {courses?.length == 0 && <li>You are not enrolled in any course yet. Go to courses, and get enrolled in your favorite courses.</li>}
+        </ul>
       </div>
     </>
   )

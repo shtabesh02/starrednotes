@@ -92,3 +92,24 @@ h1 {
 .createcourse button:hover {
     background-color: #0056b3; /* Darker shade of button color */
   }
+
+  /* Progres bar */
+  .progress{
+    display: flex;
+    gap: 5px;
+    align-items: center;
+  }
+.progress-bar{
+    width: 100%;
+    height: 5px;
+    border: 1px solid rgb(139, 127, 127);
+  }
+
+  .percentage-progress{
+    display: flex;
+    align-items: center;
+    /* width: 10%;
+    height: 4px; */
+    background-color: #0056b3;
+    border: 1px solid gray;
+  }
