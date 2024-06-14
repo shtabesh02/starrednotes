@@ -101,3 +101,47 @@ h1 {
     pointer-events: none;
     background-color: gray;
 }
+
+.markform button{
+    padding: 10px;
+    margin: 20px 0px;
+    cursor: pointer;
+    border: none;
+    border-radius: 3px;
+    background-color: #586864;
+    color: #fff;
+    font-size: 1em;
+    display: flex;
+    gap: 5px;
+    font-weight: bold;
+}
+/* Enroll Now */
+
+.enroll-now{
+    display: flex;
+    justify-content: right;
+    width: 100%;
+    margin-right: 20px;
+    padding-right: 20px;
+}
+.enrollbtn{
+    padding: 5px;
+    /* width: 50%; */
+    /* border-bottom: 1px dashed rgb(182, 181, 181); */
+    display: flex;
+    gap: 10px;
+
+  }
+.enroll-now button{
+    padding: 5px 10px;
+    margin-right: 5px;
+    cursor: pointer;
+    border: none;
+    border-radius: 3px;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 1em;
+}
+.enroll-now button:hover {
+    background-color: #0056b3; /* Darker shade of button color */
+  }

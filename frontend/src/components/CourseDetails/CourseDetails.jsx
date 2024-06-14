@@ -8,9 +8,10 @@ import DOMPurify from "dompurify";
 
 import './CourseDetails.css'
 import AddComment from "../Comments/AddComment";
+import { getenrolled, loadEnrollment } from "../../store/enrollment";
 const CourseDetails = () => {
   const { course_id } = useParams();
-
+  const user_id = useSelector(state => state.session?.user?.id);
   const course = useSelector(state => state.courseReducer?.courseDetails);
   const lessons = useSelector(state => state.lessonReducer?.lessons);
   // console.log('lessons: ', lessons)
@@ -26,8 +27,9 @@ const CourseDetails = () => {
   useEffect(() => {
     dispatch(loadCoursefromDB(course_id));
     dispatch(loadlessonsfromDB(course_id));
-    dispatch(loadcommentsfromDB(course_id))
-  }, [dispatch, course_id])
+    dispatch(loadcommentsfromDB(course_id));
+    dispatch(loadEnrollment(user_id));
+  }, [dispatch, course_id, user_id])
 
   // delete a comment
   const deleteacomment = async (comment_id) => {
@@ -45,12 +47,32 @@ const CourseDetails = () => {
   const editcomment = (comment_id) => {
     navigate(`/courses/${course_id}/comment/${comment_id}`)
   }
+
+  // handle enroll now
+  const enrolledCourses = useSelector(state => Object.values(state.enrollmentReducer?.enrolled));
+  const enrolledCourse = enrolledCourses.filter(course => course.Course_Enrollment.course_id == course_id);
+  const handleenrollnow = (e) => {
+    e.preventDefault();
+    const enrollment = {
+      user_id,
+      course_id
+    };
+    dispatch(getenrolled(enrollment))
+    .then(() => {
+      alert('You got enrolled successfully.')
+      navigate(`/courses/${course_id}`)
+    })
+  }
   return (
     <div className="coursedetailscontainer">
       <div className="enroll-now">
-       <button className="enrollbtn">
-       <span>Enroll now</span> <i className="fa-solid fa-pen-to-square"></i>
-        </button> 
+        {user_id && enrolledCourse.length == 0 &&
+        <form onSubmit={handleenrollnow}>
+        <button className="enrollbtn">
+          <span>Enroll now</span> <i className="fa-solid fa-pen-to-square"></i>
+        </button>
+        </form>
+        }
       </div>
       <h1>{course.title}</h1>
       <div className="tabs">

@@ -14,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'course_id',
         otherKey: 'user_id',
         onDelete: 'CASCADE'
+        // hooks: true // this should be on one side.
       });
 
       Course.hasMany(models.Lesson, {

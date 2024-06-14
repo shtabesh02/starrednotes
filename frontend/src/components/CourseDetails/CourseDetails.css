@@ -108,3 +108,12 @@ hr {
 .enroll-now button:hover {
     background-color: #0056b3; /* Darker shade of button color */
   }
+
+  .comments_container{
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start !important;
+    justify-content:flex-start;
+    width: 85%;
+  }
