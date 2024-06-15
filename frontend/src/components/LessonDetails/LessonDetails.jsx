@@ -116,7 +116,7 @@ const LessonDetails = () => {
                     <button onClick={() => navigate(`/courses/${course_id}`)}>Back</button>
                 </div>
                 <div className="enroll-now">
-                    {user_id && enrolledCourse.length == 0 &&
+                    {user_id && enrolledCourse.length == 0 && course.user_id !== user_id &&
                         <form onSubmit={handleenrollnow}>
                             <button className="enrollbtn">
                                 <span>Enroll now</span> <i className="fa-solid fa-pen-to-square"></i>
