@@ -10,7 +10,7 @@ const AddComment = ({ setSelectedTab }) => {
     const { course_id } = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const current_user = useSelector(state => state.session.user.id);
+    const current_user = useSelector(state => state.session?.user?.id);
 
     const [errors, setErrors] = useState({});
 

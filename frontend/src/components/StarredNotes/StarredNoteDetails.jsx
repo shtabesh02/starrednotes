@@ -37,7 +37,7 @@ const StarredNoteDetails = () => {
                         <div className="noteinfo">
                             <NavLink to={`/${notedetails.User?.username}`} style={{textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '10px'}}>
                             <span className='user-icon'><i className="fa-solid fa-user fa-lg"></i></span>
-                            <span>{notedetails.User.firstName + ' ' + notedetails.User.lastName}</span>
+                            <span>{notedetails.User?.firstName + ' ' + notedetails.User?.lastName}</span>
                             </NavLink>
                             <span>{new Date(notedetails.createdAt).toLocaleString('en-US', {month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric'})}</span>
                             {/* <span>{new Date(note.createdAt).toLocaleString('en-US', { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</span> */}
