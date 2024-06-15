@@ -16,8 +16,8 @@ router.get('/:user_id', async (req, res) => {
         // const mycompletedlessons = await Completedlesson.findAll({where: {user_id}});
         const mycompletedlessons = await Completedlesson.findAll({
             where: { user_id: user_id },
-            attributes: ['id', 'user_id', 'lesson_id', 'course_id', 'createdAt', 'updatedAt', [Sequelize.fn('COUNT', Sequelize.col('course_id')), 'numOfLessondone']],
-            // attributes: ['course_id', [Sequelize.fn('COUNT', Sequelize.col('course_id')), 'numOfLessondone']],
+            // attributes: ['id', 'user_id', 'lesson_id', 'course_id', 'createdAt', 'updatedAt', [Sequelize.fn('COUNT', Sequelize.col('course_id')), 'numOfLessondone']],
+            attributes: ['course_id', [Sequelize.fn('COUNT', Sequelize.col('lesson_id')), 'numOfLessondone']],
             group: ['course_id']
         });
      
