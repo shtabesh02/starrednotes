@@ -4,24 +4,29 @@ const { Completedlesson, User, Course } = require('../../db/models');
 const { where, Sequelize } = require('sequelize');
 
 router.get('/:user_id', async (req, res) => {
-    const { user_id } = req.params;
-    // const mycompletedlessons = await User.findAll({where: {id:user_id},
-    //     include: {
-    //         model: Completedlesson
-    //     }
-    // });
-
-    // This works before including model
-    // const mycompletedlessons = await Completedlesson.findAll({where: {user_id}});
-
-    const mycompletedlessons = await Completedlesson.findAll({
-        where: { user_id: user_id },
-        attributes: ['id', 'user_id', 'lesson_id', 'course_id', 'createdAt', 'updatedAt', [Sequelize.fn('COUNT', Sequelize.col('course_id')), 'numOfLessondone']],
-        // attributes: ['course_id', [Sequelize.fn('COUNT', Sequelize.col('course_id')), 'numOfLessondone']],
-        group: ['course_id']
-    });
- 
-    res.status(200).json(mycompletedlessons);
+    try {        
+        const { user_id } = req.params;
+        // const mycompletedlessons = await User.findAll({where: {id:user_id},
+        //     include: {
+        //         model: Completedlesson
+        //     }
+        // });
+    
+        // This works before including model
+        // const mycompletedlessons = await Completedlesson.findAll({where: {user_id}});
+        const mycompletedlessons = await Completedlesson.findAll({
+            where: { user_id: user_id },
+            attributes: ['id', 'user_id', 'lesson_id', 'course_id', 'createdAt', 'updatedAt', [Sequelize.fn('COUNT', Sequelize.col('course_id')), 'numOfLessondone']],
+            // attributes: ['course_id', [Sequelize.fn('COUNT', Sequelize.col('course_id')), 'numOfLessondone']],
+            group: ['course_id']
+        });
+     
+        res.status(200).json(mycompletedlessons);
+    } catch (error) {
+        res.status(404).json({
+            "message": "You have not started any lesson yet."
+        })
+    }
 })
 
 

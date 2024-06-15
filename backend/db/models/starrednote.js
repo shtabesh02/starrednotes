@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
   StarredNote.init({
     user_id: DataTypes.INTEGER,
     title: DataTypes.STRING,
-    content: DataTypes.STRING
+    content: DataTypes.TEXT, // Changed it from STRING to TEXT
   }, {
     sequelize,
     modelName: 'StarredNote',
