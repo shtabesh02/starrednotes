@@ -47,6 +47,6 @@ module.exports = {
   },
   async down(queryInterface, Sequelize) {
     options.tableName = "StarredNoteComments";
-    await queryInterface.dropTable('StarredNoteComments');
+    await queryInterface.dropTable(options);
   }
 };
