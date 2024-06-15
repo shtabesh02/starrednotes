@@ -10,6 +10,13 @@ router.get('/:user_id', async (req, res) => {
         console.log('user_id: ', user_id)
         const user = await User.findByPk(user_id);
         console.log('user: ', user);
+        if(!user){
+            return res.status(404).json(
+                {
+                    message: "You need to log in first."
+                }
+            )
+        }
         // the bellow commented getCourses() works before getting number of lessons
         // const enrolledCourses = await user.getCourses();
 
