@@ -11,27 +11,27 @@ if (process.env.NODE_ENV === 'production') {
 
 module.exports = {
   async up (queryInterface, Sequelize) {
-    // await Course_Enrollment.bulkCreate([
-    //   {
-    //     user_id: 1,
-    //     course_id: 1,
-    //   },
-    //   {
-    //     user_id: 2,
-    //     course_id: 2,
-    //   },
-    //   {
-    //     user_id: 3,
-    //     course_id: 3,
-    //   }
-    // ], {validate: true})
+    await Course_Enrollment.bulkCreate([
+      {
+        user_id: 1,
+        course_id: 2,
+      },
+      {
+        user_id: 1,
+        course_id: 3,
+      },
+      {
+        user_id: 2,
+        course_id: 2,
+      }
+    ], {validate: true})
   },
 
   async down (queryInterface, Sequelize) {
     options.tableName = 'Course_Enrollments';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      course_id: { [Op.in]: [1, 2, 3] }
+      course_id: { [Op.in]: [2, 3] }
     }, {});
   }
 };
