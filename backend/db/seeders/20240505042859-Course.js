@@ -13,21 +13,28 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     await Course.bulkCreate([
       {
-        user_id: 2,
+        user_id: 1,
         title: 'SequelizeJS',
-        instructor: 'Sharif Rezaie',
+        instructor: 'Shir Hussain Tabesh',
         category: 'Javascript',
         description: 'A detailed course on Sequelize JS'
       },
       {
         user_id: 2,
+        title: 'Javascript Basics',
+        instructor: 'Sharif Rezaie',
+        category: 'Javascript',
+        description: 'A detailed course on Sequelize JS'
+      },
+      {
+        user_id: 3,
         title: 'ExpressJS',
         instructor: 'Alisina Danesh',
         category: 'Javascript',
         description: 'A detailed course on Express JS'
       },
       {
-        user_id: 1,
+        user_id: 4,
         title: 'Flask',
         instructor: 'Mohammadjan Farasu',
         category: 'Python',
