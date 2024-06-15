@@ -107,7 +107,7 @@ const ManageCourses = () => {
                 <span>Progress:</span>
                 <span className='progress-bar'>
                   <span className='percentage-progress' style={{width: `${((numOfCompletedlesson[course.id])*100)/(course.numOfLessons) || 0}%`, height:'4px' }}></span>
-                  <span>{((numOfCompletedlesson[course.id])*100)/(course.numOfLessons) || 0} &#37;</span>
+                  <span>{(((numOfCompletedlesson[course.id])*100)/(course.numOfLessons) || 0).toFixed(0)} &#37;</span>
                 </span>
               </div>
             </li>

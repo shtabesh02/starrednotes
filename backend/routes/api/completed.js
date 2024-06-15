@@ -20,7 +20,7 @@ router.get('/:user_id', async (req, res) => {
         // attributes: ['course_id', [Sequelize.fn('COUNT', Sequelize.col('course_id')), 'numOfLessondone']],
         group: ['course_id']
     });
-    // console.log('my completed lessons: ', mycompletedlessons)
+ 
     res.status(200).json(mycompletedlessons);
 })
 
