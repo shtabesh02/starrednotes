@@ -11,10 +11,17 @@ const loadcomplted = (completelessons) => {
 }
 // thunk action to load completed lessons from db
 export const loadCompletedlesson = (user_id) => async (dispatch) => {
-    const response = await csrfFetch(`/api/completed/${user_id}`);
-    if(response.ok){
-        const data = await response.json();
-        dispatch(loadcomplted(data))
+    try {
+        const response = await csrfFetch(`/api/completed/${user_id}`);
+        if(response.ok){
+            const data = await response.json();
+            dispatch(loadcomplted(data))
+        }else{
+            const err = await response.json();
+            return err
+        }
+    } catch (error) {
+        return error
     }
 }
 

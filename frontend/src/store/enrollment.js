@@ -12,16 +12,20 @@ const loadenrolledcourses = (enrolledcourses) => {
 }
 // thunk action to load all enrolled courses from db
 export const loadEnrollment = (user_id) => async (dispatch) => {
-    console.log('user_id : ', user_id)
-    const response = await csrfFetch(`/api/enrollment/${user_id}`);
-    console.log('response: ', response)
-    if(response.ok){
-        const data = await response.json();
-        dispatch(loadenrolledcourses(data));
-    }else{
-        const errors = await response.json();
-        return errors;
+    try {
+        const response = await csrfFetch(`/api/enrollment/${user_id}`);
+        console.log('response: ', response)
+        if(response.ok){
+            const data = await response.json();
+            dispatch(loadenrolledcourses(data));
+        }else{
+            const err = await response.json();
+            return err;
+        }
+    } catch (error) {
+        return error;
     }
+    // console.log('user_id : ', user_id)
 }
 
 
