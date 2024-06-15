@@ -19,8 +19,14 @@ router.get('/:user_id', async (req, res) => {
             group: ['Course.id']
         });
     
-        // console.log('enrolledCourses: ', enrolledCourses)
-        res.status(200).json(enrolledCourses);
+        if(enrolledCourses.length > 0){
+            // console.log('enrolledCourses: ', enrolledCourses)
+            res.status(200).json(enrolledCourses);
+        }else{
+            res.status(404).json({
+                message: "You are not enrolled in any couse."
+            })
+        }
     } catch (error) {
         res.status(404).json({
             "message": "You are not enrolled in any course yet."
