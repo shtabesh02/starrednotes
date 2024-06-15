@@ -7,7 +7,9 @@ router.get('/:user_id', async (req, res) => {
 
     try {
         const { user_id } = req.params;
+        console.log('user_id: ', user_id)
         const user = await User.findByPk(user_id);
+        console.log('user: ', user);
         // the bellow commented getCourses() works before getting number of lessons
         // const enrolledCourses = await user.getCourses();
 
@@ -19,7 +21,7 @@ router.get('/:user_id', async (req, res) => {
             group: ['Course.id']
         });
 
-        // console.log('enrolledCourses: ', enrolledCourses)
+        console.log('enrolledCourses: ', enrolledCourses)
         res.status(200).json(enrolledCourses);
 
     } catch (error) {
