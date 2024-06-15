@@ -17,7 +17,7 @@ router.get('/:user_id', async (req, res) => {
             }],
             group: ['Course.id']
         });
-        if(enrolledCourses){
+        if(enrolledCourses.length > 0){
             // console.log('enrolledCourses: ', enrolledCourses)
             res.status(200).json(enrolledCourses);
         }else{
