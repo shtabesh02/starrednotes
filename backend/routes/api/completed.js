@@ -24,7 +24,7 @@ router.get('/:user_id', async (req, res) => {
         res.status(200).json(mycompletedlessons);
     } catch (error) {
         res.status(404).json({
-            "message": "You have not started any lesson yet."
+            message: "You have not started any lesson yet."
         })
     }
 })
