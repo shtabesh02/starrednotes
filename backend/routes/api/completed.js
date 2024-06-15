@@ -1,16 +1,25 @@
 const express = require('express');
 const router = express.Router();
-const {Completedlesson, User} = require('../../db/models');
-const { where } = require('sequelize');
+const { Completedlesson, User, Course } = require('../../db/models');
+const { where, Sequelize } = require('sequelize');
 
 router.get('/:user_id', async (req, res) => {
-    const {user_id} = req.params;
+    const { user_id } = req.params;
     // const mycompletedlessons = await User.findAll({where: {id:user_id},
     //     include: {
     //         model: Completedlesson
     //     }
     // });
-    const mycompletedlessons = await Completedlesson.findAll({where: {user_id}});
+
+    // This works before including model
+    // const mycompletedlessons = await Completedlesson.findAll({where: {user_id}});
+
+    const mycompletedlessons = await Completedlesson.findAll({
+        where: { user_id: user_id },
+        attributes: ['id', 'user_id', 'lesson_id', 'course_id', 'createdAt', 'updatedAt', [Sequelize.fn('COUNT', Sequelize.col('course_id')), 'numOfLessondone']],
+        // attributes: ['course_id', [Sequelize.fn('COUNT', Sequelize.col('course_id')), 'numOfLessondone']],
+        group: ['course_id']
+    });
     // console.log('my completed lessons: ', mycompletedlessons)
     res.status(200).json(mycompletedlessons);
 })

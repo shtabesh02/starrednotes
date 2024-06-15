@@ -135,7 +135,7 @@ const LessonDetails = () => {
                                     {/* {activelesson[0]?.content} */}
 
                                 </div>
-                                {thisLesson.length == 0 && user_id &&
+                                {thisLesson.length == 0 && user_id && enrolledCourse.length > 0 &&
                                     <form onSubmit={handlemarkascomplete} className='markform'>
                                         <button><i className="fa-solid fa-check"></i><span>Mark As Complete</span></button>
                                     </form>

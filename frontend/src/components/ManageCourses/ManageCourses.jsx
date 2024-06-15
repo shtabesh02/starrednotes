@@ -28,18 +28,28 @@ const ManageCourses = () => {
   useEffect(() => {
     dispatch(loadCompletedlesson(current_user));
   }, [dispatch, current_user]);
-  const numOfLessons = {};
-
-
-
-
-
+  
   // Enrollment
   useEffect(() => {
     dispatch(loadEnrollment(current_user));
   }, [dispatch, current_user]);
-
+  
+  // Progress calculation
   const enrolledCourses = useSelector(state => Object.values(state.enrollmentReducer?.enrolled));
+  
+  // calculating the number of the number of lessons in enrolled courses by the user
+  // const numOfLessonsPerCourse = {};
+  // enrolledCourses.forEach(course => numOfLessonsPerCourse[course.id] = course.numOfLessons);
+  // console.log('numOfLessonsPerCourse: ', numOfLessonsPerCourse);
+
+  // grouping the completed lesson by their course_id
+  const completedLessons = useSelector(state => Object.values(state.completedLessons?.lessons));
+  const numOfCompletedlesson = {};
+  completedLessons.forEach(lesson => numOfCompletedlesson[lesson.course_id] = lesson.numOfLessondone);
+  console.log('numOfLessondone: ', numOfCompletedlesson);
+
+
+
 
   // Handle Delete a course
   const deletecourse = async (course_id) => {
@@ -96,14 +106,14 @@ const ManageCourses = () => {
               <div className="progress">
                 <span>Progress:</span>
                 <span className='progress-bar'>
-                  <span className='percentage-progress' style={{width: `${50}%`, height:'4px' }}></span>
-                  <span>{10} &#37;</span>
+                  <span className='percentage-progress' style={{width: `${((numOfCompletedlesson[course.id])*100)/(course.numOfLessons) || 0}%`, height:'4px' }}></span>
+                  <span>{((numOfCompletedlesson[course.id])*100)/(course.numOfLessons) || 0} &#37;</span>
                 </span>
               </div>
             </li>
           )
           )}
-          {courses?.length == 0 && <li>You are not enrolled in any course yet. Go to courses, and get enrolled in your favorite courses.</li>}
+          {enrolledCourses?.length == 0 && <li>You are not enrolled in any course yet. Go to courses, and get enrolled in your favorite courses.</li>}
         </ul>
       </div>
     </>
