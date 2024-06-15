@@ -18,6 +18,9 @@ export const loadEnrollment = (user_id) => async (dispatch) => {
     if(response.ok){
         const data = await response.json();
         dispatch(loadenrolledcourses(data));
+    }else{
+        const errors = await response.json();
+        return errors;
     }
 }
 

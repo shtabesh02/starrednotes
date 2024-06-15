@@ -37,6 +37,9 @@ export const markascompleteLesson = (marked) => async (dispatch) => {
         const data = await response.json();
         // console.log('data: ', data)
         dispatch(markedcompete(data))
+    }else{
+        const errors = await response.json();
+        return errors
     }
 }
 
