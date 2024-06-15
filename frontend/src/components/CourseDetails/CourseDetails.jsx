@@ -28,7 +28,9 @@ const CourseDetails = () => {
     dispatch(loadCoursefromDB(course_id));
     dispatch(loadlessonsfromDB(course_id));
     dispatch(loadcommentsfromDB(course_id));
-    dispatch(loadEnrollment(user_id));
+    dispatch(loadEnrollment(user_id))
+    .then(() => console.log('All the courses you are enrolled in loaded successfully...'))
+    .catch(() => console.log('You are not enrolled in any course yet...'))
   }, [dispatch, course_id, user_id])
 
   // delete a comment

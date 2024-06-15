@@ -26,12 +26,16 @@ const ManageCourses = () => {
 
   // load the completed lessons
   useEffect(() => {
-    dispatch(loadCompletedlesson(current_user));
+    dispatch(loadCompletedlesson(current_user))
+    .then(() => console.log('completed lessons loaded successfully...'))
+    .catch(() => console.log('No completed lesson found...'))
   }, [dispatch, current_user]);
   
   // Enrollment
   useEffect(() => {
-    dispatch(loadEnrollment(current_user));
+    dispatch(loadEnrollment(current_user))
+    .then(() => console.log('All the courses you are enrolled in loaded successfully...'))
+    .catch(() => console.log('You are not enrolled in any course yet...'))
   }, [dispatch, current_user]);
   
   // Progress calculation

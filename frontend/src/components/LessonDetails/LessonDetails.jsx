@@ -76,6 +76,8 @@ const LessonDetails = () => {
 
     useEffect(() => {
         dispatch(loadCompletedlesson(user_id))
+        .then(() => console.log('completed lessons loaded successfully...'))
+        .catch(() => console.log('No completed lesson found...'))
     }, [dispatch, user_id])
     useEffect(() => {
         dispatch(loadEnrollment(user_id))
@@ -89,24 +91,24 @@ const LessonDetails = () => {
             user_id
         }
         dispatch(markascompleteLesson(markedcomplete))
-        .then(() => navigate(`/courses/${course_id}/lessons/${lesson_id}`))
+            .then(() => navigate(`/courses/${course_id}/lessons/${lesson_id}`))
     }
 
-      // handle enroll now
-  const enrolledCourses = useSelector(state => Object.values(state.enrollmentReducer?.enrolled));
-  const enrolledCourse = enrolledCourses.filter(course => course.Course_Enrollment.course_id == course_id);
-  const handleenrollnow = (e) => {
-    e.preventDefault();
-    const enrollment = {
-      user_id,
-      course_id
-    };
-    dispatch(getenrolled(enrollment))
-    .then(() => {
-      alert('You got enrolled successfully.')
-      navigate(`/courses/${course_id}`)
-    })
-  }
+    // handle enroll now
+    const enrolledCourses = useSelector(state => Object.values(state.enrollmentReducer?.enrolled));
+    const enrolledCourse = enrolledCourses.filter(course => course.Course_Enrollment.course_id == course_id);
+    const handleenrollnow = (e) => {
+        e.preventDefault();
+        const enrollment = {
+            user_id,
+            course_id
+        };
+        dispatch(getenrolled(enrollment))
+            .then(() => {
+                alert('You got enrolled successfully.')
+                navigate(`/courses/${course_id}`)
+            })
+    }
     return (
         <>
             <div className="lessonDetails_container">
@@ -114,14 +116,14 @@ const LessonDetails = () => {
                     <button onClick={() => navigate(`/courses/${course_id}`)}>Back</button>
                 </div>
                 <div className="enroll-now">
-        {user_id && enrolledCourse.length == 0 &&
-        <form onSubmit={handleenrollnow}>
-        <button className="enrollbtn">
-          <span>Enroll now</span> <i className="fa-solid fa-pen-to-square"></i>
-        </button>
-        </form>
-        }
-      </div>
+                    {user_id && enrolledCourse.length == 0 &&
+                        <form onSubmit={handleenrollnow}>
+                            <button className="enrollbtn">
+                                <span>Enroll now</span> <i className="fa-solid fa-pen-to-square"></i>
+                            </button>
+                        </form>
+                    }
+                </div>
                 <h1>{course.title}</h1>
                 <h2>{activelesson[0]?.title}</h2>
                 <div className="lesson_contents">
