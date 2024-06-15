@@ -35,7 +35,7 @@ const ManageCourses = () => {
   useEffect(() => {
     dispatch(loadEnrollment(current_user))
     .then(() => console.log('All the courses you are enrolled in loaded successfully...'))
-    .catch(() => console.log('You are not enrolled in any course yet...'))
+    .catch(() => console.log('You are not enrolled in any course yet.'))
   }, [dispatch, current_user]);
   
   // Progress calculation
