@@ -27,17 +27,17 @@ const ManageCourses = () => {
   // load the completed lessons
   useEffect(() => {
     dispatch(loadCompletedlesson(current_user))
-    .then(() => console.log('completed lessons loaded successfully...'))
-    .catch(() => console.log('No completed lesson found...'))
+      .then(() => console.log('completed lessons loaded successfully...'))
+      .catch(() => console.log('No completed lesson found...'))
   }, [dispatch, current_user]);
-  
+
   // Enrollment
   useEffect(() => {
     dispatch(loadEnrollment(current_user))
-    .then(() => console.log('All the courses you are enrolled in loaded successfully...'))
-    .catch(() => console.log('You are not enrolled in any course yet.'))
+      .then(() => console.log('All the courses you are enrolled in loaded successfully...'))
+      .catch(() => console.log('You are not enrolled in any course yet.'))
   }, [dispatch, current_user]);
-  
+
   // Progress calculation
   const enrolledCourses = useSelector(state => Object.values(state.enrollmentReducer?.enrolled));
   // calculating the number of the number of lessons in enrolled courses by the user
@@ -80,7 +80,8 @@ const ManageCourses = () => {
         <ul className='coursecarts'>
           {courses.length > 0 && courses.map(course => (
             <li key={course.id} className='thecourse'>
-              {course.user_id == current_user &&
+              {
+                course.user_id == current_user &&
                 <NavLink to={`/courses/${course.id}/managelessons`} style={{ textDecoration: "none" }}>
                   {course.title}
                 </NavLink>
@@ -97,29 +98,30 @@ const ManageCourses = () => {
         <hr />
         <h1>Courses I&apos;m enrolled in</h1>
         <ul className='coursecarts'>
-          {enrolledCourses.length > 0 ? (
-            enrolledCourses.map(course => (
-              <li key={course.id} className='thecourse'>
-  
-                <NavLink to={`/courses/${course.id}`} style={{ textDecoration: "none" }}>
-                  {course.title}
-                </NavLink>
-                <p>
-                  Instructor: {course.instructor}
-                </p>
-                <div className="progress">
-                  <span>Progress:</span>
-                  <span className='progress-bar'>
-                    <span className='percentage-progress' style={{width: `${((numOfCompletedlesson[course.id])*100)/(course.numOfLessons) || 0}%`, height:'4px' }}></span>
-                    <span>{(((numOfCompletedlesson[course.id])*100)/(course.numOfLessons) || 0).toFixed(0)} &#37;</span>
-                  </span>
-                </div>
-              </li>
+          {
+            enrolledCourses.length > 0 ? (
+              enrolledCourses.map(course => (
+                <li key={course.id} className='thecourse'>
+                  <NavLink to={`/courses/${course.id}`} style={{ textDecoration: "none" }}>
+                    {course.title}
+                  </NavLink>
+                  <p>
+                    Instructor: {course.instructor}
+                  </p>
+                  <div className="progress">
+                    <span>Progress:</span>
+                    <span className='progress-bar'>
+                      <span className='percentage-progress' style={{ width: `${((numOfCompletedlesson[course.id]) * 100) / (course.numOfLessons) || 0}%`, height: '4px' }}></span>
+                      <span>{(((numOfCompletedlesson[course.id]) * 100) / (course.numOfLessons) || 0).toFixed(0)} &#37;</span>
+                    </span>
+                  </div>
+                </li>
+              )
+              )
+            ) : (
+              <li>You are not enrolled in any course yet. Go to courses, and get enrolled in your favorite courses.</li>
             )
-            )
-          ):(
-            <li>You are not enrolled in any course yet. Go to courses, and get enrolled in your favorite courses.</li>
-          )}
+          }
           {/* {enrolledCourses.length > 0 && enrolledCourses.map(course => (
             <li key={course.id} className='thecourse'>
 

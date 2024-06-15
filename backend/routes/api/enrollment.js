@@ -17,6 +17,7 @@ router.get('/:user_id', async (req, res) => {
             attributes: ['id', 'title', 'instructor', 'category', 'description', 'createdAt', 'updatedAt', [Sequelize.fn('COUNT', Sequelize.col('Lessons.id')), 'numOfLessons']],
             include: [{
                 model: Lesson,
+                attributes: [], // the attributes of Lesson is not needed now.
             }],
             group: ['Course.id']
         });
