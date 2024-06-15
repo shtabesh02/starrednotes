@@ -51,7 +51,7 @@ const CourseDetails = () => {
   }
 
   // handle enroll now
-  const enrolledCourses = useSelector(state => Object.values(state.enrollmentReducer?.enrolled));
+  const enrolledCourses = useSelector(state => Object.values(state.enrollmentReducer?.enrolled || {}));
   const enrolledCourse = enrolledCourses.filter(course => course.Course_Enrollment.course_id == course_id);
   const handleenrollnow = (e) => {
     e.preventDefault();
