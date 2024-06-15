@@ -4,7 +4,8 @@ const { User, Course_Enrollment, Course, Lesson, Completedlesson } = require('..
 const { where, Sequelize } = require('sequelize');
 
 router.get('/:user_id', async (req, res) => {
-          
+    
+    try {        
         const { user_id } = req.params;
         const user = await User.findByPk(user_id);
         // the bellow commented getCourses() works before getting number of lessons
@@ -17,6 +18,10 @@ router.get('/:user_id', async (req, res) => {
             }],
             group: ['Course.id']
         });
+    
+        // console.log('typeof: ', typeof(enrolledCourses));
+        // console.log('enrolledCourses: ', enrolledCourses)
+
         if(enrolledCourses.length > 0){
             // console.log('enrolledCourses: ', enrolledCourses)
             res.status(200).json(enrolledCourses);
@@ -25,6 +30,11 @@ router.get('/:user_id', async (req, res) => {
                 message: "You are not enrolled in any couse."
             })
         }
+    } catch (error) {
+        res.status(500).json({
+            message: "It looks sth is wrong with the server. try again later."
+        })
+    }
 });
 
 router.post('/enrollnow', async (req, res) => {
