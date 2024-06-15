@@ -32,7 +32,7 @@ const LessonDetails = () => {
     const [prevdisabled, setPrevdisabled] = useState(false);
     // next
     const handlenext = () => {
-        // console.log('lesson_id: ', lesson_id)
+        // console.log('lesson_id:', lesson_id)
         if (activeindex == lessons.length - 1) {
             setNextdisabled(true);
             return
