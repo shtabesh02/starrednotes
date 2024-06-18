@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       User.belongsToMany(models.Course, {
-        through: models.Course_Enrollment,
+        through: models.UserCourse,
         foreignKey: 'user_id',
         otherKey: 'course_id',
         onDelete: 'CASCADE',
@@ -44,10 +44,10 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: 'CASCADE'
       })
 
-      User.hasMany(models.Completedlesson, {
-        foreignKey: 'user_id',
-        onDelete: 'CASCADE'
-      })
+      // User.hasMany(models.Completedlesson, {
+      //   foreignKey: 'user_id',
+      //   onDelete: 'CASCADE'
+      // })
     }
   };
 

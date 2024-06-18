@@ -17,7 +17,13 @@ module.exports = (sequelize, DataTypes) => {
 
       Lesson.belongsTo(models.Course, {
         foreignKey: 'course_id'
+      });
+
+      Lesson.hasOne(models.Completedlesson, {
+        foreignKey: 'lesson_id',
+        onDelete: 'CASCADE'
       })
+
     }
   }
   Lesson.init({
@@ -41,6 +47,7 @@ module.exports = (sequelize, DataTypes) => {
       }
 
     },
+    completed: DataTypes.BOOLEAN,
   }, {
     sequelize,
     modelName: 'Lesson',

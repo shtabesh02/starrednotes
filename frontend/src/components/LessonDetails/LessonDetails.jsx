@@ -13,8 +13,8 @@ const LessonDetails = () => {
     const { course_id, lesson_id } = useParams();
     const user_id = useSelector(state => state.session.user?.id)
     const navigate = useNavigate();
-    const course = useSelector(state => state.courseReducer.courseDetails);
-    const lessons = useSelector(state => Object.values(state.lessonReducer.lessons));
+    const course = useSelector(state => state.courseReducer?.courseDetails);
+    const lessons = useSelector(state => Object.values(state.lessonReducer?.lessons));
     let activelesson = lessons.filter(lesson => lesson.id == lesson_id);
 
     let activeindex = lessons.findIndex(lesson => lesson.id == lesson_id)
@@ -25,14 +25,14 @@ const LessonDetails = () => {
     })
 
 
-    const completedLessons = useSelector(state => Object.values(state.completedLessons?.lessons));
+    const completedLessons = useSelector(state => Object.values(state.completedLessons?.lessons?.mycompletedlessons || {}));
     const thisLesson = completedLessons.filter(lesson => lesson.lesson_id == lesson_id)
     // console.log('thisLesson: ', thisLesson)
     const [nextdisabled, setNextdisabled] = useState(false);
     const [prevdisabled, setPrevdisabled] = useState(false);
     // next
     const handlenext = () => {
-        // console.log('lesson_id:', lesson_id)
+        // console.log('lesson_id: ', lesson_id)
         if (activeindex == lessons.length - 1) {
             setNextdisabled(true);
             return
@@ -96,7 +96,7 @@ const LessonDetails = () => {
 
     // handle enroll now
     const enrolledCourses = useSelector(state => Object.values(state.enrollmentReducer?.enrolled));
-    const enrolledCourse = enrolledCourses.filter(course => course.Course_Enrollment.course_id == course_id);
+    const enrolledCourse = enrolledCourses.filter(course => course.UserCourse.course_id == course_id);
     const handleenrollnow = (e) => {
         e.preventDefault();
         const enrollment = {

@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { User, Course_Enrollment, Course, Lesson, Completedlesson } = require('../../db/models');
+const { User, UserCourse, Course, Lesson, Completedlesson } = require('../../db/models');
 const { where, Sequelize } = require('sequelize');
 router.get('/:user_id', async (req, res) => {
     try {
@@ -8,7 +8,7 @@ router.get('/:user_id', async (req, res) => {
         console.log('user_id: ', user_id)
         const user = await User.findByPk(user_id);
         console.log('user: ', user);
-        if(!user){
+        if (!user) {
             return res.status(404).json(
                 {
                     message: "You need to log in first."
@@ -18,14 +18,20 @@ router.get('/:user_id', async (req, res) => {
         // the bellow commented getCourses() works before getting number of lessons
         // const enrolledCourses = await user.getCourses();
         const enrolledCourses = await user.getCourses({
-            attributes: ['id', 'title', 'instructor', 'category', 'description', 'createdAt', 'updatedAt', [Sequelize.fn('COUNT', Sequelize.col('Lessons.id')), 'numOfLessons']],
+            attributes: ['id', 'title', 'instructor', 'category', 'description', 'createdAt', 'updatedAt', [Sequelize.fn('COUNT', Sequelize.col('Lessons.id')), 'numOfLessons'], [Sequelize.fn('COUNT', Sequelize.col('Completedlessons.lesson_id')), 'numOfLessondone']],
             include: [{
                 model: Lesson,
                 attributes: [], // the attributes of Lesson is not needed now.
-            }],
+                include : {
+                    model: Completedlesson,
+                    attributes: []
+                }
+            },
+            
+            ],
             group: ['Course.id']
         });
-        console.log('enrolledCourses: ', enrolledCourses)
+        // console.log('enrolledCourses: ', enrolledCourses)
         res.status(200).json(enrolledCourses);
     } catch (error) {
         res.status(404).json({
@@ -36,7 +42,7 @@ router.get('/:user_id', async (req, res) => {
 
 router.post('/enrollnow', async (req, res) => {
     const { user_id, course_id } = req.body;
-    const gotenrolled = await Course_Enrollment.create({
+    const gotenrolled = await UserCourse.create({
         user_id,
         course_id
     });

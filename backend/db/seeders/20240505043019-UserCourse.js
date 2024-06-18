@@ -1,6 +1,6 @@
 'use strict';
 
-const { Course_Enrollment } = require('../models');
+const { UserCourse } = require('../models');
 const bcrypt = require("bcryptjs");
 
 let options = {};
@@ -11,7 +11,7 @@ if (process.env.NODE_ENV === 'production') {
 
 module.exports = {
   async up (queryInterface, Sequelize) {
-    await Course_Enrollment.bulkCreate([
+    await UserCourse.bulkCreate([
       {
         user_id: 1,
         course_id: 2,
@@ -28,7 +28,7 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    options.tableName = 'Course_Enrollments';
+    options.tableName = 'UserCourses';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
       course_id: { [Op.in]: [2, 3] }

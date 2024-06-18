@@ -11,12 +11,16 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Completedlesson.belongsTo(models.User, {
-        foreignKey: 'user_id'
-      })
+      // Completedlesson.belongsTo(models.User, {
+      //   foreignKey: 'user_id'
+      // })
 
-      Completedlesson.belongsTo(models.Course, {
-        foreignKey: 'course_id'
+      // Completedlesson.belongsTo(models.Course, {
+      //   foreignKey: 'course_id'
+      // })
+
+      Completedlesson.belongsTo(models.Lesson, {
+        foreignKey: 'lesson_id'
       })
     }
   }
