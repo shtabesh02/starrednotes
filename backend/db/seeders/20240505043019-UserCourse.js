@@ -22,7 +22,7 @@ module.exports = {
       },
       {
         user_id: 2,
-        course_id: 2,
+        course_id: 1,
       }
     ], {validate: true})
   },

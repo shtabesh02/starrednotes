@@ -16,9 +16,9 @@ h1 {
     /* margin: 15px 1px; */
 }
 .one-note{
-    box-shadow: 0 1px 9px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0 1px 9px rgba(0, 0, 0, 0.1); */
     /* padding: 15px 1px; */
-    border-radius: 10px;
+    /* border-radius: 10px; */
 }
 .one-note-container{
     margin: 15px;
