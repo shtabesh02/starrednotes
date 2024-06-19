@@ -11,24 +11,28 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Lesson.belongsTo(models.User, {
-        foreignKey: 'user_id'
-      });
+      // Lesson.belongsTo(models.User, {
+      //   foreignKey: 'user_id'
+      // });
 
       Lesson.belongsTo(models.Course, {
         foreignKey: 'course_id'
       });
 
-      Lesson.hasOne(models.Completedlesson, {
-        foreignKey: 'lesson_id',
-        onDelete: 'CASCADE'
-      })
+      Lesson.belongsTo(models.User, {
+        foreignKey: 'user_id'
+      });
+
+      // Lesson.hasOne(models.Completedlesson, {
+      //   foreignKey: 'lesson_id',
+      //   onDelete: 'CASCADE'
+      // })
 
     }
   }
   Lesson.init({
     course_id: DataTypes.INTEGER,
-    user_id: DataTypes.INTEGER,
+    // user_id: DataTypes.INTEGER,
     title: {
       type: DataTypes.STRING,
       validate: {

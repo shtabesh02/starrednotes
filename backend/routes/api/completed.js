@@ -1,38 +1,21 @@
 const express = require('express');
 const router = express.Router();
-const { Completedlesson, User, Course } = require('../../db/models');
+const { Completedlesson, User, Course, Lesson } = require('../../db/models');
 const { where, Sequelize } = require('sequelize');
+const lesson = require('../../db/models/lesson');
 
 router.get('/:user_id', async (req, res) => {
     try {        
         const { user_id } = req.params;
-        // const mycompletedlessons = await User.findAll({where: {id:user_id},
-        //     include: {
-        //         model: Completedlesson
-        //     }
-        // });
-    
-        // This works before including model
-        // const mycompletedlessons = await Completedlesson.findAll({where: {user_id}});
-        const mycompletedlessons = await Completedlesson.findAll({
-            where: { user_id: user_id },
-            // attributes: ['id', 'user_id', 'lesson_id', 'course_id', 'createdAt', 'updatedAt', [Sequelize.fn('COUNT', Sequelize.col('course_id')), 'numOfLessondone']],
-            attributes: ['course_id', 'lesson_id', 'user_id'],
+        const mycompletedlessons = await Lesson.findAll({
+            where: { completed: true },
+            attributes: ['id', 'course_id', 'user_id', 'completed'],
             // group: ['course_id']
         });
 
-
-        const numOfLessondone = await Completedlesson.findAll({
-            where: { user_id: user_id },
-            // attributes: ['id', 'user_id', 'lesson_id', 'course_id', 'createdAt', 'updatedAt', [Sequelize.fn('COUNT', Sequelize.col('course_id')), 'numOfLessondone']],
-            attributes: ['course_id', [Sequelize.fn('COUNT', Sequelize.col('lesson_id')), 'numOfLessondone']],
-            group: ['course_id']
-        });
      
 
-        res.status(200).json({mycompletedlessons,
-            numOfLessondone
-        });
+        res.status(200).json(mycompletedlessons);
     } catch (error) {
         res.status(404).json({
             message: "You have not started any lesson yet."
@@ -42,16 +25,15 @@ router.get('/:user_id', async (req, res) => {
 
 
 // marked as complete
-router.post('/markascomplete', async (req, res) => {
-    const { lesson_id, course_id, user_id, } = req.body;
+router.put('/markascomplete', async (req, res) => {
+    const { lesson_id, course_id, user_id, completed } = req.body;
 
-    const thelesson = await Completedlesson.create({
-        lesson_id,
-        course_id,
-        user_id
+    const lesson2mark = await Lesson.findByPk(lesson_id);
+    const markedlesson = await lesson2mark.set({
+        completed
     });
-
-    res.status(200).json(thelesson);
+    await markedlesson.save();
+    res.status(200).json(markedlesson);
 })
 
 

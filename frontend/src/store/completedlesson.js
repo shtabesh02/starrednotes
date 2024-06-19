@@ -35,7 +35,7 @@ const markedcompete = (markedascompleted) => {
 // thunk action to mark as complete a lesson
 export const markascompleteLesson = (marked) => async (dispatch) => {
     const response = await csrfFetch(`/api/completed/markascomplete`, {
-        method: 'POST',
+        method: 'PUT',
         headers: {"Content-Type":"application/json"},
         body: JSON.stringify(marked)
     });

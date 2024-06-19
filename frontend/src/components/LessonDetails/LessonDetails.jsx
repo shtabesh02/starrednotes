@@ -25,8 +25,8 @@ const LessonDetails = () => {
     })
 
 
-    const completedLessons = useSelector(state => Object.values(state.completedLessons?.lessons?.mycompletedlessons || {}));
-    const thisLesson = completedLessons.filter(lesson => lesson.lesson_id == lesson_id)
+    const completedLessons = useSelector(state => Object.values(state.completedLessons?.lessons || {}));
+    const thisLesson = completedLessons.filter(lesson => lesson.id == lesson_id)
     // console.log('thisLesson: ', thisLesson)
     const [nextdisabled, setNextdisabled] = useState(false);
     const [prevdisabled, setPrevdisabled] = useState(false);
@@ -88,7 +88,8 @@ const LessonDetails = () => {
         const markedcomplete = {
             lesson_id,
             course_id,
-            user_id
+            user_id,
+            completed: true,
         }
         dispatch(markascompleteLesson(markedcomplete))
             .then(() => navigate(`/courses/${course_id}/lessons/${lesson_id}`))

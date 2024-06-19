@@ -5,9 +5,9 @@ const { where, Sequelize } = require('sequelize');
 router.get('/:user_id', async (req, res) => {
     try {
         const { user_id } = req.params;
-        console.log('user_id: ', user_id)
+        // console.log('user_id: ', user_id)
         const user = await User.findByPk(user_id);
-        console.log('user: ', user);
+        // console.log('user: ', user);
         if (!user) {
             return res.status(404).json(
                 {
@@ -15,24 +15,22 @@ router.get('/:user_id', async (req, res) => {
                 }
             )
         }
-        // the bellow commented getCourses() works before getting number of lessons
-        // const enrolledCourses = await user.getCourses();
-        const enrolledCourses = await user.getCourses({
-            attributes: ['id', 'title', 'instructor', 'category', 'description', 'createdAt', 'updatedAt', [Sequelize.fn('COUNT', Sequelize.col('Lessons.id')), 'numOfLessons'], [Sequelize.fn('COUNT', Sequelize.col('Completedlessons.lesson_id')), 'numOfLessondone']],
-            include: [{
-                model: Lesson,
-                attributes: [], // the attributes of Lesson is not needed now.
-                include : {
-                    model: Completedlesson,
-                    attributes: []
-                }
-            },
-            
+        const enrolledcourses = await user.getCourses({
+            attributes: ['id', 'title', 'instructor', 'category', 'description', 'createdAt', 'updatedAt'],
+            include: [
+                { model: Lesson, attributes: ['id', 'completed', 'course_id'] }
             ],
-            group: ['Course.id']
+            // group: ['Course.id']
         });
-        // console.log('enrolledCourses: ', enrolledCourses)
-        res.status(200).json(enrolledCourses);
+
+        const coursesWithLessonCounts = enrolledcourses.map(course => {
+            const numOfLessons = course.Lessons.length;
+            const numOfCompletedLessons = course.Lessons.filter(lesson => lesson.completed).length;
+            return { ...course.toJSON(), numOfLessons, numOfCompletedLessons };
+        });
+
+        res.status(200).json(coursesWithLessonCounts);
+
     } catch (error) {
         res.status(404).json({
             message: "You are not enrolled in to any course. Get enrolled in a course, and try again later."
