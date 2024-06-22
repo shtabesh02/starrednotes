@@ -14,27 +14,32 @@ module.exports = {
       {
         user_id: 1,
         course_id: 1,
-        comment: 'This is the best course available on planet earth.'
+        comment: 'This is the best course available on planet earth.',
+        stars: 5,
       },
       {
         user_id: 1,
         course_id: 2,
-        comment: 'This is a single course sufficient to learn this technology'
+        comment: 'This is a single course sufficient to learn this technology',
+        stars: 4,
       },
       {
         user_id: 2,
         course_id: 1,
-        comment: 'Human beings needed this course.'
+        comment: 'Human beings needed this course.',
+        stars: 3,
       },
       {
         user_id: 2,
         course_id: 2,
-        comment: 'After going through like tens of courses, finally I got blessed finding this course. It is amazing. If you are passinate about learning this course, then do not miss it.'
+        comment: 'After going through like tens of courses, finally I got blessed finding this course. It is amazing. If you are passinate about learning this course, then do not miss it.',
+        stars: 2,
       },
       {
         user_id: 1,
         course_id: 3,
-        comment: 'After going through like tens of courses, finally I got blessed finding this course. It is amazing. If you are passinate about learning this course, then do not miss it.'
+        comment: 'After going through like tens of courses, finally I got blessed finding this course. It is amazing. If you are passinate about learning this course, then do not miss it.',
+        stars: 5,
       }
     ], {validate:true})
   },

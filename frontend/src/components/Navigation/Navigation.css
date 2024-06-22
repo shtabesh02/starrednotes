@@ -23,9 +23,10 @@
 }
 
 .log_btn{
-  background-color: #ccc;
+  background-color: #3c7eef;
   border: none;
-  border-radius: 40px;
+  color: white;
+  border-radius: 10px;
   padding: 10px;
 }
 

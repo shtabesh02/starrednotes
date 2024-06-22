@@ -3,6 +3,7 @@ const router = express.Router();
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation')
 const { Course_Comment, User } = require('../../db/models');
+const { where } = require('sequelize');
 
 // loading comments for a course based on its id -->
 router.get('/:course_id/comments', async (req, res) => {
@@ -32,10 +33,15 @@ const validateComment = [
     handleValidationErrors
 ]
 router.post('/:course_id/comment', validateComment, async (req, res) => {
-    const { user_id, course_id, comment } = req.body;
-    const newcomment = await Course_Comment.create({ user_id, course_id, comment });
+    const { user_id, course_id, comment, stars } = req.body;
+    const newcomment = await Course_Comment.create({ user_id, course_id, comment, stars });
     // console.log()
-    res.status(200).json(newcomment);
+    const commentanduser = await Course_Comment.findOne({where: { id: newcomment.id},
+    include: [
+        {model: User, attributes: ['id', 'firstName', 'lastName']}
+    ]})
+    // console.log()
+    res.status(200).json(commentanduser);
 })
 
 
@@ -61,14 +67,21 @@ router.delete('/:comment_id', async (req, res) => {
 router.put('/:comment_id', validateComment, async (req, res) => {
     const { user_id, course_id, comment } = req.body;
     const commentid = req.params.comment_id;
-    const targetcomment = await Course_Comment.findOne({ where: { id: commentid } })
-    const uc = await targetcomment.set({
+    const targetcomment = await Course_Comment.findOne({ where: { id: commentid } });
+    
+    await targetcomment.set({
         user_id,
         course_id,
         comment
     })
     await targetcomment.save();
-    res.status(200).json(uc);
+        // console.log()
+        const updatedResult = await Course_Comment.findOne({where: { id: targetcomment.id},
+            include: [
+                {model: User, attributes: ['id', 'firstName', 'lastName']}
+            ]})
+            // console.log()
+    res.status(200).json(updatedResult);
 })
 
 

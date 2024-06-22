@@ -46,13 +46,16 @@ const Home = () => {
             .map((category) => (
               <div key={category}>
                 <h1>{category}</h1>
+                <div className='tabs-container'>
                 <div className="tabs">
                   <h3 onClick={() => setTabState({ ...tabState, [category]: 'mr' })}>
-                    Most recent
+                    Recent courses
                   </h3>
+                  <h3>.</h3>
                   <h3 onClick={() => setTabState({ ...tabState, [category]: 'va' })}>
                     View all
                   </h3>
+                </div>
                 </div>
                 <hr />
                 <div className='coursesdisplay'>

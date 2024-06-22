@@ -117,3 +117,22 @@ hr {
     justify-content:flex-start;
     width: 85%;
   }
+  .commentsbtn{
+    margin: 10px 0px;
+  }
+
+  .ratingcount{
+    width: 100%;
+    display: flex;
+    justify-content: right;
+
+  }
+  .ratingdetails{
+    display: flex;
+    padding: 10px;
+    border: 1px solid gray;
+  }
+.ratingcount span{
+    margin: 5px;
+    /* padding: 5px; */
+}
