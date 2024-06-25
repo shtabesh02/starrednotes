@@ -65,14 +65,15 @@ router.delete('/:comment_id', async (req, res) => {
 
 // update a comment
 router.put('/:comment_id', validateComment, async (req, res) => {
-    const { user_id, course_id, comment } = req.body;
+    const { user_id, course_id, comment, stars } = req.body;
     const commentid = req.params.comment_id;
     const targetcomment = await Course_Comment.findOne({ where: { id: commentid } });
     
     await targetcomment.set({
         user_id,
         course_id,
-        comment
+        comment,
+        stars
     })
     await targetcomment.save();
         // console.log()

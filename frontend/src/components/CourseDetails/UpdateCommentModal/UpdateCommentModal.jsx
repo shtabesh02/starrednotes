@@ -105,7 +105,7 @@ function UpdateCommentModal ({comment_id, course_id, setSelectedTab}) {
                     onClick={handleSubmit}
                     disabled={updatingmycomment.length < 10 || rating < 1}
                 >
-                    Submit Your Comment
+                    Update Your Comment
                 </button>
 
 
