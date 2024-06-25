@@ -16,9 +16,9 @@ const Home = () => {
   //   return <p>Loading...</p>; // Placeholder while data loads
   // }
 
+  
+  // Group courses by category. The 'category' is set as 'keys' and courses are set at values in an array.
   const courseByCategory = {};
-
-  // Group courses by category
   allCourses.forEach((course) => {
     const category = course.category;
     if (!courseByCategory[category]) {
@@ -47,15 +47,15 @@ const Home = () => {
               <div key={category}>
                 <h1>{category}</h1>
                 <div className='tabs-container'>
-                <div className="tabs">
-                  <h3 onClick={() => setTabState({ ...tabState, [category]: 'mr' })}>
-                    Recent courses
-                  </h3>
-                  <h3>.</h3>
-                  <h3 onClick={() => setTabState({ ...tabState, [category]: 'va' })}>
-                    View all
-                  </h3>
-                </div>
+                  <div className="tabs">
+                    <h3 onClick={() => setTabState({ ...tabState, [category]: 'mr' })}>
+                      Recent courses
+                    </h3>
+                    <h3>.</h3>
+                    <h3 onClick={() => setTabState({ ...tabState, [category]: 'va' })}>
+                      View all
+                    </h3>
+                  </div>
                 </div>
                 <hr />
                 <div className='coursesdisplay'>
@@ -69,11 +69,17 @@ const Home = () => {
                               <NavLink to={`/courses/${course.id}`}>{course.title}</NavLink>
                               <p className='instructor'>
                                 Instructor: {course.instructor}
+
                                 {/* <NavLink to={`/${course.Users[0]?.username}`} style={{ fontWeight: 'lighter', fontSize: '1em', color: 'black' }}>Instructor:  
                                 {course.instructor} 
                                 {course.Users[0]?.firstName + ' ' + course.Users[0]?.lastName}
                                 </NavLink> */}
                               </p>
+
+                              {course.numOfStudents == 0 && <p>New</p>}
+                              {course.numOfStudents == 1 && <p>{course.numOfStudents} Student</p>}
+                              {course.numOfStudents > 1 && <p>{course.numOfStudents} Students</p>}
+
                             </li>
                           ))
                       ) : (
@@ -88,6 +94,9 @@ const Home = () => {
                                 {course.Users[0]?.firstName + ' ' + course.Users[0]?.lastName}
                                 </NavLink> */}
                               </p>
+                              {course.numOfStudents == 0 && <p>New</p>}
+                              {course.numOfStudents == 1 && <p>{course.numOfStudents} Student</p>}
+                              {course.numOfStudents > 1 && <p>{course.numOfStudents} Students</p>}
                             </li>
                           ))
                       )

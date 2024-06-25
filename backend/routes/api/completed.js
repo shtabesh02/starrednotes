@@ -1,15 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const { Completedlesson, User, Course, Lesson } = require('../../db/models');
+const { CompletedLesson, User, Course, Lesson } = require('../../db/models');
 const { where, Sequelize } = require('sequelize');
 const lesson = require('../../db/models/lesson');
 
 router.get('/:user_id', async (req, res) => {
     try {        
         const { user_id } = req.params;
-        const mycompletedlessons = await Lesson.findAll({
-            where: { completed: true },
-            attributes: ['id', 'course_id', 'user_id', 'completed'],
+        const mycompletedlessons = await CompletedLesson.findAll({
+            where: { user_id },
+            attributes: ['id', 'course_id', 'user_id', 'lesson_id'],
             // group: ['course_id']
         });
 
@@ -26,14 +26,19 @@ router.get('/:user_id', async (req, res) => {
 
 // marked as complete
 router.put('/markascomplete', async (req, res) => {
-    const { lesson_id, course_id, user_id, completed } = req.body;
+    const { lesson_id, course_id, user_id } = req.body;
 
-    const lesson2mark = await Lesson.findByPk(lesson_id);
-    const markedlesson = await lesson2mark.set({
-        completed
-    });
-    await markedlesson.save();
-    res.status(200).json(markedlesson);
+    // const lesson2mark = await Lesson.findByPk(lesson_id);
+    // const markedlesson = await lesson2mark.set({
+    //     completed
+    // });
+    // await markedlesson.save();
+    const markit = await CompletedLesson.create({
+        user_id,
+        course_id,
+        lesson_id
+    })
+    res.status(200).json(markit);
 })
 
 

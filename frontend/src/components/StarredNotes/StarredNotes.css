@@ -15,10 +15,8 @@ h1 {
     list-style-type: none;
     /* margin: 15px 1px; */
 }
-.one-note{
-    /* box-shadow: 0 1px 9px rgba(0, 0, 0, 0.1); */
-    /* padding: 15px 1px; */
-    /* border-radius: 10px; */
+.errors{
+    color: red;
 }
 .one-note-container{
     margin: 15px;
@@ -49,11 +47,12 @@ h1 {
 
 .addnotebtn{
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between
 }
 
 .addnotebtn > button {
     background-color: #00aaff;
+    margin: 10px 15px 10px 20px;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -65,13 +64,17 @@ h1 {
     background-color: #0088cc;
 }
 
-.one-note-container textarea, .one-note-container input[type='text'] {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    transition: border-color 0.3s;
+.title {
+    width: 98% !important;
+    /* background-color: #0088cc; */
+    margin: 0px;
+    border: #978080 !important;
 }
+  
+.ql-editor {
+    min-height: 100px;
+    width: 100%;
+  }
 
 .more-less{
     color: rgb(39, 24, 245);

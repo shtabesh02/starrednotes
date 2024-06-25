@@ -23,10 +23,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'user_id'
       });
 
-      // Lesson.hasOne(models.Completedlesson, {
-      //   foreignKey: 'lesson_id',
-      //   onDelete: 'CASCADE'
-      // })
+      Lesson.hasMany(models.CompletedLesson, {
+        foreignKey: 'lesson_id',
+        onDelete: 'CASCADE'
+      })
 
     }
   }
@@ -51,7 +51,7 @@ module.exports = (sequelize, DataTypes) => {
       }
 
     },
-    completed: DataTypes.BOOLEAN,
+    // completed: DataTypes.BOOLEAN,
   }, {
     sequelize,
     modelName: 'Lesson',

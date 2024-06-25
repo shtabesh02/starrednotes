@@ -16,6 +16,7 @@ const starrednotesRouter = require('./starrednotes.js');
 const userprofileRouter = require('./userprofile.js');
 const completedRouter = require('./completed.js');
 const enrollmentRouter = require('./enrollment.js');
+const searchResult = require('./search.js');
 
 
 
@@ -32,6 +33,7 @@ router.use('/starrednotes', starrednotesRouter);
 router.use('/userprofile', userprofileRouter);
 router.use('/completed', completedRouter);
 router.use('/enrollment', enrollmentRouter);
+router.use('/search', searchResult);
 
 
 

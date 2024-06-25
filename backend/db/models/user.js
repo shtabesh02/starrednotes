@@ -44,10 +44,10 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: 'CASCADE'
       })
 
-      // User.hasMany(models.Completedlesson, {
-      //   foreignKey: 'user_id',
-      //   onDelete: 'CASCADE'
-      // })
+      User.hasMany(models.CompletedLesson, {
+        foreignKey: 'user_id',
+        onDelete: 'CASCADE'
+      });
     }
   };
 

@@ -26,7 +26,7 @@ const LessonDetails = () => {
 
 
     const completedLessons = useSelector(state => Object.values(state.completedLessons?.lessons || {}));
-    const thisLesson = completedLessons.filter(lesson => lesson.id == lesson_id)
+    const thisLesson = completedLessons.filter(lesson => lesson.lesson_id == lesson_id)
     // console.log('thisLesson: ', thisLesson)
     const [nextdisabled, setNextdisabled] = useState(false);
     const [prevdisabled, setPrevdisabled] = useState(false);

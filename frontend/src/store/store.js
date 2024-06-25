@@ -9,6 +9,7 @@ import starrednotesReducer from './starrednotes'
 import profileReducer from './userprofile';
 import completedLessons from './completedlesson';
 import enrollmentReducer from './enrollment';
+import searchReducer from './search';
 
 const rootReducer = combineReducers({
   // ADD REDUCERS HERE
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
   profileReducer: profileReducer,
   completedLessons: completedLessons,
   enrollmentReducer: enrollmentReducer,
+  searchReducer: searchReducer,
 });
 
 let enhancer;

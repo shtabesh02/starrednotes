@@ -4,19 +4,44 @@ const express = require('express');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation')
 const { Course, Lesson, Course_Comment, User } = require('../../db/models');
-const { where, json } = require('sequelize');
+const { where, json, Sequelize } = require('sequelize');
 const { requireAuth } = require('../../utils/auth');
 const router = express.Router();
 
+// router.get('/', async (req, res) => {
+//     const courses = await Course.findAll({
+//         include: {
+//             model: User, attributes: ['id', 'firstName', 'lastName', 'username']
+//         }
+//     });
+//     // console.log('coruses: ', courses)
+//     res.status(200).json(courses)
+// })
+
+
+
+
 router.get('/', async (req, res) => {
     const courses = await Course.findAll({
-        include: {
-            model: User, attributes: ['id', 'firstName', 'lastName', 'username']
-        }
+        attributes: {
+            include: [
+              [Sequelize.fn('COUNT', Sequelize.col('Users.id')), 'numOfStudents']
+            ]
+          },
+        include: [{
+            model: User,
+            attributes: ['id', 'firstName', 'lastName', 'username'],
+            through: {attributes: []}
+
+        }],
+        group: ['Course.id']
     });
     // console.log('coruses: ', courses)
     res.status(200).json(courses)
 })
+
+
+
 
 // loading one course details by id
 router.get('/:course_id', async (req, res) => {
@@ -24,8 +49,6 @@ router.get('/:course_id', async (req, res) => {
     const course = await Course.findOne({ where: { id: course_id } })
     res.status(200).json(course);
 })
-
-
 
 // loading all my courses
 router.get('/:current_user/currentcourses', async (req, res) => {

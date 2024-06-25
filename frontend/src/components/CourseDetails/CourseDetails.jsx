@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { loadCoursefromDB } from "../../store/courses";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { loadlessonsfromDB } from "../../store/lessons";
-// import { deletecomment, loadcommentsfromDB } from "../../store/comments";
+import { loadcommentsfromDB } from "../../store/comments";
 import OpenModalButton from '../OpenModalButton'
 import DOMPurify from "dompurify";
 
@@ -16,6 +16,7 @@ import UpdateCommentModal from "./UpdateCommentModal/UpdateCommentModal";
 const CourseDetails = () => {
   const { course_id } = useParams();
 
+  
   const user_id = useSelector(state => state.session?.user?.id);
   const course = useSelector(state => state.courseReducer?.courseDetails);
   const lessons = useSelector(state => state.lessonReducer?.lessons);
@@ -32,7 +33,7 @@ const CourseDetails = () => {
   useEffect(() => {
     dispatch(loadCoursefromDB(course_id));
     dispatch(loadlessonsfromDB(course_id));
-    // dispatch(loadcommentsfromDB(course_id));
+    dispatch(loadcommentsfromDB(course_id));
     dispatch(loadEnrollment(user_id))
       .then(() => console.log('All the courses you are enrolled in loaded successfully...'))
       .catch(() => console.log('You are not enrolled in any course yet...'))
@@ -130,7 +131,7 @@ const CourseDetails = () => {
                   {comments?.length > 0 && (
                     <>
                       {/* <span> · </span> */}
-                      {comments.length == 1 ? '1 Review' : `${comments.length} Reviews`}
+                      {comments.length == 1 ? '1 Comment' : `${comments.length} Comments`}
                     </>
                   )}
                 </span>

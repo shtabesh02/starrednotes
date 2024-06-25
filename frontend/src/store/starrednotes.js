@@ -58,6 +58,8 @@ export const insertnewnote = (newnote) => async (dispatch) => {
     if (response.ok) {
         const data = await response.json();
         dispatch(addnewnote(data))
+    }else{
+        return response;
     }
 }
 

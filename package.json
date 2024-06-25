@@ -15,6 +15,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "dompurify": "^3.1.5"
+    "dompurify": "^3.1.5",
+    "highlight.js": "^11.9.0",
+    "quill": "^2.0.2",
+    "react-quill": "^2.0.0"
   }
 }

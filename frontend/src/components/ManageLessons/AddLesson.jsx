@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { addnewlesson } from "../../store/lessons";
 import { loadCoursefromDB } from "../../store/courses";
+import ReactQuill from "react-quill";
+import 'react-quill/dist/quill.snow.css'
 
 import './AddLesson.css'
 
@@ -26,6 +28,11 @@ const AddLesson = () => {
             content,
             completed: false
         }
+        if (content.trim() === '' || content.trim() === '<p><br></p>') {
+            setErrors({ content: "Add the note!" })
+            return;
+        }
+
         dispatch(addnewlesson(newlesson, course_id))
             .then(() => {
                 navigate(`/courses/${course_id}/managelessons`)
@@ -50,20 +57,24 @@ const AddLesson = () => {
             <div className="addalessoncontainer">
                 <div className="addlesson">
                     <h1>Add a new lesson to <span className="thelesson">{course_title} </span>course</h1>
-                    <form onSubmit={addlesson} className="lessonform">
+                    <form onSubmit={addlesson} className="addlessonform">
                         <div>
                             <label htmlFor="title">Title</label>
                             <input type="text" value={title} onChange={e => setTitle(e.target.value)} />
                             {errors.title && <p className="errorcss">{errors.title}</p>}
                         </div>
                         <div>
-                            <label htmlFor="content">Content</label>
-                            <textarea value={content} onChange={e => setContent(e.target.value)} name="lessoncontent" id="lessoncontent" cols="30" rows="10">Content</textarea>
+                            {/* <label htmlFor="content">Content</label> */}
+                            {/* <textarea value={content} onChange={e => setContent(e.target.value)} name="lessoncontent" id="lessoncontent" cols="30" rows="10">Content</textarea> */}
+
+                            <ReactQuill theme='snow' value={content} onChange={(content) => setContent(content)} style={{ minHeight: '100px' }} />
                             {errors.content && <p className="errorcss">{errors.content}</p>}
                         </div>
                         <div className="sbmtbtn">
-                            <button>Submit</button>
+                            <button>Add the lesson</button>
                         </div>
+
+                        {/* <ReactQuill theme='snow' value={content} onChange={(content) => setContent(content)} style={{minHeight: '100px'}}/> */}
                     </form>
                 </div>
             </div>

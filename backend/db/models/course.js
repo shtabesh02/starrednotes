@@ -31,10 +31,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'user_id'
       })
 
-      // Course.hasMany(models.Completedlesson, {
-      //   foreignKey: 'course_id',
-      //   onDelete: 'CASCADE'
-      // })
+      Course.hasMany(models.CompletedLesson, {
+        foreignKey: 'course_id',
+        onDelete: 'CASCADE'
+      })
     }
   }
   Course.init({

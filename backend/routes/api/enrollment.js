@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { User, UserCourse, Course, Lesson, Completedlesson } = require('../../db/models');
+const { User, UserCourse, Course, Lesson, CompletedLesson } = require('../../db/models');
 const { where, Sequelize } = require('sequelize');
 router.get('/:user_id', async (req, res) => {
     try {
@@ -18,17 +18,43 @@ router.get('/:user_id', async (req, res) => {
         const enrolledcourses = await user.getCourses({
             attributes: ['id', 'title', 'instructor', 'category', 'description', 'createdAt', 'updatedAt'],
             include: [
-                { model: Lesson, attributes: ['id', 'completed', 'course_id'] }
+                {
+                    model: Lesson,
+                    attributes: ['id', 'course_id'],
+                    include: [{
+                        model: CompletedLesson, where: { user_id },
+                        required: false,
+                        attributes: ['id']
+                    }]
+                }
             ],
             // group: ['Course.id']
         });
 
-        const coursesWithLessonCounts = enrolledcourses.map(course => {
-            const numOfLessons = course.Lessons.length;
-            const numOfCompletedLessons = course.Lessons.filter(lesson => lesson.completed).length;
-            return { ...course.toJSON(), numOfLessons, numOfCompletedLessons };
-        });
+        // console.log('enrolledcourses: ', enrolledcourses)
 
+        const result = [];
+        enrolledcourses.forEach(course => {
+            result.push(course.toJSON())
+        });
+        const coursesWithLessonCounts = result.map(course => {
+            const numOfLessons = course.Lessons.length;
+            const numOfCompletedLessons = course.Lessons.filter(lesson => lesson.CompletedLessons.length > 0).length;
+            return { ...course, numOfLessons, numOfCompletedLessons };
+        });
+     
+        // result.forEach(course => {
+        //     course.numOfLessons = course.Lessons.length;
+        //     course.numOfCompletedLessons = course.Lessons.filter(lesson => lesson.CompletedLesson.length > 0).length
+        //     // course.Lessons.forEach(lesson => {
+        //         // if(lesson.CompletedLessons.length > 0){
+        //         //     course.numOfCompletedLessons = lesson.CompletedLesson.length;
+        //         // }else{
+        //         //     course.numOfCompletedLessons = 0;
+        //         // }
+        //     // })
+        // })
+        // console.log('result: ', result)
         res.status(200).json(coursesWithLessonCounts);
 
     } catch (error) {

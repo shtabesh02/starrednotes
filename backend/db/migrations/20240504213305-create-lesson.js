@@ -36,10 +36,10 @@ module.exports = {
       content: {
         type: Sequelize.TEXT // changed it from STRING to TEXT
       },
-      completed: {
-        type: Sequelize.BOOLEAN,
-        defaultValue: false
-      },
+      // completed: {
+      //   type: Sequelize.BOOLEAN,
+      //   defaultValue: false
+      // },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

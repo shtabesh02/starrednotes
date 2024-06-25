@@ -33,16 +33,20 @@ router.post('/', validateNewnote, async (req, res) => {
         title,
         content: note
     });
-    // console.log('newnote: ', newnote)
-    // When you insert a new record into the database using Sequelize, the "newly created record" is returned by the create method.
-    const newnote_User = await StarredNote.findOne(
-        {
-            where: { id: newnote.id },
-            include: {
-                model: User, attributes: ['id', 'firstName', 'lastName']
-            }
-        });
-    res.status(200).json(newnote_User);
+    console.log('newnote: ', newnote)
+    if(newnote){
+        // When you insert a new record into the database using Sequelize, the "newly created record" is returned by the create method.
+        const newnote_User = await StarredNote.findOne(
+            {
+                where: { id: newnote.id },
+                include: {
+                    model: User, attributes: ['id', 'firstName', 'lastName']
+                }
+            });
+        res.status(200).json(newnote_User);
+    }else{
+        res.status(400).json(newnote);
+    }
 });
 
 router.get('/:starrednote_id', async (req, res) => {
