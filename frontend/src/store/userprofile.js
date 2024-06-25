@@ -12,16 +12,16 @@ const loadprofile = (profile) => {
 }
 // thunk action to load profile from db
 export const loadUserProfile = (username) => async (dispatch) => {
-    console.log('before fetch: ')
+    // console.log('before fetch: ')
     try {
         const response = await csrfFetch(`/api/userprofile/${username}`);
-    console.log('response: ', response)
+    // console.log('response: ', response)
     if(response.ok){
         const data = await response.json();
         dispatch(loadprofile(data))
     }
     } catch (error) {
-        console.log('error: ', error)
+        // console.log('error: ', error)
         return error;
     }
 }
@@ -40,7 +40,7 @@ export const updatethisprofile = (newprofile, user_id) => async (dispatch) => {
         headers: {"Content-Type":"application/json"},
         body: JSON.stringify(newprofile)
     })
-    console.log('response: ', response)
+    // console.log('response: ', response)
     if(response.ok){
         const data = await response.json();
         dispatch(uptdateprofile(data))

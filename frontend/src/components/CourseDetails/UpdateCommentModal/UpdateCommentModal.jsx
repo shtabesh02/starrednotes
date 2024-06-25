@@ -9,12 +9,12 @@ import { editcomment, loadcommentsfromDB } from '../../../store/comments';
 // import { useParams } from 'react-router-dom';
 // import { insertReview } from '../../store/review';
 function UpdateCommentModal ({comment_id, course_id, setSelectedTab}) {
-    console.log('comment id: ', comment_id)
+    // console.log('comment id: ', comment_id)
     const dispatch = useDispatch();
     //const sessionUser = useSelector((state) => state.session.user);
 
     const updatingmycomment = useSelector(state => state.commentReducer?.comments[comment_id]);
-    console.log('current comment: ', updatingmycomment);
+    // console.log('current comment: ', updatingmycomment);
     const [comment, setComment] = useState(updatingmycomment?.comment || '');
     const [rating, setRating] = useState(updatingmycomment?.stars || 0);
     const [errors, setErrors] = useState({});

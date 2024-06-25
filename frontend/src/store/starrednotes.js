@@ -16,7 +16,7 @@ const loadSN = (sn) => {
 // thunk action to load StarredNotes from db
 export const loadStarredNotes = () => async (dispatch) => {
     const response = await csrfFetch(`/api/starrednotes`);
-    console.log('stareednotes loaded: ', response)
+    // console.log('stareednotes loaded: ', response)
     if (response.ok) {
         const sn = await response.json();
         dispatch(loadSN(sn));
@@ -33,10 +33,10 @@ const addthisnote2state = (notedetails) => {
 // thunk action to load one note details from db
 export const loadthenote = (starrednote_id) => async (dispatch) => {
     const response = await csrfFetch(`/api/starrednotes/${starrednote_id}`);
-    console.log('response: ', response)
+    // console.log('response: ', response)
     if(response.ok){
         const data = await response.json();
-        console.log('data: ', data)
+        // console.log('data: ', data)
         dispatch(addthisnote2state(data));
     }
 }

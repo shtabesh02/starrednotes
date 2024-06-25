@@ -49,7 +49,7 @@ const ManageCourses = () => {
   const completedLessons = useSelector(state => Object.values(state.completedLessons?.lessons));
   const numOfCompletedlesson = {};
   completedLessons.forEach(lesson => numOfCompletedlesson[lesson.course_id] = lesson.numOfLessondone);
-  console.log('numOfLessondone: ', numOfCompletedlesson);
+  // console.log('numOfLessondone: ', numOfCompletedlesson);
 
 
 

@@ -12,21 +12,21 @@ const loadenrolledcourses = (enrolledcourses) => {
 }
 // thunk action to load all enrolled courses from db
 export const loadEnrollment = (user_id) => async (dispatch) => {
-    console.log('before try')
+    // console.log('before try')
     try {
-        console.log('before fetch')
+        // console.log('before fetch')
         const response = await csrfFetch(`/api/enrollment/${user_id}`);
-        console.log('response: ', response)
+        // console.log('response: ', response)
         if(response.ok){
             const data = await response.json();
             dispatch(loadenrolledcourses(data));
         }else{
             const err = await response.json();
-            console.log('err: ', err)
+            // console.log('err: ', err)
             return err;
         }
     } catch (error) {
-        console.log('error: ', error)
+        // console.log('error: ', error)
         return error;
     }
     // console.log('user_id : ', user_id)
@@ -49,7 +49,7 @@ export const getenrolled = (enrollment) => async(dispatch) => {
     });
     if(response.ok){
         const data = await response.json();
-        console.log('data from thunk: ', data)
+        // console.log('data from thunk: ', data)
         dispatch(enroll(data));
     }
 }
