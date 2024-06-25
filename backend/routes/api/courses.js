@@ -34,7 +34,9 @@ router.get('/', async (req, res) => {
             through: {attributes: []}
 
         }],
-        group: ['Course.id']
+        // group: ['Course.id']
+        group: ['Course.id', 'Users.id', 'Users.firstName', 'Users.lastName', 'Users.username']
+
     });
     // console.log('coruses: ', courses)
     res.status(200).json(courses)
