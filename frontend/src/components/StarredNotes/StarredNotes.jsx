@@ -60,6 +60,28 @@ const StarredNotes = () => {
       })
   }
 
+  const module = {
+    toolbar: [
+      ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+      ['blockquote', 'code-block'],
+      // ['link', 'image', 'video', 'formula'],
+  
+      // [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+      [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'list': 'check' }],
+      [{ 'script': 'sub' }, { 'script': 'super' }],      // superscript/subscript
+      [{ 'indent': '-1' }, { 'indent': '+1' }],          // outdent/indent
+      [{ 'direction': 'rtl' }],                         // text direction
+  
+      [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+      [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+  
+      [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+      [{ 'font': [] }],
+      [{ 'align': [] }],
+  
+      ['clean']                                         // remove formatting button
+    ]
+  }
   return (
     <div className='starrednotes-container'>
       <ul className='notes'>
@@ -69,10 +91,15 @@ const StarredNotes = () => {
               <form className='noteform' onSubmit={addnewnote}>
                 <div>
 
-                  <input value={title} onChange={e => setTitle(e.target.value)} type="text" placeholder='Title' className='title'/>
+                  <input value={title} onChange={e => setTitle(e.target.value)} type="text" placeholder='Title' className='title' />
 
                   {/* <textarea onChange={(e) => setNote(e.target.value)} value={note} onFocus={() => setFormModal(true)} className='addnote' placeholder='Share your note here now, use it later and anytime...' /> */}
-                  <ReactQuill theme='snow' value={note} onChange={(content) => setNote(content)} placeholder='Share your note here now, use it later and anytime...' className='ql-editor' style={{minHeight: '100px'}}/>
+                  <ReactQuill
+                    theme='snow'
+                    value={note}
+                    onChange={(content) => setNote(content)}
+                    modules={module}
+                  placeholder='Share your note here now, use it later and anytime...' className='ql-editor' style={{ minHeight: '100px' }} />
 
 
                   <div className='addnotebtn'>
@@ -119,10 +146,10 @@ const StarredNotes = () => {
                       <>
                         {/* <span>{`${note.content.substring(0, 400)}... `}</span> */}
                         <span dangerouslySetInnerHTML={{
-                        __html: DOMPurify.sanitize(note.content.substring(0, 400).replace(/\n/g, '<br>')),
-                      }}>
-                        {/* {note.content} */}
-                      </span>
+                          __html: DOMPurify.sanitize(note.content.substring(0, 400).replace(/\n/g, '<br>')),
+                        }}>
+                          {/* {note.content} */}
+                        </span>
                       </>
 
                     )}

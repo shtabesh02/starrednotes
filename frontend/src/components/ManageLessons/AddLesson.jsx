@@ -49,27 +49,55 @@ const AddLesson = () => {
     useEffect(() => {
         dispatch(loadCoursefromDB(course_id))
     }, [dispatch, course_id]);
+
+    const module = {
+        toolbar: [
+            ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+            ['blockquote', 'code-block'],
+            // ['link', 'image', 'video', 'formula'],
+
+            // [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+            [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'list': 'check' }],
+            [{ 'script': 'sub' }, { 'script': 'super' }],      // superscript/subscript
+            [{ 'indent': '-1' }, { 'indent': '+1' }],          // outdent/indent
+            [{ 'direction': 'rtl' }],                         // text direction
+
+            [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+            [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+
+            [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+            [{ 'font': [] }],
+            [{ 'align': [] }],
+
+            ['clean']                                         // remove formatting button
+        ]
+    }
     return (
         <>
             <div className="back2managelesson">
                 <button onClick={() => navigate(`/courses/${course_id}/managelessons`)}>Back</button>
             </div>
             <div className="addalessoncontainer">
-                <div className="addlesson">
-                    <h1>Add a new lesson to <span className="thelesson">{course_title} </span>course</h1>
+                <div className="addlesson1">
+                    <h1>Add a new lesson to <span style={{color: 'green'}}> {course_title} </span>course</h1>
                     <form onSubmit={addlesson} className="addlessonform">
                         <div>
                             <label htmlFor="title">Title</label>
                             <input type="text" value={title} onChange={e => setTitle(e.target.value)} />
                             {errors.title && <p className="errorcss">{errors.title}</p>}
                         </div>
-                        <div>
+                        {/* <div> */}
                             {/* <label htmlFor="content">Content</label> */}
                             {/* <textarea value={content} onChange={e => setContent(e.target.value)} name="lessoncontent" id="lessoncontent" cols="30" rows="10">Content</textarea> */}
 
-                            <ReactQuill theme='snow' value={content} onChange={(content) => setContent(content)} style={{ minHeight: '100px' }} />
+                            <ReactQuill
+                                modules={module}
+                                theme='snow'
+                                value={content}
+                                onChange={(content) => setContent(content)} style={{ minHeight: '200px' }}
+                                placeholder="Add the content of the lesson here..." />
                             {errors.content && <p className="errorcss">{errors.content}</p>}
-                        </div>
+                        {/* </div> */}
                         <div className="sbmtbtn">
                             <button>Add the lesson</button>
                         </div>

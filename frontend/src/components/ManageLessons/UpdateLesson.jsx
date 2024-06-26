@@ -59,13 +59,37 @@ const UpdateLesson = () => {
             setContent(updatinglesson?.content || '');
         }
     }, [updatinglesson]);
+
+    const module = {
+        toolbar: [
+            ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+            ['blockquote', 'code-block'],
+            // ['link', 'image', 'video', 'formula'],
+
+            // [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+            [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'list': 'check' }],
+            [{ 'script': 'sub' }, { 'script': 'super' }],      // superscript/subscript
+            [{ 'indent': '-1' }, { 'indent': '+1' }],          // outdent/indent
+            [{ 'direction': 'rtl' }],                         // text direction
+
+            [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+            [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+
+            [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+            [{ 'font': [] }],
+            [{ 'align': [] }],
+
+            ['clean']                                         // remove formatting button
+        ]
+    }
+
     return (
         <>
             <div className="back2managelesson">
                 <button onClick={() => navigate(`/courses/${course_id}/managelessons`)}>Back</button>
             </div>
             <div className='updatelessoncontainer'>
-                <div className='updatelesson'>
+                <div className='updatelesson1'>
                     <h1>Update Lesson</h1>
                     <form onSubmit={updatethelesson} className='updatelessonform'>
                         <div>
@@ -74,13 +98,15 @@ const UpdateLesson = () => {
                             {errors.title && <p className='errorcss'>{errors.title}</p>}
                         </div>
                         <div>
-                            <label htmlFor="content">Content</label>
+                            {/* <label htmlFor="content">Content</label> */}
                             {/* <textarea id="content" name='content' value={content} onChange={e => setContent(e.target.value)} cols="30" rows="10">Content</textarea> */}
-                            <ReactQuill theme='snow' value={content} onChange={(content) => setContent(content)} style={{ minHeight: '100px' }} />
+                            <ReactQuill
+                            modules={module}
+                            theme='snow' value={content} onChange={(content) => setContent(content)} style={{ minHeight: '100px' }} />
                             {errors.content && <p className='errorcss'>{errors.content}</p>}
                         </div>
                         <div className='sbmtbtn'>
-                            <button>Submit</button>
+                            <button>Update</button>
                         </div>
                     </form>
                 </div>
